@@ -5,6 +5,7 @@ INSERT INTO gestor_banco.usuario (nombre,apellido,email,contrasena,activo,rol,di
 INSERT INTO gestor_banco.usuario (nombre,apellido,email,contrasena,activo,rol,direccion,telefono) VALUES('Miguel', 'Moya Castillo', 'algo2@gmail.com', '123', 1, 'empresa', 'direc', '95155555'); 
 INSERT INTO gestor_banco.usuario (nombre,apellido,email,contrasena,activo,rol,direccion,telefono) VALUES('Jose', 'Torres Postigo', 'algo3@gmail.com', '123', 1, 'empresa', 'direc', '95155555'); 
 INSERT INTO gestor_banco.usuario (nombre,apellido,email,contrasena,activo,rol,direccion,telefono) VALUES('Oscar', 'Hidalgo Puertas', 'algo4@gmail.com', '123', 1, 'empresa', 'direc', '95155555');
+INSERT INTO gestor_banco.usuario (nombre,apellido,email,contrasena,activo,rol,direccion,telefono) VALUES('Fernando', 'Alonso Díaz', 'aporla33@gmail.com', '123', 0, 'cliente', 'direc', '333333333');
 
 INSERT INTO gestor_banco.empleado VALUES(111,  'Fernando Calvo', 'algo@gmail.com', 'gestor');
 INSERT INTO gestor_banco.empleado VALUES(222,  'Alba Sanchez', 'algo1@gmail.com', 'gestor');
