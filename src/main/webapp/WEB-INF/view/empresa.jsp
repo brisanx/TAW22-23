@@ -19,34 +19,15 @@
 <body>
 <h1>REGISTRO DE EMPRESA</h1>
     <form:form action="/guardar" method="post" modelAttribute="usuario">
-        CIF(*)
-        Nombre de la empresa(*)
-        Dirección
-        <table>
-            <tr>
-                <td>Calle(*)</td>
-                <td>Número (*)</td>
-            </tr>
-            <tr>
-                <td>Planta/Puerta/Oficina (*)</td>
-            </tr>
-            <tr>
-                <td>Ciudad(*)</td>
-                <td>Región</td>
-            </tr>
-            <tr>
-                <td>País(*)</td>
-                <td>C.P.(*)</td>
-            </tr>
-        </table>
-        <form:checkbox path="direccion" value="false" label="Válida (dirección actual)"/>
-        <table>
-            <tr>
-                <td>Contraseña(*)</td>
-                <td>Contraseña.Repetir(*)</td>
-            </tr>
-        </table>
+        <form:hidden path="apellido" value=" "/>
+        <form:hidden path="email" value=" "/>
+        <form:hidden path="rol" value="empresa"/>
+        CIF(*): <br>
+        Nombre de la empresa(*): <form:input path="nombre"/> <br>
+        Dirección <form:input path="direccion"/><br><br>
+         Contraseña(*) <form:password path="contrasena"/><br>
         <form:button>Registrar</form:button>
     </form:form>
+
 </body>
 </html>
