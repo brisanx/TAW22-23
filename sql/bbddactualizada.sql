@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`empleado` (
   `nombre` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
   `rol` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_gestor`),
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
@@ -35,7 +36,7 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- Table `gestor_banco`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gestor_banco`.`usuario` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(11) NOT NULL,
   `nombre` VARCHAR(50) NOT NULL,
   `apellido` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
@@ -47,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`usuario` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -56,9 +56,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gestor_banco`.`conversacion` (
   `id_conver` INT(11) NOT NULL AUTO_INCREMENT,
-  `nunero_mensajes` INT(11) NULL DEFAULT NULL,
+  `numero_mensaje` INT(11) NULL DEFAULT NULL,
   `empleado_id_gestor` INT(11) NOT NULL,
-  `usuario_id` INT(11) NOT NULL,
+  `usuario_id` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id_conver`),
   INDEX `fk_conversacion_empleado1_idx` (`empleado_id_gestor` ASC) VISIBLE,
   INDEX `fk_conversacion_usuario1_idx` (`usuario_id` ASC) VISIBLE,
@@ -102,16 +102,12 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`cuenta_bancaria` (
   PRIMARY KEY (`id`),
   INDEX `id_cliente` (`id_cliente` ASC) VISIBLE,
   INDEX `fk_cuenta_bancaria_divisa1_idx` (`divisa_id` ASC) VISIBLE,
-  CONSTRAINT `cuenta_bancaria_ibfk_1`
-    FOREIGN KEY (`id_cliente`)
-    REFERENCES `gestor_banco`.`usuario` (`id`),
   CONSTRAINT `fk_cuenta_bancaria_divisa1`
     FOREIGN KEY (`divisa_id`)
     REFERENCES `gestor_banco`.`divisa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -131,7 +127,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`mensaje` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -154,7 +149,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`operacion_bancaria` (
     FOREIGN KEY (`id_cuenta_destino`)
     REFERENCES `gestor_banco`.`cuenta_bancaria` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -165,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_activacion` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `fecha_solicitud` TIMESTAMP NOT NULL,
   `aprobada` TINYINT(1) NULL DEFAULT 0,
-  `usuario_id` INT(11) NOT NULL,
+  `usuario_id` VARCHAR(11) NOT NULL,
   `empleado_id_gestor` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_solicitud_activacion_usuario1_idx` (`usuario_id` ASC) VISIBLE,
@@ -181,7 +175,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_activacion` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -193,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_alta` (
   `id_gestor` INT(11) NOT NULL,
   `fecha_solicitud` DATE NOT NULL,
   `estado` VARCHAR(15) NULL DEFAULT 'pendiente',
-  `usuario_id` INT(11) NOT NULL,
+  `usuario_id` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id_solicitud`),
   INDEX `id_gestor` (`id_gestor` ASC) VISIBLE,
   INDEX `fk_solicitud_alta_usuario1_idx` (`usuario_id` ASC) VISIBLE,
@@ -206,7 +199,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_alta` (
     FOREIGN KEY (`id_gestor`)
     REFERENCES `gestor_banco`.`empleado` (`id_gestor`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4;
 
 
