@@ -1,7 +1,7 @@
-package es.taw.sampletaw.controller;
+package org.taw.gestorbanco.controller;
 
-import es.taw.sampletaw.dao.EmpleadoRepository;
-import es.taw.sampletaw.entity.EmpleadoEntity;
+import org.taw.gestorbanco.dao.EmpleadoRepository;
+import org.taw.gestorbanco.entity.EmpleadoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

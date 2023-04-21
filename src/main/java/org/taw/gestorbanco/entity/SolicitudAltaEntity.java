@@ -1,4 +1,4 @@
-package es.taw.sampletaw.entity;
+package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
 import java.sql.Date;

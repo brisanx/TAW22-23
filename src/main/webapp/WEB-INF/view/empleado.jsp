@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="es.taw.sampletaw.entity.EmpleadoEntity" %>
+<%@ page import="org.taw.gestorbanco.entity.EmpleadoEntity" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: J.Torres
