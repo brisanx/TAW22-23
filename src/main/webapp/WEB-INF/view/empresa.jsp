@@ -13,6 +13,21 @@
         h1 {
             text-align: center;
         }
+        table {
+            margin: auto;
+            width: 50%;
+            border-collapse: collapse;
+            border: 2px solid black;
+        }
+        td {
+            padding: 10px;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid black;
+            width: 100%;
+        }
     </style>
     <title >Cajasoft</title>
 </head>
@@ -20,13 +35,16 @@
 <h1>REGISTRO DE EMPRESA</h1>
     <form:form action="/guardar" method="post" modelAttribute="usuario">
         <form:hidden path="apellido" value=" "/>
-        <form:hidden path="email" value=" "/>
+
         <form:hidden path="rol" value="empresa"/>
-        CIF(*): <br>
-        Nombre de la empresa(*): <form:input path="nombre"/> <br>
-        Dirección <form:input path="direccion"/><br><br>
-         Contraseña(*) <form:password path="contrasena"/><br>
-        <form:button>Registrar</form:button>
+        <table>
+            <tr><td>CIF(*): <form:input path="id"/><td></tr>
+            <tr><td>Nombre de la empresa(*) <form:input path="nombre"/></td></tr>
+            <tr><td>Email(*) <form:input path="email"/></td></tr>
+            <tr><td>Dirección <form:input path="direccion"/></td></tr>
+            <tr><td>Contraseña(*) <form:password path="contrasena"/></td></tr>
+            <tr><td> <form:button>Registrar</form:button></td></tr>
+        </table>
     </form:form>
 
 </body>
