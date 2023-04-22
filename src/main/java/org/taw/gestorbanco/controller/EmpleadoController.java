@@ -14,7 +14,7 @@ public class EmpleadoController {
     @Autowired
     protected EmpleadoRepository empleadoRepository;
 
-    @GetMapping("/")
+    @GetMapping("/empleados")
     public String doListar(Model model){
         List<EmpleadoEntity> lista = this.empleadoRepository.findAll();
         model.addAttribute("empleado", lista);
