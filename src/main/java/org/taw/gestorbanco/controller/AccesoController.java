@@ -39,7 +39,7 @@ public class AccesoController {
         UsuarioEntity usuario = this.usuarioRepository.autenticar(user,contrasena);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
-            urlTo = "/";
+            urlTo = "usuario";
         } else {
             session.setAttribute("user", usuario);
         }
