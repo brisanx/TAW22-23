@@ -78,6 +78,13 @@
 <div class="container">
     <h1>Bienvenido a Cajasoft</h1>
     <h3>Inicie sesión para poder continuar</h3>
+
+    <c:if test="${error != null}" >
+        <p style="color:red;">
+                ${error}
+        </p>
+    </c:if>
+
     <form action="/autenticar" method="post">
         <table>
             <tr>
@@ -91,8 +98,11 @@
             </tr>
         </table>
     </form>
-    <form action="/preguntaRegistro" method="get">
-        <button type="submit">Registrar</button>
+    <form action="/registrocliente" method="get">
+        <button type="submit">Registrarse como cliente</button>
+    </form>
+    <form action="/registro" method="get">
+        <button type="submit">Registrarse como empresa</button>
     </form>
 </div>
 </body>
