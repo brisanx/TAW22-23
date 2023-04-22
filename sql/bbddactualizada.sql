@@ -1,4 +1,4 @@
--- MySQL Workbench Forward Engineering
+-- MySQL Workbench Forward Engineering taw
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gestor_banco`.`usuario` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `identificacion` VARCHAR(11) NULL,
+  `identificacion` VARCHAR(11) NOT NULL,
   `nombre` VARCHAR(50) NOT NULL,
   `apellido` VARCHAR(50) NULL DEFAULT NULL,
   `email` VARCHAR(50) NOT NULL,
