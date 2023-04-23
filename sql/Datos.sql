@@ -56,13 +56,26 @@ INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Oscar Hi
 INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 4);
 INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 5);
 INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 3);
-INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/22', 1, 12);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/22', 1, 11);
 
+INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Euro', '€', 1.0);
+INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Dolar', '$', 1.8);
+INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Libra', '£', 0.88);
 
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/22', 6, 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/23', 7, 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/22', 8, 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/23', 9, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.50, 1, 1, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 500000.33, 1, 1, 10);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 6);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3331.33, 0, 2, 7);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 8);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3333.33, 0, 2, 9);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 55555.50, 1, 3, 12);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 5555.33, 1, 3, 13);
+
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 6, 1, 4);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 7, 1, 5);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 8, 1, 6);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 9, 1, 7);
 
 
 INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id) VALUES(2, 5, 1);
@@ -73,19 +86,6 @@ INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver)  VALUE
 INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver)  VALUES(20, 'Me cobraron comision', 2);
 INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver)  VALUES(15, 'Denme el dinero', 2);
 
-INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Euro', '€', 1.0);
-INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Dolar', '$', 1.8);
-INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Libra', '£', 0.88);
-
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1, 1);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.50, 1, 1, 2);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 3333333.33, 1, 1, 13);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 6);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3331.33, 0, 2, 7);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 8);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3333.33, 0, 2, 9);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 55555.50, 1, 3, 14);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 5555.33, 1, 3, 15);
 
 -- Cuando se crea una cuenta bancaria se hace una operacion bancaria a si mismo del dinero con el que empieza la cuenta
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/20', 500.0, 1, 1);
