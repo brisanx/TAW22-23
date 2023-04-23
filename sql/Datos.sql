@@ -18,14 +18,33 @@ delete from  gestor_banco.usuario;
 ALTER TABLE gestor_banco.usuario AUTO_INCREMENT = 1;
 
 
+INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('11111111A', 'Fernando', 'Calvo Díaz', 'algo@gmail.com', '123', 'cliente', null, 'direc', '95155555');
+INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('11111111B', 'Alba', 'Sanchez Ibañez', 'algo1@gmail.com', '123', 'cliente', null, 'direc', '91234567');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+ VALUES('11111111C', 'Miguel', 'algo2@gmail.com', '123', 'empresa', 'socio', 'direc', '92345678'); 
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111C', 'Jose', 'algo3@gmail.com', '123', 'empresa', 'autorizado', 'direcr', '93456789');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111C', 'Alvaro', 'algo4@gmail.com', '123', 'empresa', 'cliente', 'direcr', '93456789');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111D', 'Cartel Cali', 'cali1@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456789');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111D', 'Cartel Medellin', 'medellin@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111E', 'FIA', 'fia@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
+VALUES ('11111111E', 'Libery Media', 'lb@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('11111111F', 'Oscar', 'Hidalgo Puertas', 'oscarHidalgo@gmail.com', '123', 'cliente', null, 'direc', '95155555');
+INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('33333333A', 'Fernando', 'Alonso Díaz', 'aporla33@gmail.com', '123', 'cliente', null, 'direc', '333333333');
+ INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('11111111G', 'Vinicius', 'Junior', 'aporla15@gmail.com', '123', 'cliente', null, 'direc', '333333333');
+ INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
+ VALUES('11111111H', 'Carletto', 'Anceloti', 'aporla15ya@gmail.com', '123', 'cliente', null, 'direc', '333333333');
 
-
-INSERT INTO gestor_banco.usuario VALUES('11111111A', 'Fernando', 'Calvo Díaz', 'algo@gmail.com', '123', 0, 'cliente', 'direc', '95155555');
-INSERT INTO gestor_banco.usuario VALUES('11111111B', 'Alba', 'Sanchez Ibañez', 'algo1@gmail.com', '123', 1, 'cliente', 'direc', '95155555');
-INSERT INTO gestor_banco.usuario VALUES('11111111C', 'Miguel', 'Moya Castillo', 'algo2@gmail.com', '123', 1, 'empresa', 'direc', '95155555'); 
-INSERT INTO gestor_banco.usuario VALUES('11111111D', 'Jose', 'Torres Postigo', 'algo3@gmail.com', '123', 1, 'empresa', 'direc', '95155555'); 
-INSERT INTO gestor_banco.usuario VALUES('11111111E', 'Oscar', 'Hidalgo Puertas', 'algo4@gmail.com', '123', 1, 'empresa', 'direc', '95155555');
-INSERT INTO gestor_banco.usuario VALUES('33333333A', 'Fernando', 'Alonso Díaz', 'aporla33@gmail.com', '123', 0, 'cliente', 'direc', '333333333');
 
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Fernando Calvo', 'algo@gmail.com', 'gestor', '123');
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Alba Sanchez', 'algo1@gmail.com', 'gestor', '123');
@@ -34,21 +53,20 @@ INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Jose Tor
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Oscar Hidalgo', 'algo4@gmail.com', 'asistente', '123');
 
 
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'pendiente', '11111111A');
-UPDATE gestor_banco.usuario SET gestor_banco.usuario.activo = 0 WHERE gestor_banco.usuario.nombre = 'Alba';
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'pendiente', '11111111B');
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'pendiente', '11111111C');
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'activo', '11111111D');
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'activo', '11111111E');
-INSERT INTO gestor_banco.solicitud_alta(id_gestor,fecha_solicitud,estado,usuario_id) VALUES (1, '2023/03/25', 'activo', '33333333A');
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 4);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 5);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 3);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/22', 1, 12);
 
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, aprobada, usuario_id, empleado_id_gestor) VALUES ('2023/03/25', 0, '11111111E', 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, aprobada, usuario_id, empleado_id_gestor) VALUES ('2023/03/28', 0, '11111111E', 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, aprobada, usuario_id, empleado_id_gestor) VALUES ('2023/03/25', 0, '33333333A', 1);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, aprobada, usuario_id, empleado_id_gestor) VALUES ('2023/03/28', 0, '11111111D', 1);
 
-INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id) VALUES(2, 5, '11111111E');
-INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id)  VALUES(2, 5, '11111111E');
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/22', 6, 1);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/23', 7, 1);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/22', 8, 1);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor) VALUES ('2023/04/23', 9, 1);
+
+
+INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id) VALUES(2, 5, 1);
+INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id)  VALUES(2, 5, 2);
 
 INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver) VALUES(4, 'Hola', 1);
 INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver)  VALUES(5, 'Adios', 1);
@@ -59,19 +77,35 @@ INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Euro',
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Dolar', '$', 1.8);
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Libra', '£', 0.88);
 
-ALTER TABLE `gestor_banco`.`cuenta_bancaria` 
-DROP COLUMN `id_cliente`,
-DROP INDEX `id_cliente` ;
-;
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.50, 1, 1, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 3333333.33, 1, 1, 13);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 6);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3331.33, 0, 2, 7);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 8);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 3333.33, 0, 2, 9);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 55555.50, 1, 3, 14);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 5555.33, 1, 3, 15);
 
-ALTER TABLE gestor_banco.cuenta_bancaria ADD COLUMN usuario_id VARCHAR(11) NOT NULL;
-ALTER TABLE gestor_banco.cuenta_bancaria ADD CONSTRAINT fk_usuario_id FOREIGN KEY (usuario_id) REFERENCES gestor_banco.usuario(id);
+-- Cuando se crea una cuenta bancaria se hace una operacion bancaria a si mismo del dinero con el que empieza la cuenta
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/20', 500.0, 1, 1);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/21', 500.0, 2, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/03', 500.0, 3, 3);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/06/24', 500.0, 4, 4);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/06/24', 500.0, 5, 5);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/28', 500.0, 6, 6);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/28', 500.0, 7, 7);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/03/28', 500.0, 8, 8);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/03/28', 500.0, 9, 9);
 
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.0, 1, '11111111D');
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.0, 1, '11111111D');
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.0, 1, '33333333A');
-
-INSERT INTO gestor_banco.operacion_bancaria (id_cuenta_origen, id_cuenta_destino, fecha, cantidad) VALUES (1, 2, '2023/03/28', 500.0);
-INSERT INTO gestor_banco.operacion_bancaria (id_cuenta_origen, id_cuenta_destino, fecha, cantidad) VALUES (2, 1, '2023/03/28', 500.0);
-INSERT INTO gestor_banco.operacion_bancaria (id_cuenta_origen, id_cuenta_destino, fecha, cantidad) VALUES (1, 3, '2023/03/28', 99.75);
-INSERT INTO gestor_banco.operacion_bancaria (id_cuenta_origen, id_cuenta_destino, fecha, cantidad) VALUES (3, 1, '2023/03/28', 99.75);
+-- Al hacer transferencia el que recibe dinero tambien cuenta como una de ellas
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/03/15', 500.0, 1, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/03/15', -500.0, 2, 1);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/16', 333.33, 2, 3);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/16', -333.33, 3, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', 500.0, 6, 7);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', -500.0, 7, 6);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', 123.0, 4, 5);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', -123.0, 5, 4);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/05/20', 123.0, 8, 9);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/05/20', -123.0, 9, 8);
