@@ -63,6 +63,7 @@ INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Dolar'
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Libra', '£', 0.88);
 
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 73742.69, 1, 3, 1);
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 1000.50, 1, 1, 2);
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 500000.33, 1, 1, 10);
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2, 6);
@@ -72,10 +73,10 @@ INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 55555.50, 1, 3, 12);
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 5555.33, 1, 3, 13);
 
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 6, 1, 4);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 7, 1, 5);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 8, 1, 6);
-INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 9, 1, 7);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 6, 1, 5);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 7, 1, 6);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 8, 1, 7);
+INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/23', 9, 1, 8);
 
 
 INSERT INTO gestor_banco.conversacion(numero_mensaje, empleado_id_gestor, usuario_id) VALUES(2, 5, 1);
@@ -88,24 +89,27 @@ INSERT INTO gestor_banco.mensaje(longitud, texto, conversacion_id_conver)  VALUE
 
 
 -- Cuando se crea una cuenta bancaria se hace una operacion bancaria a si mismo del dinero con el que empieza la cuenta
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/20', 500.0, 1, 1);
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/21', 500.0, 2, 2);
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/03', 500.0, 3, 3);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/04', 500.0, 1, 1);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/04', 500.0, 2, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/04', 500.0, 3, 3);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/06/24', 500.0, 4, 4);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/06/24', 500.0, 5, 5);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/28', 500.0, 6, 6);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/28', 500.0, 7, 7);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/03/28', 500.0, 8, 8);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/03/28', 500.0, 9, 9);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/03/28', 500.0, 10, 10);
 
 -- Al hacer transferencia el que recibe dinero tambien cuenta como una de ellas
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/03/15', 500.0, 1, 2);
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/03/15', -500.0, 2, 1);
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/16', 333.33, 2, 3);
-INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/03/16', -333.33, 3, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/15', 500.0, 1, 2);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/15', -500.0, 2, 1);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/04/16', 333.33, 2, 3);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/04/16', -333.33, 3, 2);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', 500.0, 6, 7);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', -500.0, 7, 6);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', 123.0, 4, 5);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2022/01/20', -123.0, 5, 4);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/05/20', 123.0, 8, 9);
 INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2021/05/20', -123.0, 9, 8);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/23', 10.0, 2, 6);
+INSERT INTO gestor_banco.operacion_bancaria (fecha, cantidad, id_cuenta_origen, id_cuenta_destino) VALUES ('2023/04/23', -10.0, 6, 2);
