@@ -206,9 +206,11 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_alta` (
   `fecha_solicitud` DATE NOT NULL,
   `id_gestor` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
+  `divisa_id` INT(11) NOT NULL,
   PRIMARY KEY (`id_solicitud`),
   INDEX `id_gestor` (`id_gestor` ASC) VISIBLE,
   INDEX `fk_solicitud_alta_usuario1_idx` (`usuario_id` ASC) VISIBLE,
+  INDEX `fk_solicitud_alta_divisa1_idx` (`divisa_id` ASC) VISIBLE,
   CONSTRAINT `fk_solicitud_alta_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `gestor_banco`.`usuario` (`id`)
@@ -216,7 +218,12 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_alta` (
     ON UPDATE NO ACTION,
   CONSTRAINT `solicitud_alta_ibfk_3`
     FOREIGN KEY (`id_gestor`)
-    REFERENCES `gestor_banco`.`empleado` (`id_gestor`))
+    REFERENCES `gestor_banco`.`empleado` (`id_gestor`),
+  CONSTRAINT `fk_solicitud_alta_divisa1`
+    FOREIGN KEY (`divisa_id`)
+    REFERENCES `gestor_banco`.`divisa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4;
