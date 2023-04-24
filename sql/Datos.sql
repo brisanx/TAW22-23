@@ -1,3 +1,5 @@
+delete from  gestor_banco.divisa;
+ALTER TABLE gestor_banco.divisa AUTO_INCREMENT = 1;
 delete from  gestor_banco.mensaje;
 ALTER TABLE gestor_banco.mensaje AUTO_INCREMENT = 1;
 delete from  gestor_banco.conversacion;
@@ -10,8 +12,6 @@ delete from  gestor_banco.operacion_bancaria;
 ALTER TABLE gestor_banco.operacion_bancaria AUTO_INCREMENT = 1;
 delete from  gestor_banco.cuenta_bancaria;
 ALTER TABLE gestor_banco.cuenta_bancaria AUTO_INCREMENT = 1;
-delete from  gestor_banco.divisa;
-ALTER TABLE gestor_banco.divisa AUTO_INCREMENT = 1;
 delete from  gestor_banco.empleado;
 ALTER TABLE gestor_banco.empleado AUTO_INCREMENT = 1;
 delete from  gestor_banco.usuario;
@@ -52,15 +52,14 @@ INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Miguel M
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Jose Torres', 'algo3@gmail.com', 'asistente', '123');
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Oscar Hidalgo', 'algo4@gmail.com', 'asistente', '123');
 
-
-INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 4);
-INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 5);
-INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/25', 1, 3);
-INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id) VALUES ('2023/03/22', 1, 11);
-
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Euro', '€', 1.0);
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Dolar', '$', 1.8);
 INSERT INTO gestor_banco.divisa(nombre, simbolo, ratio_de_cambio) VALUES('Libra', '£', 0.88);
+
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/25', 1, 4, 1);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/25', 1, 5, 1);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/25', 1, 3, 2);
+INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/22', 1, 11, 3);
 
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1, 1);
 INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id, usuario_id) VALUES ('Débito', 'Libra', 73742.69, 1, 3, 1);
