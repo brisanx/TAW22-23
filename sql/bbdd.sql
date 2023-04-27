@@ -18,18 +18,38 @@ CREATE SCHEMA IF NOT EXISTS `gestor_banco` DEFAULT CHARACTER SET utf8mb4 ;
 USE `gestor_banco` ;
 
 -- -----------------------------------------------------
--- Table `gestor_banco`.`empleado`
+-- Table `gestor_banco`.`divisa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestor_banco`.`empleado` (
-  `id_gestor` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(50) NOT NULL,
-  `email` VARCHAR(50) NOT NULL,
-  `contrasena` VARCHAR(45) NOT NULL,
-  `rol` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_gestor`),
-  UNIQUE INDEX `email` (`email` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `gestor_banco`.`divisa` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `simbolo` VARCHAR(10) NOT NULL,
+  `ratio_de_cambio` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `gestor_banco`.`cuenta_bancaria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gestor_banco`.`cuenta_bancaria` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `saldo` FLOAT NOT NULL,
+  `moneda` VARCHAR(20) NOT NULL,
+  `sospechosa` TINYINT(4) NOT NULL DEFAULT 0,
+  `activo` TINYINT(4) NOT NULL,
+  `divisa_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_cuenta_bancaria_divisa1_idx` (`divisa_id` ASC) VISIBLE,
+  CONSTRAINT `fk_cuenta_bancaria_divisa1`
+    FOREIGN KEY (`divisa_id`)
+    REFERENCES `gestor_banco`.`divisa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -51,6 +71,45 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`usuario` (
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 14
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `gestor_banco`.`asignacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gestor_banco`.`asignacion` (
+  `cuenta_bancaria_id` INT(11) NOT NULL,
+  `usuario_id` INT(11) NOT NULL,
+  PRIMARY KEY (`cuenta_bancaria_id`, `usuario_id`),
+  INDEX `fk_cuenta_bancaria_has_usuario_usuario1_idx` (`usuario_id` ASC) VISIBLE,
+  INDEX `fk_cuenta_bancaria_has_usuario_cuenta_bancaria1_idx` (`cuenta_bancaria_id` ASC) VISIBLE,
+  CONSTRAINT `fk_cuenta_bancaria_has_usuario_cuenta_bancaria1`
+    FOREIGN KEY (`cuenta_bancaria_id`)
+    REFERENCES `gestor_banco`.`cuenta_bancaria` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cuenta_bancaria_has_usuario_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `gestor_banco`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `gestor_banco`.`empleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gestor_banco`.`empleado` (
+  `id_gestor` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
+  `contrasena` VARCHAR(45) NOT NULL,
+  `rol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_gestor`),
+  UNIQUE INDEX `email` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -77,43 +136,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`conversacion` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8mb4;
-
-
--- -----------------------------------------------------
--- Table `gestor_banco`.`divisa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestor_banco`.`divisa` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(255) NOT NULL,
-  `simbolo` VARCHAR(10) NOT NULL,
-  `ratio_de_cambio` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8mb4;
-
-
--- -----------------------------------------------------
--- Table `gestor_banco`.`cuenta_bancaria`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestor_banco`.`cuenta_bancaria` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(20) NOT NULL,
-  `moneda` VARCHAR(20) NOT NULL,
-  `saldo` FLOAT NOT NULL,
-  `sospechosa` TINYINT(4) NOT NULL DEFAULT 0,
-  `activo` TINYINT(4) NOT NULL,
-  `divisa_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_cuenta_bancaria_divisa1_idx` (`divisa_id` ASC) VISIBLE,
-  CONSTRAINT `fk_cuenta_bancaria_divisa1`
-    FOREIGN KEY (`divisa_id`)
-    REFERENCES `gestor_banco`.`divisa` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -221,29 +243,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`solicitud_alta` (
     REFERENCES `gestor_banco`.`empleado` (`id_gestor`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb4;
-
-
--- -----------------------------------------------------
--- Table `gestor_banco`.`asignacion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestor_banco`.`asignacion` (
-  `cuenta_bancaria_id` INT(11) NOT NULL,
-  `usuario_id` INT(11) NOT NULL,
-  PRIMARY KEY (`cuenta_bancaria_id`, `usuario_id`),
-  INDEX `fk_cuenta_bancaria_has_usuario_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-  INDEX `fk_cuenta_bancaria_has_usuario_cuenta_bancaria1_idx` (`cuenta_bancaria_id` ASC) VISIBLE,
-  CONSTRAINT `fk_cuenta_bancaria_has_usuario_cuenta_bancaria1`
-    FOREIGN KEY (`cuenta_bancaria_id`)
-    REFERENCES `gestor_banco`.`cuenta_bancaria` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_cuenta_bancaria_has_usuario_usuario1`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `gestor_banco`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
 
