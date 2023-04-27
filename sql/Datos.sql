@@ -1,5 +1,3 @@
-delete from  gestor_banco.divisa;
-ALTER TABLE gestor_banco.divisa AUTO_INCREMENT = 1;
 delete from  gestor_banco.mensaje;
 ALTER TABLE gestor_banco.mensaje AUTO_INCREMENT = 1;
 delete from  gestor_banco.conversacion;
@@ -10,12 +8,17 @@ delete from  gestor_banco.solicitud_alta;
 ALTER TABLE gestor_banco.solicitud_alta AUTO_INCREMENT = 1;
 delete from  gestor_banco.operacion_bancaria;
 ALTER TABLE gestor_banco.operacion_bancaria AUTO_INCREMENT = 1;
-delete from  gestor_banco.cuenta_bancaria;
-ALTER TABLE gestor_banco.cuenta_bancaria AUTO_INCREMENT = 1;
 delete from  gestor_banco.empleado;
 ALTER TABLE gestor_banco.empleado AUTO_INCREMENT = 1;
+delete from  gestor_banco.asignacion;
+ALTER TABLE gestor_banco.asignacion AUTO_INCREMENT = 1;
+delete from  gestor_banco.cuenta_bancaria;
+ALTER TABLE gestor_banco.cuenta_bancaria AUTO_INCREMENT = 1;
+delete from  gestor_banco.divisa;
+ALTER TABLE gestor_banco.divisa AUTO_INCREMENT = 1;
 delete from  gestor_banco.usuario;
 ALTER TABLE gestor_banco.usuario AUTO_INCREMENT = 1;
+
 
 
 INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
@@ -61,25 +64,25 @@ INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, 
 INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/25', 1, 3, 2);
 INSERT INTO gestor_banco.solicitud_alta (fecha_solicitud,id_gestor, usuario_id, divisa_id) VALUES ('2023/03/22', 1, 11, 3);
 
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Euro', 278.14, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (278.14, 'Euro', 1, 1);
 INSERT INTO asignacion VALUES (1,1);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Débito', 'Libra', 73742.69, 1, 3);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (73742.69, 'Libra', 1, 3);
 INSERT INTO asignacion VALUES (2,1);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Euro', 1000.50, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (1000.50, 'Euro', 1, 1);
 INSERT INTO asignacion VALUES (3,2);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Euro', 500000.33, 1, 1);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (500000.33, 'Euro', 1, 1);
 INSERT INTO asignacion VALUES (4,10);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (1000.50, 'Dolar', 0, 2);
 INSERT INTO asignacion VALUES (5,6);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Dolar', 3331.33, 0, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (3331.33, 'Dolar', 0, 2);
 INSERT INTO asignacion VALUES (6,7);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Dolar', 1000.50, 0, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (1000.50, 'Dolar', 0, 2);
 INSERT INTO asignacion VALUES (7,8);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Crédito', 'Dolar', 3333.33, 0, 2);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (3333.33, 'Dolar', 0, 2);
 INSERT INTO asignacion VALUES (8,9);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Débito', 'Libra', 55555.50, 1, 3);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (55555.50, 'Libra', 1, 3);
 INSERT INTO asignacion VALUES (9,12);
-INSERT INTO gestor_banco.cuenta_bancaria (tipo, moneda, saldo, activo, divisa_id) VALUES ('Débito', 'Libra', 5555.33, 1, 3);
+INSERT INTO gestor_banco.cuenta_bancaria (saldo, moneda, activo, divisa_id) VALUES (5555.33, 'Libra', 1, 3);
 INSERT INTO asignacion VALUES (10,13);
 
 INSERT INTO gestor_banco.solicitud_activacion (fecha_solicitud, usuario_id, empleado_id_gestor,cuenta_bancaria_id) VALUES ('2023/04/22', 6, 1, 5);
