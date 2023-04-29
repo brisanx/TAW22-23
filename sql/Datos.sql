@@ -22,31 +22,31 @@ ALTER TABLE gestor_banco.usuario AUTO_INCREMENT = 1;
 
 
 INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('11111111A', 'Fernando', 'Calvo Díaz', 'algo@gmail.com', '123', 'cliente', null, 'direc', '95155555');
+ VALUES('11111111A', 'Fernando', 'Calvo Díaz', 'algo@gmail.com', '123', 'Particular', null, 'direc', '95155555');
 INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('11111111B', 'Alba', 'Sanchez Ibañez', 'algo1@gmail.com', '123', 'cliente', null, 'direc', '91234567');
+ VALUES('11111111B', 'Alba', 'Sanchez Ibañez', 'algo1@gmail.com', '123', 'Particular', null, 'direc', '91234567');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
- VALUES('11111111C', 'Miguel', 'algo2@gmail.com', '123', 'empresa', 'socio', 'direc', '92345678'); 
+ VALUES('11111111C', 'Miguel', 'algo2@gmail.com', '123', 'Empresa', 'socio', 'direc', '92345678'); 
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111C', 'Jose', 'algo3@gmail.com', '123', 'empresa', 'autorizado', 'direcr', '93456789');
+VALUES ('11111111C', 'Jose', 'algo3@gmail.com', '123', 'Empresa', 'autorizado', 'direcr', '93456789');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111C', 'Alvaro', 'algo4@gmail.com', '123', 'empresa', 'cliente', 'direcr', '93456789');
+VALUES ('11111111C', 'Alvaro', 'algo4@gmail.com', '123', 'Empresa', 'cliente', 'direcr', '93456789');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111D', 'Cartel Cali', 'cali1@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456789');
+VALUES ('11111111D', 'Cartel Cali', 'cali1@gmail.com', '123', 'Empresa', 'socio', 'direcr', '999456789');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111D', 'Cartel Medellin', 'medellin@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+VALUES ('11111111D', 'Cartel Medellin', 'medellin@gmail.com', '123', 'Empresa', 'socio', 'direcr', '999456780');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111E', 'FIA', 'fia@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+VALUES ('11111111E', 'FIA', 'fia@gmail.com', '123', 'Empresa', 'socio', 'direcr', '999456780');
 INSERT INTO `gestor_banco`.`usuario` (`identificacion`, `nombre`, `email`, `contrasena`, `rol`, `subRol`, `direccion`, `telefono`) 
-VALUES ('11111111E', 'Libery Media', 'lb@gmail.com', '123', 'empresa', 'socio', 'direcr', '999456780');
+VALUES ('11111111E', 'Libery Media', 'lb@gmail.com', '123', 'Empresa', 'socio', 'direcr', '999456780');
 INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('11111111F', 'Oscar', 'Hidalgo Puertas', 'oscarHidalgo@gmail.com', '123', 'cliente', null, 'direc', '95155555');
+ VALUES('11111111F', 'Oscar', 'Hidalgo Puertas', 'oscarHidalgo@gmail.com', '123', 'Particular', null, 'direc', '95155555');
 INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('33333333A', 'Fernando', 'Alonso Díaz', 'aporla33@gmail.com', '123', 'cliente', null, 'direc', '333333333');
+ VALUES('33333333A', 'Fernando', 'Alonso Díaz', 'aporla33@gmail.com', '123', 'Particular', null, 'direc', '333333333');
  INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('11111111G', 'Vinicius', 'Junior', 'aporla15@gmail.com', '123', 'cliente', null, 'direc', '333333333');
+ VALUES('11111111G', 'Vinicius', 'Junior', 'aporla15@gmail.com', '123', 'Particular', null, 'direc', '333333333');
  INSERT INTO gestor_banco.usuario(identificacion,nombre,apellido,email,contrasena,rol,subRol,direccion,telefono)
- VALUES('11111111H', 'Carletto', 'Anceloti', 'aporla15ya@gmail.com', '123', 'cliente', null, 'direc', '333333333');
+ VALUES('11111111H', 'Carletto', 'Anceloti', 'aporla15ya@gmail.com', '123', 'Particular', null, 'direc', '333333333');
 
 
 INSERT INTO gestor_banco.empleado(nombre,email,rol,contrasena)  VALUES('Fernando Calvo', 'algo@gmail.com', 'gestor', '123');
