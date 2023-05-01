@@ -101,6 +101,9 @@
 </form:form>
 <a href="/cambiodatos?id=<%=e.getIdentificacion()%>"><button type="submit">Modificar datos de la empresa</button></a>
 
+<%
+    if(e.getSubrol().equalsIgnoreCase("socio")){
+%>
 <h1>Listado de socios/autorizados</h1>
 <table border="1">
     <tr>
@@ -148,6 +151,9 @@
         }
     %>
 </table>
+<%
+    }
+%>
 <h1>Transferencia a otra cuenta bancaria</h1>
 <h1>Cambio de divisas</h1>
 <h1>Listado de operaciones realizadas por cualquier s/a de la cuenta de la empresa y filtrarlos</h1>
