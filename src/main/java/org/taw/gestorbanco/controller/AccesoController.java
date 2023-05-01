@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.taw.gestorbanco.dao.UsuarioRepository;
+import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +23,7 @@ public class AccesoController {
 
     @GetMapping("/accesoUsuario")
     public String doAccesoUsuario(){
-        return "usuario";
+        return "acceso";
     }
 
     @GetMapping("/accesoEmpleado")
@@ -38,7 +39,7 @@ public class AccesoController {
         UsuarioEntity usuario = this.usuarioRepository.autenticar(user,contrasena);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
-            urlTo = "usuario";
+            urlTo = "acceso";
         } else {
             session.setAttribute("user", usuario);
         }
