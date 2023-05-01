@@ -9,19 +9,22 @@ public class MensajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_mensaje", nullable = false)
-    private int idMensaje;
+    private Integer idMensaje;
     @Basic
     @Column(name = "longitud", nullable = true)
     private Integer longitud;
     @Basic
-    @Column(name = "texto", nullable = true, length = 45)
+    @Column(name = "texto", nullable = true, length = 500)
     private String texto;
+    @ManyToOne
+    @JoinColumn(name = "conversacion_id_conver", referencedColumnName = "id_conver", nullable = false)
+    private ConversacionEntity conversacionByConversacionIdConver;
 
-    public int getIdMensaje() {
+    public Integer getIdMensaje() {
         return idMensaje;
     }
 
-    public void setIdMensaje(int idMensaje) {
+    public void setIdMensaje(Integer idMensaje) {
         this.idMensaje = idMensaje;
     }
 
@@ -46,11 +49,19 @@ public class MensajeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MensajeEntity that = (MensajeEntity) o;
-        return idMensaje == that.idMensaje && Objects.equals(longitud, that.longitud) && Objects.equals(texto, that.texto);
+        return Objects.equals(idMensaje, that.idMensaje) && Objects.equals(longitud, that.longitud) && Objects.equals(texto, that.texto);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idMensaje, longitud, texto);
+    }
+
+    public ConversacionEntity getConversacionByConversacionIdConver() {
+        return conversacionByConversacionIdConver;
+    }
+
+    public void setConversacionByConversacionIdConver(ConversacionEntity conversacionByConversacionIdConver) {
+        this.conversacionByConversacionIdConver = conversacionByConversacionIdConver;
     }
 }

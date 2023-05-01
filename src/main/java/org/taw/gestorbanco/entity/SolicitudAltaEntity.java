@@ -10,19 +10,25 @@ public class SolicitudAltaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_solicitud", nullable = false)
-    private int idSolicitud;
+    private Integer idSolicitud;
     @Basic
     @Column(name = "fecha_solicitud", nullable = false)
     private Date fechaSolicitud;
-    @Basic
-    @Column(name = "estado", nullable = true, length = 15)
-    private String estado;
+    @ManyToOne
+    @JoinColumn(name = "id_gestor", referencedColumnName = "id_gestor", nullable = false)
+    private EmpleadoEntity empleadoByIdGestor;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    private UsuarioEntity usuarioByUsuarioId;
+    @ManyToOne
+    @JoinColumn(name = "divisa_id", referencedColumnName = "id", nullable = false)
+    private DivisaEntity divisaByDivisaId;
 
-    public int getIdSolicitud() {
+    public Integer getIdSolicitud() {
         return idSolicitud;
     }
 
-    public void setIdSolicitud(int idSolicitud) {
+    public void setIdSolicitud(Integer idSolicitud) {
         this.idSolicitud = idSolicitud;
     }
 
@@ -34,24 +40,40 @@ public class SolicitudAltaEntity {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SolicitudAltaEntity that = (SolicitudAltaEntity) o;
-        return idSolicitud == that.idSolicitud && Objects.equals(fechaSolicitud, that.fechaSolicitud) && Objects.equals(estado, that.estado);
+        return Objects.equals(idSolicitud, that.idSolicitud) && Objects.equals(fechaSolicitud, that.fechaSolicitud);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSolicitud, fechaSolicitud, estado);
+        return Objects.hash(idSolicitud, fechaSolicitud);
+    }
+
+    public EmpleadoEntity getEmpleadoByIdGestor() {
+        return empleadoByIdGestor;
+    }
+
+    public void setEmpleadoByIdGestor(EmpleadoEntity empleadoByIdGestor) {
+        this.empleadoByIdGestor = empleadoByIdGestor;
+    }
+
+    public UsuarioEntity getUsuarioByUsuarioId() {
+        return usuarioByUsuarioId;
+    }
+
+    public void setUsuarioByUsuarioId(UsuarioEntity usuarioByUsuarioId) {
+        this.usuarioByUsuarioId = usuarioByUsuarioId;
+    }
+
+    public DivisaEntity getDivisaByDivisaId() {
+        return divisaByDivisaId;
+    }
+
+    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
+        this.divisaByDivisaId = divisaByDivisaId;
     }
 }

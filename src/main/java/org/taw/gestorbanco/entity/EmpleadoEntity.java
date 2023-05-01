@@ -1,6 +1,7 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -9,7 +10,7 @@ public class EmpleadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_gestor", nullable = false)
-    private int idGestor;
+    private Integer idGestor;
     @Basic
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
@@ -17,14 +18,23 @@ public class EmpleadoEntity {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
     @Basic
+    @Column(name = "contrasena", nullable = false, length = 45)
+    private String contrasena;
+    @Basic
     @Column(name = "rol", nullable = false, length = 45)
     private String rol;
+    @OneToMany(mappedBy = "empleadoByEmpleadoIdGestor")
+    private Collection<ConversacionEntity> conversacionsByIdGestor;
+    @OneToMany(mappedBy = "empleadoByEmpleadoIdGestor")
+    private Collection<SolicitudActivacionEntity> solicitudActivacionsByIdGestor;
+    @OneToMany(mappedBy = "empleadoByIdGestor")
+    private Collection<SolicitudAltaEntity> solicitudAltasByIdGestor;
 
-    public int getIdGestor() {
+    public Integer getIdGestor() {
         return idGestor;
     }
 
-    public void setIdGestor(int idGestor) {
+    public void setIdGestor(Integer idGestor) {
         this.idGestor = idGestor;
     }
 
@@ -44,6 +54,14 @@ public class EmpleadoEntity {
         this.email = email;
     }
 
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
     public String getRol() {
         return rol;
     }
@@ -57,11 +75,35 @@ public class EmpleadoEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmpleadoEntity that = (EmpleadoEntity) o;
-        return idGestor == that.idGestor && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(rol, that.rol);
+        return Objects.equals(idGestor, that.idGestor) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(contrasena, that.contrasena) && Objects.equals(rol, that.rol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idGestor, nombre, email, rol);
+        return Objects.hash(idGestor, nombre, email, contrasena, rol);
+    }
+
+    public Collection<ConversacionEntity> getConversacionsByIdGestor() {
+        return conversacionsByIdGestor;
+    }
+
+    public void setConversacionsByIdGestor(Collection<ConversacionEntity> conversacionsByIdGestor) {
+        this.conversacionsByIdGestor = conversacionsByIdGestor;
+    }
+
+    public Collection<SolicitudActivacionEntity> getSolicitudActivacionsByIdGestor() {
+        return solicitudActivacionsByIdGestor;
+    }
+
+    public void setSolicitudActivacionsByIdGestor(Collection<SolicitudActivacionEntity> solicitudActivacionsByIdGestor) {
+        this.solicitudActivacionsByIdGestor = solicitudActivacionsByIdGestor;
+    }
+
+    public Collection<SolicitudAltaEntity> getSolicitudAltasByIdGestor() {
+        return solicitudAltasByIdGestor;
+    }
+
+    public void setSolicitudAltasByIdGestor(Collection<SolicitudAltaEntity> solicitudAltasByIdGestor) {
+        this.solicitudAltasByIdGestor = solicitudAltasByIdGestor;
     }
 }

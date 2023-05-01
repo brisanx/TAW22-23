@@ -1,6 +1,7 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -9,12 +10,15 @@ public class UsuarioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
+    @Basic
+    @Column(name = "identificacion", nullable = false, length = 11)
+    private String identificacion;
     @Basic
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
     @Basic
-    @Column(name = "apellido", nullable = false, length = 50)
+    @Column(name = "apellido", nullable = true, length = 50)
     private String apellido;
     @Basic
     @Column(name = "email", nullable = false, length = 50)
@@ -23,24 +27,43 @@ public class UsuarioEntity {
     @Column(name = "contrasena", nullable = false, length = 50)
     private String contrasena;
     @Basic
-    @Column(name = "activo", nullable = true)
-    private Byte activo;
-    @Basic
     @Column(name = "rol", nullable = false, length = 45)
     private String rol;
+    @Basic
+    @Column(name = "subrol", nullable = true, length = 45)
+    private String subrol;
     @Basic
     @Column(name = "direccion", nullable = true, length = 45)
     private String direccion;
     @Basic
-    @Column(name = "telefono", nullable = true, length = 45)
+    @Column(name = "telefono", nullable = true, length = 12)
     private String telefono;
+    @Basic
+    @Column(name = "bloqueo", nullable = true)
+    private Boolean bloqueo;
+    @OneToMany(mappedBy = "usuarioId")
+    private Collection<AsignacionEntity> asignacionsById;
+    @OneToMany(mappedBy = "usuarioByUsuarioId")
+    private Collection<ConversacionEntity> conversacionsById;
+    @OneToMany(mappedBy = "usuarioByUsuarioId")
+    private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
+    @OneToMany(mappedBy = "usuarioByUsuarioId")
+    private Collection<SolicitudAltaEntity> solicitudAltasById;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
     public String getNombre() {
@@ -75,20 +98,20 @@ public class UsuarioEntity {
         this.contrasena = contrasena;
     }
 
-    public Byte getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Byte activo) {
-        this.activo = activo;
-    }
-
     public String getRol() {
         return rol;
     }
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getSubrol() {
+        return subrol;
+    }
+
+    public void setSubrol(String subrol) {
+        this.subrol = subrol;
     }
 
     public String getDireccion() {
@@ -107,16 +130,55 @@ public class UsuarioEntity {
         this.telefono = telefono;
     }
 
+    public Boolean getBloqueo() {
+        return bloqueo;
+    }
+
+    public void setBloqueo(Boolean bloqueo){
+        this.bloqueo = bloqueo;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsuarioEntity that = (UsuarioEntity) o;
-        return id == that.id && Objects.equals(nombre, that.nombre) && Objects.equals(apellido, that.apellido) && Objects.equals(email, that.email) && Objects.equals(contrasena, that.contrasena) && Objects.equals(activo, that.activo) && Objects.equals(rol, that.rol) && Objects.equals(direccion, that.direccion) && Objects.equals(telefono, that.telefono);
+        return Objects.equals(id, that.id) && Objects.equals(identificacion, that.identificacion) && Objects.equals(nombre, that.nombre) && Objects.equals(apellido, that.apellido) && Objects.equals(email, that.email) && Objects.equals(contrasena, that.contrasena) && Objects.equals(rol, that.rol) && Objects.equals(subrol, that.subrol) && Objects.equals(direccion, that.direccion) && Objects.equals(telefono, that.telefono);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellido, email, contrasena, activo, rol, direccion, telefono);
+        return Objects.hash(id, identificacion, nombre, apellido, email, contrasena, rol, subrol, direccion, telefono);
+    }
+
+    public Collection<AsignacionEntity> getAsignacionsById() {
+        return asignacionsById;
+    }
+
+    public void setAsignacionsById(Collection<AsignacionEntity> asignacionsById) {
+        this.asignacionsById = asignacionsById;
+    }
+
+    public Collection<ConversacionEntity> getConversacionsById() {
+        return conversacionsById;
+    }
+
+    public void setConversacionsById(Collection<ConversacionEntity> conversacionsById) {
+        this.conversacionsById = conversacionsById;
+    }
+
+    public Collection<SolicitudActivacionEntity> getSolicitudActivacionsById() {
+        return solicitudActivacionsById;
+    }
+
+    public void setSolicitudActivacionsById(Collection<SolicitudActivacionEntity> solicitudActivacionsById) {
+        this.solicitudActivacionsById = solicitudActivacionsById;
+    }
+
+    public Collection<SolicitudAltaEntity> getSolicitudAltasById() {
+        return solicitudAltasById;
+    }
+
+    public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
+        this.solicitudAltasById = solicitudAltasById;
     }
 }

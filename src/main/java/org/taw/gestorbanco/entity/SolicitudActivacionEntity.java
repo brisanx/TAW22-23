@@ -10,19 +10,25 @@ public class SolicitudActivacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "fecha_solicitud", nullable = false)
     private Timestamp fechaSolicitud;
-    @Basic
-    @Column(name = "aprobada", nullable = true)
-    private Byte aprobada;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    private UsuarioEntity usuarioByUsuarioId;
+    @ManyToOne
+    @JoinColumn(name = "empleado_id_gestor", referencedColumnName = "id_gestor", nullable = false)
+    private EmpleadoEntity empleadoByEmpleadoIdGestor;
+    @ManyToOne
+    @JoinColumn(name = "cuenta_bancaria_id", referencedColumnName = "id", nullable = false)
+    private CuentaBancariaEntity cuentaBancariaByCuentaBancariaId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,24 +40,40 @@ public class SolicitudActivacionEntity {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public Byte getAprobada() {
-        return aprobada;
-    }
-
-    public void setAprobada(Byte aprobada) {
-        this.aprobada = aprobada;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SolicitudActivacionEntity that = (SolicitudActivacionEntity) o;
-        return id == that.id && Objects.equals(fechaSolicitud, that.fechaSolicitud) && Objects.equals(aprobada, that.aprobada);
+        return Objects.equals(id, that.id) && Objects.equals(fechaSolicitud, that.fechaSolicitud);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fechaSolicitud, aprobada);
+        return Objects.hash(id, fechaSolicitud);
+    }
+
+    public UsuarioEntity getUsuarioByUsuarioId() {
+        return usuarioByUsuarioId;
+    }
+
+    public void setUsuarioByUsuarioId(UsuarioEntity usuarioByUsuarioId) {
+        this.usuarioByUsuarioId = usuarioByUsuarioId;
+    }
+
+    public EmpleadoEntity getEmpleadoByEmpleadoIdGestor() {
+        return empleadoByEmpleadoIdGestor;
+    }
+
+    public void setEmpleadoByEmpleadoIdGestor(EmpleadoEntity empleadoByEmpleadoIdGestor) {
+        this.empleadoByEmpleadoIdGestor = empleadoByEmpleadoIdGestor;
+    }
+
+    public CuentaBancariaEntity getCuentaBancariaByCuentaBancariaId() {
+        return cuentaBancariaByCuentaBancariaId;
+    }
+
+    public void setCuentaBancariaByCuentaBancariaId(CuentaBancariaEntity cuentaBancariaByCuentaBancariaId) {
+        this.cuentaBancariaByCuentaBancariaId = cuentaBancariaByCuentaBancariaId;
     }
 }
