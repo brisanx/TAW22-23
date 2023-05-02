@@ -159,7 +159,7 @@ public class UsuarioController {
         this.operacionBancariaRepository.save(op);
         CuentaBancariaEntity cb = op.getCuentaBancariaByIdCuentaOrigen();
 
-        System.out.println("holii"+cb.getId());
+
         cb.setSaldo(cb.getSaldo()-op.getCantidad());
 
         OperacionBancariaEntity op2 = op;
