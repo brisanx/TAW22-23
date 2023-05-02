@@ -158,14 +158,13 @@ public class UsuarioController {
         op.setFecha(Timestamp.valueOf(LocalDateTime.now()));
         this.operacionBancariaRepository.save(op);
         CuentaBancariaEntity cb = op.getCuentaBancariaByIdCuentaOrigen();
-
-
         cb.setSaldo(cb.getSaldo()-op.getCantidad());
 
-        OperacionBancariaEntity op2 = op;
+        OperacionBancariaEntity op2 = new OperacionBancariaEntity();
+        op2.setFecha(op.getFecha());
         op2.setCantidad(-op.getCantidad());
         op2.setCuentaBancariaByIdCuentaOrigen(op.getCuentaBancariaByIdCuentaDestino());
-        op2.setCuentaBancariaByIdCuentaDestino(op2.getCuentaBancariaByIdCuentaOrigen());
+        op2.setCuentaBancariaByIdCuentaDestino(op.getCuentaBancariaByIdCuentaOrigen());
 
         CuentaBancariaEntity destino = op.getCuentaBancariaByIdCuentaDestino();
         destino.setSaldo(destino.getSaldo()+op.getCantidad());
