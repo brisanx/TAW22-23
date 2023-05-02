@@ -83,6 +83,7 @@
         <form:hidden path="id"/>
         <form:hidden path="rol" value="empresa"/>
         <form:hidden path="identificacion" value="${idEmpresa}"/>
+        <form:hidden path="bloqueo" value="0"/>
         <table>
             <tr><td>Nombre: <form:input path="nombre"/></td></tr>
             <tr><td>Apellidos: <form:input path="apellido"/></td></tr>

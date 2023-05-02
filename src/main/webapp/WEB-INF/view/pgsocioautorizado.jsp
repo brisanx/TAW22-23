@@ -14,7 +14,7 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title><%=e.getNombre()%> | Cuenta </title>
     <style>
         body {
             background-color: #f2f2f2;
@@ -75,11 +75,21 @@
         button:hover {
             background-color: #0062cc;
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
 <h1>Usuario <%=e.getNombre()%></h1>
-<a href="/logout">Salir</a>
+<div class="button-container">
+    <a href="/logout"><button>Salir</button></a>
+</div>
 <h1>Modificar mis datos</h1>
 <form:form action="/otrosave" method="post" modelAttribute="usuariosocio">
     <form:hidden path="id"/>
@@ -99,7 +109,9 @@
         <tr><td> <form:button>Cambiar</form:button></td></tr>
     </table>
 </form:form>
-<a href="/cambiodatos?id=<%=e.getIdentificacion()%>"><button type="submit">Modificar datos de la empresa</button></a>
+<div class="button-container">
+    <a href="/cambiodatos?id=<%=e.getIdentificacion()%>"><button type="submit">Modificar datos de la empresa</button></a>
+</div>
 
 <%
     if(e.getSubrol().equalsIgnoreCase("socio")){
@@ -154,7 +166,11 @@
 <%
     }
 %>
-<h1>Transferencia a otra cuenta bancaria</h1>
+
+<div class="button-container">
+    <a href="/transferencia?id=<%=e.getId()%>"><button type="submit">Realizar transferencia</button></a>
+</div>
+
 <h1>Cambio de divisas</h1>
 <h1>Listado de operaciones realizadas por cualquier s/a de la cuenta de la empresa y filtrarlos</h1>
 <h1>Activación/desbloqueo de mi cuenta</h1>

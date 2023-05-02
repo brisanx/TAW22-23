@@ -80,6 +80,7 @@
         <form:hidden path="id"/>
         <form:hidden path="rol" value="empresa"/>
         <form:hidden path="subrol" value=" "/>
+        <form:hidden path="bloqueo" value="0"/>
         <table>
             <tr><td>CIF(*) <form:input path="identificacion"/><td></tr>
             <tr><td>Nombre de la empresa(*) <form:input path="nombre"/></td></tr>

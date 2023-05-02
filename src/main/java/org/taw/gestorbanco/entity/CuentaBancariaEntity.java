@@ -12,9 +12,6 @@ public class CuentaBancariaEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "tipo", nullable = false, length = 20)
-    private String tipo;
-    @Basic
     @Column(name = "moneda", nullable = false, length = 20)
     private String moneda;
     @Basic
@@ -45,15 +42,6 @@ public class CuentaBancariaEntity {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getMoneda() {
         return moneda;
     }
@@ -91,12 +79,12 @@ public class CuentaBancariaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CuentaBancariaEntity that = (CuentaBancariaEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(tipo, that.tipo) && Objects.equals(moneda, that.moneda) && Objects.equals(saldo, that.saldo) && Objects.equals(sospechosa, that.sospechosa) && Objects.equals(activo, that.activo);
+        return Objects.equals(id, that.id) && Objects.equals(moneda, that.moneda) && Objects.equals(saldo, that.saldo) && Objects.equals(sospechosa, that.sospechosa) && Objects.equals(activo, that.activo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, moneda, saldo, sospechosa, activo);
+        return Objects.hash(id, moneda, saldo, sospechosa, activo);
     }
 
     public Collection<AsignacionEntity> getAsignacionsById() {
