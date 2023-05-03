@@ -25,6 +25,8 @@ public class CuentaBancariaEntity {
     @Basic
     @Column(name = "activo", nullable = false)
     private Byte activo;
+    @OneToMany(mappedBy = "cuentaBancariaId")
+    private Collection <AsignacionEntity> asignacionsById;
     @ManyToOne
     @JoinColumn(name = "divisa_id", referencedColumnName = "id", nullable = false)
     private DivisaEntity divisaByDivisaId;
@@ -112,6 +114,14 @@ public class CuentaBancariaEntity {
         result = 31 * result + (sospechosa != null ? sospechosa.hashCode() : 0);
         result = 31 * result + (activo != null ? activo.hashCode() : 0);
         return result;
+    }
+
+    public Collection<AsignacionEntity> getAsignacionsById() {
+        return asignacionsById;
+    }
+
+    public void setAsignacionsById(Collection<AsignacionEntity> asignacionsById) {
+        this.asignacionsById = asignacionsById;
     }
 
     public DivisaEntity getDivisaByDivisaId() {

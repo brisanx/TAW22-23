@@ -1,11 +1,9 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.ConversacionEntity;
-import org.taw.gestorbanco.entity.CuentaBancariaEntity;
-import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
-import org.taw.gestorbanco.entity.SolicitudAltaEntity;
+import org.taw.gestorbanco.entity.*;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class UsuarioDTO {
     private Integer id;
@@ -18,6 +16,7 @@ public class UsuarioDTO {
     private String subrol;
     private String direccion;
     private String telefono;
+    private Collection<AsignacionEntity> asignacionsById;
     private Collection<ConversacionEntity> conversacionsById;
     private Collection<CuentaBancariaEntity> cuentaBancariasById;
     private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
@@ -133,5 +132,26 @@ public class UsuarioDTO {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UsuarioDTO that = (UsuarioDTO) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public Collection<AsignacionEntity> getAsignacionsById() {
+        return asignacionsById;
+    }
+
+    public void setAsignacionsById(Collection<AsignacionEntity> asignacionsById) {
+        this.asignacionsById = asignacionsById;
     }
 }
