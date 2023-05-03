@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.UsuarioDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -180,5 +182,25 @@ public class UsuarioEntity {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+
+    public UsuarioDTO toDTO() {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(this.id);
+        dto.setIdentificacion(this.identificacion);
+        dto.setNombre(this.nombre);
+        dto.setApellido(this.apellido);
+        dto.setEmail(this.email);
+        dto.setContrasena(this.contrasena);
+        dto.setRol(this.rol);
+        dto.setSubrol(this.subrol);
+        dto.setDireccion(this.direccion);
+        dto.setTelefono(this.telefono);
+        dto.setAsignacionsById(this.asignacionsById);
+        dto.setConversacionsById(this.conversacionsById);
+        dto.setSolicitudActivacionsById(this.solicitudActivacionsById);
+        dto.setSolicitudAltasById(this.solicitudAltasById);
+
+        return dto;
     }
 }

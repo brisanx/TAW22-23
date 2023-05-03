@@ -36,7 +36,10 @@ public class AccesoController {
                                 @RequestParam("contrasena") String contrasena,
                                 Model model, HttpSession session) {
         UsuarioEntity usuario = this.usuarioRepository.autenticar(user,contrasena);
-        String urlTo = "redirect:/paginaempresa";
+
+        String urlTo = usuario.getRol().equalsIgnoreCase("cliente") ?
+                "redirect:/paginaCliente" : "redirect:/paginaempresa";
+
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "loginusuario";
