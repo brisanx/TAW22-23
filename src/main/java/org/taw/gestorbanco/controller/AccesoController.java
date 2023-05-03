@@ -6,15 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.taw.gestorbanco.dao.UsuarioRepository;
-import org.taw.gestorbanco.entity.UsuarioEntity;
+import org.taw.gestorbanco.dto.UsuarioDTO;
+import org.taw.gestorbanco.service.UsuarioService;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class AccesoController {
     @Autowired
-    protected UsuarioRepository usuarioRepository;
+    protected UsuarioService usuarioService;
 
     @GetMapping("/")
     public String doInicio(){
@@ -36,7 +36,7 @@ public class AccesoController {
                                 @RequestParam("contrasena") String contrasena,
                                 Model model, HttpSession session) {
         String urlTo = "redirect:/";
-        UsuarioEntity usuario = this.usuarioRepository.autenticar(user,contrasena);
+        UsuarioDTO usuario = this.usuarioService.doAutenticarUsuario(user,contrasena);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "acceso";
