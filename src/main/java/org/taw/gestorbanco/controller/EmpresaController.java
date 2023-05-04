@@ -16,9 +16,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/*
-    @author Alba Sánchez Ibáñez 3ºA Ingeniería del Software
-*/
+/**
+ * @author Alba Sánchez Ibáñez 3ºA Ingeniería del Software
+ */
 
 @Controller
 public class EmpresaController {
