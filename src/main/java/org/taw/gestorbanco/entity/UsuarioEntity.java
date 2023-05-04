@@ -44,8 +44,6 @@ public class UsuarioEntity {
     @OneToMany(mappedBy = "usuarioByUsuarioId")
     private Collection<ConversacionEntity> conversacionsById;
     @OneToMany(mappedBy = "usuarioByUsuarioId")
-    private Collection<CuentaBancariaEntity> cuentaBancariasById;
-    @OneToMany(mappedBy = "usuarioByUsuarioId")
     private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
     @OneToMany(mappedBy = "usuarioByUsuarioId")
     private Collection<SolicitudAltaEntity> solicitudAltasById;
@@ -135,19 +133,19 @@ public class UsuarioEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UsuarioEntity that = (UsuarioEntity) o;
+        UsuarioEntity usuario = (UsuarioEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (identificacion != null ? !identificacion.equals(that.identificacion) : that.identificacion != null)
+        if (id != null ? !id.equals(usuario.id) : usuario.id != null) return false;
+        if (identificacion != null ? !identificacion.equals(usuario.identificacion) : usuario.identificacion != null)
             return false;
-        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (apellido != null ? !apellido.equals(that.apellido) : that.apellido != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (contrasena != null ? !contrasena.equals(that.contrasena) : that.contrasena != null) return false;
-        if (rol != null ? !rol.equals(that.rol) : that.rol != null) return false;
-        if (subrol != null ? !subrol.equals(that.subrol) : that.subrol != null) return false;
-        if (direccion != null ? !direccion.equals(that.direccion) : that.direccion != null) return false;
-        if (telefono != null ? !telefono.equals(that.telefono) : that.telefono != null) return false;
+        if (nombre != null ? !nombre.equals(usuario.nombre) : usuario.nombre != null) return false;
+        if (apellido != null ? !apellido.equals(usuario.apellido) : usuario.apellido != null) return false;
+        if (email != null ? !email.equals(usuario.email) : usuario.email != null) return false;
+        if (contrasena != null ? !contrasena.equals(usuario.contrasena) : usuario.contrasena != null) return false;
+        if (rol != null ? !rol.equals(usuario.rol) : usuario.rol != null) return false;
+        if (subrol != null ? !subrol.equals(usuario.subrol) : usuario.subrol != null) return false;
+        if (direccion != null ? !direccion.equals(usuario.direccion) : usuario.direccion != null) return false;
+        if (telefono != null ? !telefono.equals(usuario.telefono) : usuario.telefono != null) return false;
 
         return true;
     }
@@ -183,14 +181,6 @@ public class UsuarioEntity {
         this.conversacionsById = conversacionsById;
     }
 
-    public Collection<CuentaBancariaEntity> getCuentaBancariasById() {
-        return cuentaBancariasById;
-    }
-
-    public void setCuentaBancariasById(Collection<CuentaBancariaEntity> cuentaBancariasById) {
-        this.cuentaBancariasById = cuentaBancariasById;
-    }
-
     public Collection<SolicitudActivacionEntity> getSolicitudActivacionsById() {
         return solicitudActivacionsById;
     }
@@ -221,7 +211,6 @@ public class UsuarioEntity {
         dto.setTelefono(this.telefono);
         dto.setAsignacionsById(this.asignacionsById);
         dto.setConversacionsById(this.conversacionsById);
-        dto.setCuentaBancariasById(this.cuentaBancariasById);
         dto.setSolicitudActivacionsById(this.solicitudActivacionsById);
         dto.setSolicitudAltasById(this.solicitudAltasById);
 

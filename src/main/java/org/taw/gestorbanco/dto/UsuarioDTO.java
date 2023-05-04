@@ -110,14 +110,6 @@ public class UsuarioDTO {
         this.conversacionsById = conversacionsById;
     }
 
-    public Collection<CuentaBancariaEntity> getCuentaBancariasById() {
-        return cuentaBancariasById;
-    }
-
-    public void setCuentaBancariasById(Collection<CuentaBancariaEntity> cuentaBancariasById) {
-        this.cuentaBancariasById = cuentaBancariasById;
-    }
-
     public Collection<SolicitudActivacionEntity> getSolicitudActivacionsById() {
         return solicitudActivacionsById;
     }
@@ -132,6 +124,14 @@ public class UsuarioDTO {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+
+    public Collection<CuentaBancariaEntity> getCuentaBancariasById() {
+        return cuentaBancariasById;
+    }
+
+    public void setCuentaBancariasById(Collection<CuentaBancariaEntity> cuentaBancariasById) {
+        this.cuentaBancariasById = cuentaBancariasById;
     }
 
     @Override

@@ -6,33 +6,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.taw.gestorbanco.dao.UsuarioRepository;
 import org.taw.gestorbanco.dto.UsuarioDTO;
-import org.taw.gestorbanco.entity.UsuarioEntity;
+import org.taw.gestorbanco.service.AsignacionService;
+import org.taw.gestorbanco.service.CuentaBancariaService;
 import org.taw.gestorbanco.service.UsuarioService;
+
+/**
+ * @author Jose Torres
+ */
 
 @Controller
 public class UsuarioController {
     @Autowired
     protected UsuarioService usuarioService;
 
-    @GetMapping("/registro")
-    public String doRegistro(Model model){
-        UsuarioEntity usuario = new UsuarioEntity();
-        model.addAttribute("usuario", usuario);
-        return "empresa";
-    }
+    @Autowired
+    protected CuentaBancariaService cuentaBancariaService;
+
+    @Autowired
+    protected AsignacionService asignacionService;
 
     @GetMapping("/registrocliente")
-    public String doRegistroCliente(Model model){
-        UsuarioDTO dto = new UsuarioDTO();
-        model.addAttribute("usuario", dto);
-        return "userSignup";
+    public String doRegistroCliente(Model model) {
+        UsuarioDTO cliente = new UsuarioDTO();
+        model.addAttribute("cliente", cliente);
+        return "registrocliente";
     }
 
-    @PostMapping("/registrar")
-    public String doRegistroCliente(@ModelAttribute("usuario") UsuarioDTO usuario){
-        this.usuarioService.doRegistro(usuario);
-        return "redirect:/";
+    @PostMapping("/guardarcliente")
+    public String doGuardarCliente(@ModelAttribute("cliente") UsuarioDTO usuario){
+        this.usuarioService.guardarUsuario(usuario);
+        return "pgCliente";
     }
 }

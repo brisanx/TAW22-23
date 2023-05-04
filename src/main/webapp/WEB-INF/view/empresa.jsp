@@ -39,7 +39,7 @@
             border-spacing: 0 10px;
         }
         td {
-             padding: 10px;
+            padding: 10px;
             text-align: left;
             vertical-align: middle;
             font-size: 16px;
