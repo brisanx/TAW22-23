@@ -133,6 +133,13 @@ public class EmpresaController {
         } else {
             UsuarioEntity empresa = this.usuarioRepository.buscarUsuarioEmpresaOriginal(usuario.getIdentificacion());
             List<UsuarioEntity> listaPersonalEmpresa = this.usuarioRepository.findEmpresaUsuariosSocioAutorizado(empresa.getIdentificacion());
+
+            AsignacionEntity asi = this.asignacionRepository.findByUsuarioIdEmpresa(empresa.getId());
+            CuentaBancariaEntity cb = this.cuentaBancariaRepository.findById(asi.getCuentaBancariaId()).orElse(null);
+            List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesEmpresa(cb.getId());
+
+            model.addAttribute("operaciones",operaciones);
+            model.addAttribute("cuenta", cb);
             model.addAttribute("personalempresa", listaPersonalEmpresa);
             model.addAttribute("empresa", empresa);
             model.addAttribute("usuariosocio", usuario);
@@ -154,19 +161,26 @@ public class EmpresaController {
     }
     @PostMapping("/transhecha")
     public String doGuardarTransferencia(@ModelAttribute("op") OperacionBancariaEntity op, Model model, HttpSession sesion) {
+        CuentaBancariaEntity destino = op.getCuentaBancariaByIdCuentaDestino();
+        DivisaEntity divisaDestino = destino.getDivisaByDivisaId();
+
         op.setFecha(Timestamp.valueOf(LocalDateTime.now()));
+        double cantidad = op.getCantidad();
+        op.setCantidad(-cantidad);
         this.operacionBancariaRepository.save(op);
+
         CuentaBancariaEntity cb = op.getCuentaBancariaByIdCuentaOrigen();
-        cb.setSaldo(cb.getSaldo()-op.getCantidad());
+        cb.setSaldo(cb.getSaldo()-cantidad);
 
         OperacionBancariaEntity op2 = new OperacionBancariaEntity();
         op2.setFecha(op.getFecha());
-        op2.setCantidad(-op.getCantidad());
+        op2.setCantidad(cantidad*divisaDestino.getRatioDeCambio());
         op2.setCuentaBancariaByIdCuentaOrigen(op.getCuentaBancariaByIdCuentaDestino());
         op2.setCuentaBancariaByIdCuentaDestino(op.getCuentaBancariaByIdCuentaOrigen());
 
-        CuentaBancariaEntity destino = op.getCuentaBancariaByIdCuentaDestino();
-        destino.setSaldo(destino.getSaldo()+op.getCantidad());
+
+        destino.setSaldo(destino.getSaldo()+cantidad*divisaDestino.getRatioDeCambio());
+
 
         this.operacionBancariaRepository.save(op2);
         this.cuentaBancariaRepository.save(cb);
