@@ -1,0 +1,29 @@
+.formulario {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.formulario input[type="text"],
+.formulario select {
+    padding: 5px;
+    margin: 5px;
+    width: 40%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.formulario button {
+    padding: 10px;
+    margin: 5px;
+    color: #fff;
+    background-color: #007bff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
