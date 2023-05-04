@@ -92,7 +92,7 @@ public class UsuarioController {
         operacionDestino = new OperacionBancariaDTO();
 
         operacionDestino.setFecha(operacionOrigen.getFecha());
-        operacionDestino.setCantidad(-operacionOrigen.getCantidad());
+        operacionDestino.setCantidad(-operacionOrigen.getCantidad() * operacionOrigen.getCuentaBancariaByIdCuentaDestino().getDivisaByDivisaId().getRatioDeCambio());
         operacionDestino.setCuentaBancariaByIdCuentaDestino(operacionOrigen.getCuentaBancariaByIdCuentaOrigen());
         operacionDestino.setCuentaBancariaByIdCuentaOrigen(operacionOrigen.getCuentaBancariaByIdCuentaDestino());
 

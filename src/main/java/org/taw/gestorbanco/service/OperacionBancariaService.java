@@ -33,7 +33,7 @@ public class OperacionBancariaService {
         operacion = new OperacionBancariaEntity();
 
         operacion.setFecha(dto.getFecha());
-        operacion.setCantidad(dto.getCantidad());
+        operacion.setCantidad(-dto.getCantidad());
         operacion.setCuentaBancariaByIdCuentaDestino(dto.getCuentaBancariaByIdCuentaDestino());
         operacion.setCuentaBancariaByIdCuentaOrigen(dto.getCuentaBancariaByIdCuentaOrigen());
 

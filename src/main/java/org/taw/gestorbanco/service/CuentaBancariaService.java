@@ -10,6 +10,7 @@ import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
+import org.taw.gestorbanco.entity.DivisaEntity;
 import org.taw.gestorbanco.entity.OperacionBancariaEntity;
 
 /**
@@ -46,10 +47,18 @@ public class CuentaBancariaService {
 
     public void ajustarSaldos(OperacionBancariaDTO dto){
         CuentaBancariaEntity cuentaOrigen = dto.getCuentaBancariaByIdCuentaOrigen();
+        DivisaEntity divisaOrigen = cuentaOrigen.getDivisaByDivisaId();
+
         CuentaBancariaEntity cuentaDestino = dto.getCuentaBancariaByIdCuentaDestino();
+        DivisaEntity divisaDestino = cuentaDestino.getDivisaByDivisaId();
 
         cuentaOrigen.setSaldo(cuentaOrigen.getSaldo()- dto.getCantidad());
-        cuentaDestino.setSaldo(cuentaDestino.getSaldo()+dto.getCantidad());
+
+        Double cantidadOrigenADivisa = dto.getCantidad() * divisaOrigen.getRatioDeCambio();
+        Double saldoDestinoADivisa = cuentaDestino.getSaldo() * divisaDestino.getRatioDeCambio();
+
+        Double cantidadTotal = cantidadOrigenADivisa + saldoDestinoADivisa;
+        cuentaDestino.setSaldo(cantidadTotal / divisaDestino.getRatioDeCambio());
 
         this.cuentaBancariaRepository.save(cuentaOrigen);
         this.cuentaBancariaRepository.save(cuentaDestino);

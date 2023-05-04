@@ -19,7 +19,7 @@ public class DivisaEntity {
     private String simbolo;
     @Basic
     @Column(name = "ratio_de_cambio", nullable = false, precision = 2)
-    private BigDecimal ratioDeCambio;
+    private Double ratioDeCambio;
     @OneToMany(mappedBy = "divisaByDivisaId")
     private Collection<CuentaBancariaEntity> cuentaBancariasById;
     @OneToMany(mappedBy = "divisaByDivisaId")
@@ -49,11 +49,11 @@ public class DivisaEntity {
         this.simbolo = simbolo;
     }
 
-    public BigDecimal getRatioDeCambio() {
+    public Double getRatioDeCambio() {
         return ratioDeCambio;
     }
 
-    public void setRatioDeCambio(BigDecimal ratioDeCambio) {
+    public void setRatioDeCambio(Double ratioDeCambio) {
         this.ratioDeCambio = ratioDeCambio;
     }
 
