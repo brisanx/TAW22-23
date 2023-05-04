@@ -35,7 +35,7 @@ public class UsuarioService {
         return (usuario == null ? null : usuario.toDTO());
     }
 
-    public void guardarUsuario(UsuarioDTO dto){
+    public void guardarNuevoUsuario(UsuarioDTO dto){
         UsuarioEntity usuario;
         usuario = new UsuarioEntity();
 
@@ -73,4 +73,19 @@ public class UsuarioService {
         asignacion.setCuentaBancariaId(cuenta.getId());
         this.asignacionRepository.save(asignacion);
     }
+
+    public void modificarUsuario(UsuarioDTO dto){
+        UsuarioEntity usuario = this.usuarioRepository.getById(dto.getId());
+
+        usuario.setIdentificacion(dto.getIdentificacion());
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
+        usuario.setEmail(dto.getEmail());
+        usuario.setDireccion(dto.getDireccion());
+        usuario.setTelefono(dto.getTelefono());
+        usuario.setContrasena(dto.getContrasena());
+
+        this.usuarioRepository.save(usuario);
+    }
+
 }

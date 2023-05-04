@@ -2,7 +2,7 @@
 
 <%--
   Created by IntelliJ IDEA.
-  User: erpep
+  User: Jose Torres
   Date: 04/05/2023
   Time: 0:52
   To change this template use File | Settings | File Templates.
@@ -77,5 +77,8 @@
 
 <body>
     <h3>Bienvenido, ${user.nombre} ${user.apellido}!</h3>
+    <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
+
+    <a href="/logout"><button>Salir</button></a>
 </body>
 </html>
