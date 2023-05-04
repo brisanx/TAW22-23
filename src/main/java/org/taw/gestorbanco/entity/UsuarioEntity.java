@@ -209,10 +209,6 @@ public class UsuarioEntity {
         dto.setSubrol(this.subrol);
         dto.setDireccion(this.direccion);
         dto.setTelefono(this.telefono);
-        dto.setAsignacionsById(this.asignacionsById);
-        dto.setConversacionsById(this.conversacionsById);
-        dto.setSolicitudActivacionsById(this.solicitudActivacionsById);
-        dto.setSolicitudAltasById(this.solicitudAltasById);
 
         return dto;
     }

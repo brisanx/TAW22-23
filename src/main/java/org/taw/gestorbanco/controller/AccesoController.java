@@ -40,7 +40,7 @@ public class AccesoController {
         UsuarioDTO usuario = this.usuarioService.doAutenticarUsuario(user,contrasena);
 
         String urlTo = usuario.getRol().equalsIgnoreCase("Particular") ?
-                "pgCliente" : "redirect:/paginaempresa";
+                "redirect:/homeCliente" : "redirect:/paginaempresa";
 
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");

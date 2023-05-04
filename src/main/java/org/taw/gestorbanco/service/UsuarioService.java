@@ -1,7 +1,6 @@
 package org.taw.gestorbanco.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dao.AsignacionRepository;
 import org.taw.gestorbanco.dao.CuentaBancariaRepository;
@@ -49,10 +48,6 @@ public class UsuarioService {
         usuario.setSubrol(dto.getSubrol());
         usuario.setDireccion(dto.getDireccion());
         usuario.setTelefono(dto.getTelefono());
-        usuario.setAsignacionsById(dto.getAsignacionsById());
-        usuario.setConversacionsById(dto.getConversacionsById());
-        usuario.setSolicitudActivacionsById(dto.getSolicitudActivacionsById());
-        usuario.setSolicitudAltasById(dto.getSolicitudAltasById());
 
         this.usuarioRepository.save(usuario);
 
@@ -87,5 +82,4 @@ public class UsuarioService {
 
         this.usuarioRepository.save(usuario);
     }
-
 }

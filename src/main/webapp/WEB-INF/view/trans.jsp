@@ -1,4 +1,5 @@
 <%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
+<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,14 +10,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaBancariaEntity corigen = (CuentaBancariaEntity) request.getAttribute("cuentaorigen");
+    CuentaBancariaDTO corigen = (CuentaBancariaDTO) request.getAttribute("cuentaorigen");
 %>
 <html>
 <head>
     <title>Transferencia</title>
 </head>
 <body>
-   <form:form action="/transhecha" method="post" modelAttribute="op">
+   <form:form action="/transRealizada" method="post" modelAttribute="operacion">
         <form:hidden path="id"/>
        <form:hidden path="cuentaBancariaByIdCuentaOrigen" value="<%=corigen.getId()%>"/>
         Cantidad: <form:input path="cantidad"/>

@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.OperacionBancariaDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -83,5 +85,14 @@ public class OperacionBancariaEntity {
 
     public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaEntity cuentaBancariaByIdCuentaDestino) {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
+    }
+
+    public OperacionBancariaDTO toDTO() {
+        OperacionBancariaDTO dto = new OperacionBancariaDTO();
+        dto.setId(id);
+        dto.setFecha(fecha);
+        dto.setCantidad(cantidad);
+
+        return dto;
     }
 }

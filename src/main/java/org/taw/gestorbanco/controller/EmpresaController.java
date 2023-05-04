@@ -88,7 +88,7 @@ public class EmpresaController {
         this.usuarioRepository.save(usuario);
         UsuarioEntity empresa = this.usuarioRepository.buscarUsuarioEmpresaOriginal(usuario.getIdentificacion());
 
-        AsignacionEntity asi = this.asignacionRepository.findByUsuarioIdEmpresa(empresa.getId());
+        AsignacionEntity asi = this.asignacionRepository.findByUsuarioId(empresa.getId());
 
         AsignacionEntity nuevaAsignacion = new AsignacionEntity();
         nuevaAsignacion.setCuentaBancariaId(asi.getCuentaBancariaId());
@@ -140,13 +140,13 @@ public class EmpresaController {
         }
     }
     @GetMapping("/transferencia")
-    public String doRealizarTransferencia(@RequestParam("id") Integer id, Model model, HttpSession sesion)      {
+    public String doTransferenciaCliente(@RequestParam("id") Integer id, Model model, HttpSession sesion){
         OperacionBancariaEntity op = new OperacionBancariaEntity();
         model.addAttribute("op", op);
 
         UsuarioEntity user = this.usuarioRepository.findById(id).orElse(null);
         UsuarioEntity empresa = (UsuarioEntity) this.usuarioRepository.buscarUsuarioEmpresaOriginal(user.getIdentificacion());
-        AsignacionEntity asi = this.asignacionRepository.findByUsuarioIdEmpresa(empresa.getId());
+        AsignacionEntity asi = this.asignacionRepository.findByUsuarioId(empresa.getId());
         CuentaBancariaEntity cb = this.cuentaBancariaRepository.findById(asi.getCuentaBancariaId()).orElse(null);
 
         model.addAttribute("cuentaorigen", cb);

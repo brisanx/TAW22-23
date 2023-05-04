@@ -79,6 +79,10 @@
     <h3>Bienvenido, ${user.nombre} ${user.apellido}!</h3>
     <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
 
+    <div class="button-container">
+        <a href="/transferenciaCliente"><button type="submit">Realizar transferencia</button></a>
+    </div>
+
     <a href="/logout"><button>Salir</button></a>
 </body>
 </html>
