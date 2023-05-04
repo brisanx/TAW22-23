@@ -53,6 +53,5 @@
 
 <a href="/guardarr?identificacion=<%=e.getIdentificacion()%>"><button type="submit">Dar de alta a personal de la empresa</button></a>
 <a href="/logout">Salir</a>
-<h1>Modificar datos de la empresa</h1>
 </body>
 </html>
