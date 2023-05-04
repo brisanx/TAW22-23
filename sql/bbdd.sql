@@ -169,12 +169,10 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`operacion_bancaria` (
   `id_cuenta_origen` INT(11) NOT NULL,
   `id_cuenta_destino` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
-  `divisa_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `usuario_id`, `divisa_id`),
+  PRIMARY KEY (`id`, `usuario_id`),
   INDEX `id_cuenta_origen` (`id_cuenta_origen` ASC) VISIBLE,
   INDEX `id_cuenta_destino` (`id_cuenta_destino` ASC) VISIBLE,
   INDEX `fk_operacion_bancaria_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-  INDEX `fk_operacion_bancaria_divisa1_idx` (`divisa_id` ASC) VISIBLE,
   CONSTRAINT `operacion_bancaria_ibfk_1`
     FOREIGN KEY (`id_cuenta_origen`)
     REFERENCES `gestor_banco`.`cuenta_bancaria` (`id`),
@@ -184,11 +182,6 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`operacion_bancaria` (
   CONSTRAINT `fk_operacion_bancaria_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `gestor_banco`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_operacion_bancaria_divisa1`
-    FOREIGN KEY (`divisa_id`)
-    REFERENCES `gestor_banco`.`divisa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
