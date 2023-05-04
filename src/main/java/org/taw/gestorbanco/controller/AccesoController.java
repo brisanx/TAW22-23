@@ -11,6 +11,10 @@ import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import javax.servlet.http.HttpSession;
 
+/**
+*   @author Alba Sánchez Ibáñez, José Torres Postigo 3ºA Ingeniería del Software
+*/
+
 @Controller
 public class AccesoController {
     @Autowired
