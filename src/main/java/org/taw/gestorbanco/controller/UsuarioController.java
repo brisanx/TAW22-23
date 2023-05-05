@@ -69,6 +69,9 @@ public class UsuarioController {
         this.usuarioService.modificarUsuario(usuario);
         model.addAttribute("cliente", usuario);
         session.setAttribute("user", usuario);
+        List<OperacionBancariaDTO> operaciones =
+                this.operacionBancariaService.listarOperacionesClientes(usuario);
+        model.addAttribute("operaciones", operaciones);
         return "pgCliente";
     }
 

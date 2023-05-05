@@ -83,7 +83,8 @@
 </head>
 
 <body>
-    <h3>Bienvenido, ${user.nombre} ${user.apellido}!</h3>
+    <jsp:include page="cabeceraCliente.jsp"/>
+    <br>
     <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
 
     <div class="button-container">
