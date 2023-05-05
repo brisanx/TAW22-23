@@ -2,6 +2,9 @@ package org.taw.gestorbanco.dto;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Jose Torres
+ */
 public class DivisaDTO {
     private Integer id;
     private String nombre;

@@ -1,10 +1,10 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.*;
-
-import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * @author Jose Torres
+ */
 public class UsuarioDTO {
     private Integer id;
     private String identificacion;

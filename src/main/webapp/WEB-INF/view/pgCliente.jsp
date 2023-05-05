@@ -1,5 +1,6 @@
 <%@ page import="org.taw.gestorbanco.dto.OperacionBancariaDTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%--
@@ -12,6 +13,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<OperacionBancariaDTO> operaciones = (List<OperacionBancariaDTO>) request.getAttribute("operaciones");
+    CuentaBancariaDTO cuenta = (CuentaBancariaDTO) request.getAttribute("cuenta");
 %>
 <html>
 <head>
@@ -83,14 +85,21 @@
 </head>
 
 <body>
+
     <jsp:include page="cabeceraCliente.jsp"/>
     <br>
     <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
 
+    <%
+        if(cuenta.getActivo() == 1 && cuenta.getSospechosa() == 0) {
+    %>
     <div class="button-container">
         <a href="/transferenciaCliente"><button type="submit">Realizar transferencia</button></a>
     </div>
-    <form action="/pgCliente"
+
+    <%
+        }
+    %>
     <a href="/logout"><button>Salir</button></a>
 
     <h4>Operaciones realizadas</h4>
@@ -107,10 +116,8 @@
         <tr>
             <td><%=op.getFecha()%></td>
             <td><%=op.getCantidad()%></td>
-            <%--
-            <td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
-            <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>
-            --%>
+            <%--<td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
+            <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>--%>
         </tr>
         <%
             }

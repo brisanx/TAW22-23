@@ -5,6 +5,9 @@ import org.taw.gestorbanco.entity.CuentaBancariaEntity;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+/**
+ * @author Jose Torres
+ */
 public class OperacionBancariaDTO {
     private Integer id;
     private Timestamp fecha;

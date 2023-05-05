@@ -8,6 +8,9 @@ import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * @author Jose Torres
+ */
 public class CuentaBancariaDTO {
     private Integer id;
     private String moneda;

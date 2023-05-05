@@ -12,6 +12,9 @@ import org.taw.gestorbanco.entity.OperacionBancariaEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jose Torres
+ */
 @Service
 public class OperacionBancariaService {
     @Autowired

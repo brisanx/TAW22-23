@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+import org.taw.gestorbanco.dto.DivisaDTO;
 import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.service.AsignacionService;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
 /**
  * @author Jose Torres
  */
@@ -41,7 +43,12 @@ public class UsuarioController {
         UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
         List<OperacionBancariaDTO> operaciones =
                 this.operacionBancariaService.listarOperacionesClientes(usuario);
+        model.addAttribute(
+                "cuenta", this.cuentaBancariaService.obtenerCuentaBancaria(usuario)
+        );
+
         model.addAttribute("operaciones", operaciones);
+        model.addAttribute("divisas", new DivisaDTO());
         return "pgCliente";
     }
 
@@ -107,5 +114,7 @@ public class UsuarioController {
 
         return "redirect:/homeCliente";
     }
+
+
 
 }
