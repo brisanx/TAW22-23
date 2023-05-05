@@ -55,7 +55,7 @@ public class UsuarioController {
     @PostMapping("/guardarcliente")
     public String doGuardarCliente(@ModelAttribute("cliente") UsuarioDTO usuario) {
         this.usuarioService.guardarNuevoUsuario(usuario);
-        return "pgCliente";
+        return "redirect:/homeCliente";
     }
 
     @GetMapping("/modificarDatos")
@@ -72,7 +72,7 @@ public class UsuarioController {
         List<OperacionBancariaDTO> operaciones =
                 this.operacionBancariaService.listarOperacionesClientes(usuario);
         model.addAttribute("operaciones", operaciones);
-        return "pgCliente";
+        return "redirect:/homeCliente";
     }
 
     @GetMapping("/transferenciaCliente")

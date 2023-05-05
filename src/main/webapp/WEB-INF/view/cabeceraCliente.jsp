@@ -13,6 +13,8 @@
     <title></title>
 </head>
 <body>
+${pageContext.session.id}
+<h3>Bienvenido, ${user.email}</h3>
 <table border="1">
     <tr>
         <th>DNI/CIF</th>
