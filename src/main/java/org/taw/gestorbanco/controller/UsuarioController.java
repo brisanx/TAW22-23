@@ -6,14 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.taw.gestorbanco.dto.CuentaBancariaDTO;
-import org.taw.gestorbanco.dto.DivisaDTO;
-import org.taw.gestorbanco.dto.OperacionBancariaDTO;
-import org.taw.gestorbanco.dto.UsuarioDTO;
-import org.taw.gestorbanco.service.AsignacionService;
-import org.taw.gestorbanco.service.CuentaBancariaService;
-import org.taw.gestorbanco.service.OperacionBancariaService;
-import org.taw.gestorbanco.service.UsuarioService;
+import org.taw.gestorbanco.dto.*;
+import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
+import org.taw.gestorbanco.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -37,6 +32,9 @@ public class UsuarioController {
 
     @Autowired
     protected OperacionBancariaService operacionBancariaService;
+
+    @Autowired
+    protected SolicitudActivacionService solicitudActivacionService;
 
     @GetMapping("/homeCliente")
     public String doInit(Model model, HttpSession session){
@@ -115,6 +113,12 @@ public class UsuarioController {
         return "redirect:/homeCliente";
     }
 
+    @GetMapping("/solicitarActivacion")
+    public String doSolicitarActivacion(@ModelAttribute("cuenta") CuentaBancariaDTO cuenta, HttpSession session){
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
+        this.solicitudActivacionService.registrarSolicitudActivacion(usuario, cuenta);
 
+        return "redirect:/homeCliente";
+    }
 
 }
