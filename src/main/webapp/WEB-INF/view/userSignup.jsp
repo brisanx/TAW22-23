@@ -1,8 +1,9 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: albas
-  Date: 21/04/2023
-  Time: 18:02
+  User: J. Torres
+  Date: 03/05/2023
+  Time: 23:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,13 +26,10 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            font-size: 48px;
+            text-align: center;
+            font-size: 30px;
             font-weight: bold;
             margin-bottom: 20px;
-        }
-        h3 {
-            font-size: 24px;
-            margin-bottom: 50px;
         }
         table {
             margin: 0 auto;
@@ -72,38 +70,26 @@
             background-color: #0062cc;
         }
     </style>
-    <title>Cajasoft</title>
+    <title >Cajasoft</title>
 </head>
 <body>
 <div class="container">
-    <h1>Bienvenido a Cajasoft</h1>
-    <h3>Inicie sesión para poder continuar</h3>
+    <h1>REGISTRO DE USUARIO</h1>
+    <form:form action="/registrar" modelAttribute="usuario" method="post" >
+        <form:hidden path="id"/>
+        <form:hidden path="rol" value="cliente"/>
 
-    <c:if test="${error != null}" >
-        <p style="color:red;">
-                ${error}
-        </p>
-    </c:if>
-
-    <form action="/autenticar" method="post">
         <table>
-            <tr>
-                <td>NIF/CIF:</td> <td><input type="text" name="usuario"></td>
-            </tr>
-            <tr>
-                <td>Contraseña:</td> <td><input type="password" name="contrasena"> </td>
-            </tr>
-            <tr>
-                <td colspan="2"> <button>Enviar</button></td>
-            </tr>
+            <tr><td>NIF(*): <form:input path="identificacion"/><td></tr>
+            <tr><td>Nombre(*): <form:input path="nombre"/></td></tr>
+            <tr><td>Apellidos(*): <form:input path="apellido"/></td></tr>
+            <tr><td>Email(*): <form:input path="email"/></td></tr>
+            <tr><td>Dirección: <form:input path="direccion"/></td></tr>
+            <tr><td>Teléfono(*): <form:input path="telefono"/></td></tr>
+            <tr><td>Contraseña(*): <form:password path="contrasena"/></td></tr>
+            <tr><td> <form:button>Registrar</form:button></td></tr>
         </table>
-    </form>
-    <form action="/registrocliente" method="get">
-        <button type="submit">Registrarse como cliente</button>
-    </form>
-    <form action="/registro" method="get">
-        <button type="submit">Registrarse como empresa</button>
-    </form>
+    </form:form>
 </div>
 </body>
 </html>

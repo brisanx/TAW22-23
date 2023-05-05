@@ -88,7 +88,7 @@
     <form action="/autenticar" method="post">
         <table>
             <tr>
-                <td>NIF/CIF:</td> <td><input type="text" name="usuario"></td>
+                <td>Correo del usuario</td> <td><input type="text" name="usuario"></td>
             </tr>
             <tr>
                 <td>Contraseña:</td> <td><input type="password" name="contrasena"> </td>

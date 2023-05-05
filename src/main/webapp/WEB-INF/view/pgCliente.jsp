@@ -1,11 +1,20 @@
+<%@ page import="org.taw.gestorbanco.dto.OperacionBancariaDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%--
   Created by IntelliJ IDEA.
-  User: albas
-  Date: 21/04/2023
-  Time: 18:02
+  User: Jose Torres
+  Date: 04/05/2023
+  Time: 0:52
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<OperacionBancariaDTO> operaciones = (List<OperacionBancariaDTO>) request.getAttribute("operaciones");
+    CuentaBancariaDTO cuenta = (CuentaBancariaDTO) request.getAttribute("cuenta");
+%>
 <html>
 <head>
     <style>
@@ -25,13 +34,10 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            font-size: 48px;
+            text-align: center;
+            font-size: 30px;
             font-weight: bold;
             margin-bottom: 20px;
-        }
-        h3 {
-            font-size: 24px;
-            margin-bottom: 50px;
         }
         table {
             margin: 0 auto;
@@ -71,39 +77,52 @@
         button:hover {
             background-color: #0062cc;
         }
+        h4 {
+            text-align: center;
+        }
     </style>
-    <title>Cajasoft</title>
+    <title>CajaSoftix</title>
 </head>
+
 <body>
-<div class="container">
-    <h1>Bienvenido a Cajasoft</h1>
-    <h3>Inicie sesión para poder continuar</h3>
 
-    <c:if test="${error != null}" >
-        <p style="color:red;">
-                ${error}
-        </p>
-    </c:if>
+    <jsp:include page="cabeceraCliente.jsp"/>
+    <br>
+    <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
 
-    <form action="/autenticar" method="post">
-        <table>
-            <tr>
-                <td>NIF/CIF:</td> <td><input type="text" name="usuario"></td>
-            </tr>
-            <tr>
-                <td>Contraseña:</td> <td><input type="password" name="contrasena"> </td>
-            </tr>
-            <tr>
-                <td colspan="2"> <button>Enviar</button></td>
-            </tr>
-        </table>
-    </form>
-    <form action="/registrocliente" method="get">
-        <button type="submit">Registrarse como cliente</button>
-    </form>
-    <form action="/registro" method="get">
-        <button type="submit">Registrarse como empresa</button>
-    </form>
-</div>
+    <%
+        if(cuenta.getActivo() == 1 && cuenta.getSospechosa() == 0) {
+    %>
+    <div class="button-container">
+        <a href="/transferenciaCliente"><button type="submit">Realizar transferencia</button></a>
+    </div>
+
+    <%
+        }
+    %>
+    <a href="/logout"><button>Salir</button></a>
+
+    <h4>Operaciones realizadas</h4>
+    <table>
+        <tr>
+            <th>FECHA</th>
+            <th>CANTIDAD</th>
+            <th>CUENTA ORIGEN</th>
+            <th>CUENTA DESTINO</th>
+        </tr>
+        <%
+            for(OperacionBancariaDTO op : operaciones) {
+        %>
+        <tr>
+            <td><%=op.getFecha()%></td>
+            <td><%=op.getCantidad()%></td>
+            <%--<td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
+            <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>--%>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+
 </body>
 </html>

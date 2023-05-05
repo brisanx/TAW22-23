@@ -2,7 +2,7 @@ package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Collection;
 
 @Entity
 @Table(name = "divisa", schema = "gestor_banco", catalog = "")
@@ -10,7 +10,7 @@ public class DivisaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "nombre", nullable = false, length = 255)
     private String nombre;
@@ -19,13 +19,17 @@ public class DivisaEntity {
     private String simbolo;
     @Basic
     @Column(name = "ratio_de_cambio", nullable = false, precision = 2)
-    private BigDecimal ratioDeCambio;
+    private Double ratioDeCambio;
+    @OneToMany(mappedBy = "divisaByDivisaId")
+    private Collection<CuentaBancariaEntity> cuentaBancariasById;
+    @OneToMany(mappedBy = "divisaByDivisaId")
+    private Collection<SolicitudAltaEntity> solicitudAltasById;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,11 +49,11 @@ public class DivisaEntity {
         this.simbolo = simbolo;
     }
 
-    public BigDecimal getRatioDeCambio() {
+    public Double getRatioDeCambio() {
         return ratioDeCambio;
     }
 
-    public void setRatioDeCambio(BigDecimal ratioDeCambio) {
+    public void setRatioDeCambio(Double ratioDeCambio) {
         this.ratioDeCambio = ratioDeCambio;
     }
 
@@ -57,12 +61,40 @@ public class DivisaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         DivisaEntity that = (DivisaEntity) o;
-        return id == that.id && Objects.equals(nombre, that.nombre) && Objects.equals(simbolo, that.simbolo) && Objects.equals(ratioDeCambio, that.ratioDeCambio);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
+        if (simbolo != null ? !simbolo.equals(that.simbolo) : that.simbolo != null) return false;
+        if (ratioDeCambio != null ? !ratioDeCambio.equals(that.ratioDeCambio) : that.ratioDeCambio != null)
+            return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, simbolo, ratioDeCambio);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
+        result = 31 * result + (simbolo != null ? simbolo.hashCode() : 0);
+        result = 31 * result + (ratioDeCambio != null ? ratioDeCambio.hashCode() : 0);
+        return result;
+    }
+
+    public Collection<CuentaBancariaEntity> getCuentaBancariasById() {
+        return cuentaBancariasById;
+    }
+
+    public void setCuentaBancariasById(Collection<CuentaBancariaEntity> cuentaBancariasById) {
+        this.cuentaBancariasById = cuentaBancariasById;
+    }
+
+    public Collection<SolicitudAltaEntity> getSolicitudAltasById() {
+        return solicitudAltasById;
+    }
+
+    public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
+        this.solicitudAltasById = solicitudAltasById;
     }
 }

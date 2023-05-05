@@ -1,26 +1,16 @@
-package org.taw.gestorbanco.entity;
+package org.taw.gestorbanco.dto;
 
-import javax.persistence.*;
+import org.taw.gestorbanco.entity.CuentaBancariaEntity;
+import org.taw.gestorbanco.entity.EmpleadoEntity;
+import org.taw.gestorbanco.entity.UsuarioEntity;
+
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "solicitud_activacion", schema = "gestor_banco", catalog = "")
-public class SolicitudActivacionEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id", nullable = false)
+public class SolicitudActivacionDTO {
     private Integer id;
-    @Basic
-    @Column(name = "fecha_solicitud", nullable = false)
     private Timestamp fechaSolicitud;
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private UsuarioEntity usuarioByUsuarioId;
-    @ManyToOne
-    @JoinColumn(name = "empleado_id_gestor", referencedColumnName = "id_gestor", nullable = false)
     private EmpleadoEntity empleadoByEmpleadoIdGestor;
-    @ManyToOne
-    @JoinColumn(name = "cuenta_bancaria_id", referencedColumnName = "id", nullable = false)
     private CuentaBancariaEntity cuentaBancariaByCuentaBancariaId;
 
     public Integer getId() {
@@ -37,27 +27,6 @@ public class SolicitudActivacionEntity {
 
     public void setFechaSolicitud(Timestamp fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SolicitudActivacionEntity that = (SolicitudActivacionEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (fechaSolicitud != null ? !fechaSolicitud.equals(that.fechaSolicitud) : that.fechaSolicitud != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fechaSolicitud != null ? fechaSolicitud.hashCode() : 0);
-        return result;
     }
 
     public UsuarioEntity getUsuarioByUsuarioId() {
