@@ -17,7 +17,7 @@ import org.taw.gestorbanco.service.UsuarioService;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
+import java.util.List;
 /**
  * @author Jose Torres
  */
@@ -37,7 +37,11 @@ public class UsuarioController {
     protected OperacionBancariaService operacionBancariaService;
 
     @GetMapping("/homeCliente")
-    public String doInit(Model model){
+    public String doInit(Model model, HttpSession session){
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
+        List<OperacionBancariaDTO> operaciones =
+                this.operacionBancariaService.listarOperacionesClientes(usuario);
+        model.addAttribute("operaciones", operaciones);
         return "pgCliente";
     }
 
@@ -69,7 +73,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/transferenciaCliente")
-    public String doRealizarTransferencia(Model model, HttpSession sesion) {
+    public String doCargarTransferencia(Model model, HttpSession sesion) {
         OperacionBancariaDTO op = new OperacionBancariaDTO();
         model.addAttribute("operacion", op);
 
@@ -82,7 +86,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/transRealizada")
-    public String realizarTransferencia(@ModelAttribute("operacion") OperacionBancariaDTO operacionOrigen,
+    public String doRealizarTransferencia(@ModelAttribute("operacion") OperacionBancariaDTO operacionOrigen,
                                         Model model, HttpSession session) {
         operacionOrigen.setFecha(Timestamp.valueOf(LocalDateTime.now()));
         this.operacionBancariaService.guardarOperacionBancaria(operacionOrigen);
@@ -100,4 +104,5 @@ public class UsuarioController {
 
         return "redirect:/homeCliente";
     }
+
 }

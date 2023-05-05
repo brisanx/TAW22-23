@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface OperacionBancariaRepository extends JpaRepository<OperacionBancariaEntity, Integer> {
 
-    @Query("SELECT op FROM OperacionBancariaEntity op WHERE op.cuentaBancariaByIdCuentaOrigen= :cuentaId")
+    @Query("SELECT op FROM OperacionBancariaEntity op WHERE op.cuentaBancariaByIdCuentaOrigen.id = :cuentaId")
     List<OperacionBancariaEntity> buscarOperacionesClientes(@Param("cuentaId")Integer cuentaBancariaId);
 }

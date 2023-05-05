@@ -1,3 +1,5 @@
+<%@ page import="org.taw.gestorbanco.dto.OperacionBancariaDTO" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%--
@@ -8,7 +10,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%
+    List<OperacionBancariaDTO> operaciones = (List<OperacionBancariaDTO>) request.getAttribute("operaciones");
+%>
 <html>
 <head>
     <style>
@@ -71,6 +75,9 @@
         button:hover {
             background-color: #0062cc;
         }
+        h4 {
+            text-align: center;
+        }
     </style>
     <title>CajaSoftix</title>
 </head>
@@ -82,6 +89,28 @@
     <div class="button-container">
         <a href="/transferenciaCliente"><button type="submit">Realizar transferencia</button></a>
     </div>
+
+    <h4>Operaciones realizadas</h4>
+    <table>
+        <tr>
+            <th>FECHA</th>
+            <th>CANTIDAD</th>
+            <th>CUENTA ORIGEN</th>
+            <th>CUENTA DESTINO</th>
+        </tr>
+        <%
+            for(OperacionBancariaDTO op : operaciones) {
+        %>
+        <tr>
+            <td><%=op.getFecha()%></td>
+            <td><%=op.getCantidad()%></td>
+            <%--<td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
+            <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>--%>
+        </tr>
+        <%
+            }
+        %>
+    </table>
 
     <a href="/logout"><button>Salir</button></a>
 </body>
