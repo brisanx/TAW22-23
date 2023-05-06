@@ -34,6 +34,12 @@ public class UsuarioService {
         return (usuario == null ? null : usuario.toDTO());
     }
 
+    public UsuarioDTO buscarUsuario(Integer id){
+        UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(null);
+
+        return usuario != null ? usuario.toDTO() : null;
+    }
+
     public void guardarNuevoUsuario(UsuarioDTO dto){
         UsuarioEntity usuario;
         usuario = new UsuarioEntity();

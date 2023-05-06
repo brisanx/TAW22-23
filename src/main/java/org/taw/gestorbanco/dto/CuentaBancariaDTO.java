@@ -5,13 +5,14 @@ import org.taw.gestorbanco.entity.DivisaEntity;
 import org.taw.gestorbanco.entity.OperacionBancariaEntity;
 import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 /**
  * @author Jose Torres
  */
-public class CuentaBancariaDTO {
+public class CuentaBancariaDTO implements Serializable {
     private Integer id;
     private String moneda;
     private Double saldo;

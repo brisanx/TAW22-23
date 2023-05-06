@@ -2,13 +2,14 @@ package org.taw.gestorbanco.dto;
 
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
  * @author Jose Torres
  */
-public class OperacionBancariaDTO {
+public class OperacionBancariaDTO implements Serializable {
     private Integer id;
     private Timestamp fecha;
     private Double cantidad;

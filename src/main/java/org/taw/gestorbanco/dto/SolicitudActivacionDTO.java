@@ -4,9 +4,10 @@ import org.taw.gestorbanco.entity.CuentaBancariaEntity;
 import org.taw.gestorbanco.entity.EmpleadoEntity;
 import org.taw.gestorbanco.entity.UsuarioEntity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class SolicitudActivacionDTO {
+public class SolicitudActivacionDTO implements Serializable {
     private Integer id;
     private Timestamp fechaSolicitud;
     private UsuarioEntity usuarioByUsuarioId;

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dao.AsignacionRepository;
 import org.taw.gestorbanco.dao.OperacionBancariaRepository;
 import org.taw.gestorbanco.dto.OperacionBancariaDTO;
-import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.OperacionBancariaEntity;
 
@@ -23,9 +22,9 @@ public class OperacionBancariaService {
     @Autowired
     protected AsignacionRepository asignacionRepository;
 
-    public List<OperacionBancariaDTO> listarOperacionesClientes(UsuarioDTO usuario){
+    public List<OperacionBancariaDTO> listarOperacionesClientes(Integer usuarioId){
         AsignacionEntity asignacion =
-                this.asignacionRepository.findByUsuarioId(usuario.getId());
+                this.asignacionRepository.findByUsuarioId(usuarioId);
         List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesClientes(asignacion.getCuentaBancariaId());
 
         return this.listaOperacionesADTO(operaciones);

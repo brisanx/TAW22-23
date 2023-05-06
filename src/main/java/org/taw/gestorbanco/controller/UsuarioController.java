@@ -40,7 +40,7 @@ public class UsuarioController {
     public String doInit(Model model, HttpSession session){
         UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
         List<OperacionBancariaDTO> operaciones =
-                this.operacionBancariaService.listarOperacionesClientes(usuario);
+                this.operacionBancariaService.listarOperacionesClientes(usuario.getId());
         model.addAttribute(
                 "cuenta", this.cuentaBancariaService.obtenerCuentaBancaria(usuario)
         );
@@ -75,7 +75,7 @@ public class UsuarioController {
         model.addAttribute("cliente", usuario);
         session.setAttribute("user", usuario);
         List<OperacionBancariaDTO> operaciones =
-                this.operacionBancariaService.listarOperacionesClientes(usuario);
+                this.operacionBancariaService.listarOperacionesClientes(usuario.getId());
         model.addAttribute("operaciones", operaciones);
         return "redirect:/homeCliente";
     }
