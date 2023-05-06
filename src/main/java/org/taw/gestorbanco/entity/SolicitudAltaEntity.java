@@ -1,7 +1,7 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +13,7 @@ public class SolicitudAltaEntity {
     private Integer idSolicitud;
     @Basic
     @Column(name = "fecha_solicitud", nullable = false)
-    private Date fechaSolicitud;
+    private Timestamp fechaSolicitud;
     @ManyToOne
     @JoinColumn(name = "id_gestor", referencedColumnName = "id_gestor", nullable = false)
     private EmpleadoEntity empleadoByIdGestor;
@@ -32,11 +32,11 @@ public class SolicitudAltaEntity {
         this.idSolicitud = idSolicitud;
     }
 
-    public Date getFechaSolicitud() {
+    public Timestamp getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
+    public void setFechaSolicitud(Timestamp fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 

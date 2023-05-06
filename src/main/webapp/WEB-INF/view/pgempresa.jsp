@@ -1,4 +1,5 @@
-<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %><%--
+<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
+<%@ page import="org.taw.gestorbanco.entity.AsignacionEntity" %><%--
   Created by IntelliJ IDEA.
   User: albas
   Date: 22/04/2023
@@ -8,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     UsuarioEntity e = (UsuarioEntity) request.getAttribute("empresa");
+    AsignacionEntity asignacion = (AsignacionEntity) request.getAttribute("asignacion");
 %>
 <html>
 <head>
@@ -50,8 +52,13 @@
 </head>
 <body>
 <h1>Empresa <%=e.getNombre()%></h1>
-
-<a href="/guardarr?identificacion=<%=e.getIdentificacion()%>"><button type="submit">Dar de alta a personal de la empresa</button></a>
+<%
+    if(asignacion!=null){
+%>
+<a href="/empresa/registrarpersonalextra?identificacion=<%=e.getIdentificacion()%>"><button type="submit">Dar de alta a personal de la empresa</button></a>
+<%
+    } else out.println("La solicitud de alta todavía no ha sido aceptada. Por favor, espere a que un gestor de el visto bueno");
+%>
 <a href="/logout">Salir</a>
 </body>
 </html>

@@ -8,9 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String idEmpresa = (String) request.getAttribute("idEmpresa");
-%>
+
 <html>
 <head>
     <style>
@@ -79,11 +77,10 @@
 <body>
 <div class="container">
     <h1>GESTIÓN DE PERSONAS RELACIONADAS CON LA EMPRESA</h1>
-    <form:form action="/save" method="post" modelAttribute="usuariosocio">
+    <form:form action="/empresa/registropersonal" method="post" modelAttribute="personal">
         <form:hidden path="id"/>
-        <form:hidden path="rol" value="empresa"/>
+        <form:hidden path="rol" value="Empresa"/>
         <form:hidden path="identificacion" value="${idEmpresa}"/>
-        <form:hidden path="bloqueo" value="0"/>
         <table>
             <tr><td>Nombre: <form:input path="nombre"/></td></tr>
             <tr><td>Apellidos: <form:input path="apellido"/></td></tr>

@@ -75,10 +75,10 @@
 <body>
 <div class="container">
     <h1>DATOS DE EMPRESA</h1>
-    <form:form action="/guardarcambiosempresa" method="post" modelAttribute="usuario">
+    <form:form action="/empresa/guardarcambiosempresa" method="post" modelAttribute="usuario">
         <form:hidden path="apellido" value=" "/>
         <form:hidden path="id"/>
-        <form:hidden path="rol" value="empresa"/>
+        <form:hidden path="rol" value="Empresa"/>
         <form:hidden path="subrol" value=" "/>
         <table>
             <tr><td>CIF(*) <form:input path="identificacion"/><td></tr>

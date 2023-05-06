@@ -12,11 +12,11 @@ public class CuentaBancariaEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "moneda", nullable = false, length = 20)
-    private String moneda;
-    @Basic
     @Column(name = "saldo", nullable = false, precision = 0)
     private Double saldo;
+    @Basic
+    @Column(name = "moneda", nullable = false, length = 20)
+    private String moneda;
     @Basic
     @Column(name = "sospechosa", nullable = false)
     private Byte sospechosa;
@@ -42,13 +42,6 @@ public class CuentaBancariaEntity {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
 
     public Double getSaldo() {
         return saldo;
@@ -56,6 +49,14 @@ public class CuentaBancariaEntity {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
     public Byte getSospechosa() {
@@ -79,12 +80,12 @@ public class CuentaBancariaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CuentaBancariaEntity that = (CuentaBancariaEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(moneda, that.moneda) && Objects.equals(saldo, that.saldo) && Objects.equals(sospechosa, that.sospechosa) && Objects.equals(activo, that.activo);
+        return Objects.equals(id, that.id) && Objects.equals(saldo, that.saldo) && Objects.equals(moneda, that.moneda) && Objects.equals(sospechosa, that.sospechosa) && Objects.equals(activo, that.activo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, moneda, saldo, sospechosa, activo);
+        return Objects.hash(id, saldo, moneda, sospechosa, activo);
     }
 
     public Collection<AsignacionEntity> getAsignacionsById() {

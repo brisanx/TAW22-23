@@ -1,14 +1,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
-<%@ page import="org.taw.gestorbanco.entity.OperacionBancariaEntity" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.taw.gestorbanco.entity.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    AsignacionEntity asi = (AsignacionEntity) request.getAttribute("asignacion");
     UsuarioEntity e = (UsuarioEntity) request.getAttribute("usuariosocio");
-    List<UsuarioEntity> listaPersonal = (List<UsuarioEntity>) request.getAttribute("personalempresa");
-    CuentaBancariaEntity cb = (CuentaBancariaEntity) request.getAttribute("cuenta");
-    List<OperacionBancariaEntity> op = (List<OperacionBancariaEntity>) request.getAttribute("operaciones");
+
+    SolicitudActivacionEntity solicitud = (SolicitudActivacionEntity) request.getAttribute("solicitudactivacion");
+    CuentaBancariaEntity cb = null;
+
+    if(asi!=null){
+        cb = (CuentaBancariaEntity) request.getAttribute("cuenta");
+    }
 %>
 <html>
 <head>
@@ -21,7 +25,7 @@
             padding: 0;
         }
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 50px auto;
             padding: 50px 20px;
             text-align: center;
@@ -102,147 +106,136 @@
     <div class="button-container">
         <a href="/logout"><button>Salir</button></a>
     </div>
-    <h1>Cuenta de la empresa</h1>
-    <h2><%= cb.getSaldo() %> €</h2>
+
     <h1>Modificar mis datos</h1>
-    <form:form action="/otrosave" method="post" modelAttribute="usuariosocio">
+    <form:form action="/empresa/guardarcambiospersonal" method="post" modelAttribute="usuariosocio">
         <form:hidden path="id" />
         <form:hidden path="rol" />
         <form:hidden path="identificacion" />
-    <table>
-        <tr>
-            <td>Nombre:</td>
-            <td><form:input path="nombre" /></td>
-        </tr>
-        <tr>
-            <td>Apellidos:</td>
-            <td><form:input path="apellido" /></td>
-        </tr>
-        <tr>
-            <td>Email(*):</td>
-            <td><form:input path="email" /></td>
-        </tr>
-        <tr>
-            <td>Dirección:</td>
-            <td><form:input path="direccion" /></td>
-        </tr>
-        <tr>
-            <td>Teléfono:</td>
-            <td><form:input path="telefono" /></td>
-        </tr>
-        <tr>
-            <td>Selecciona rol:</td>
-            <td>
-                <form:select path="subrol">
-                    <form:option value="socio">Socio</form:option>
-                    <form:option value="autorizado">Autorizado</form:option>
-                </form:select>
-            </td>
-        </tr>
-        <tr>
-        <tr>
-            <td>Contraseña(*):</td>
-            <td><input type="text" name="contrasena" value="<%= e.getContrasena() %>" /></td>
-        </tr>
-        </tr>
-        <tr>
-            <td colspan="2"><form:button>Cambiar</form:button></td>
-        </tr>
-    </table>
-    </form:form>
-    <div class="button-container">
-        <a href="/cambiodatos?id=<%= e.getIdentificacion() %>"><button type="submit">Modificar datos de la empresa</button></a>
-    </div>
-
-        <%
-        if(e.getSubrol().equalsIgnoreCase("socio")){
-    %>
-    <h1>Listado de socios/autorizados</h1>
-    <div class="table-container">
-        <table border="1">
+        <table>
             <tr>
-                <th>ID</th>
-                <th>Identificación</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Email</th>
-                <th>Contraseña</th>
-                <th>Rol</th>
-                <th>Subrol</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Bloqueo/Desbloqueo</th>
+                <td>Nombre:</td>
+                <td><form:input path="nombre" /></td>
             </tr>
-                <%
-                for(UsuarioEntity u : listaPersonal) {
-            %>
             <tr>
-                <td><%= u.getId() %></td>
-                <td><%= u.getIdentificacion() %></td>
-                <td><%= u.getNombre() %></td>
-                <td><%= u.getApellido() %></td>
-                <td><%= u.getEmail() %></td>
-                <td><%= u.getContrasena() %></td>
-                <td><%= u.getRol() %></td>
-                <td><%= u.getSubrol() %></td>
-                <td><%= u.getDireccion() %></td>
-                <td><%= u.getTelefono() %></td>
+                <td>Apellidos:</td>
+                <td><form:input path="apellido" /></td>
+            </tr>
+            <tr>
+                <td>Email(*):</td>
+                <td><form:input path="email" /></td>
+            </tr>
+            <tr>
+                <td>Dirección:</td>
+                <td><form:input path="direccion" /></td>
+            </tr>
+            <tr>
+                <td>Teléfono:</td>
+                <td><form:input path="telefono" /></td>
+            </tr>
+            <tr>
+                <td>Selecciona rol:</td>
                 <td>
-                        <%
-                        if(u.getBloqueo()) {
-                    %>
-                    <a href="/bloquear?id=<%= u.getId() %>"><button>Desbloquear</button></a>
-                    <%
-                    } else {
-                    %>
-                    <a href="/bloquear?id=<%= u.getId() %>"><button>Bloquear</button></a>
-                    <%
-                        }
-                    %>
+                    <form:select path="subrol">
+                        <form:option value="socio">Socio</form:option>
+                        <form:option value="autorizado">Autorizado</form:option>
+                    </form:select>
                 </td>
             </tr>
+            <tr>
+            <tr>
+                <td>Contraseña(*):</td>
+                <td><input type="text" name="contrasena" value="<%= e.getContrasena() %>" /></td>
+            </tr>
+            </tr>
+            <tr>
+                <td colspan="2"><form:button>Cambiar</form:button></td>
+            </tr>
+        </table>
+    </form:form>
+
+    <div class="button-container">
+        <a href="/empresa/cambiodatos?id=<%= e.getIdentificacion() %>"><button type="submit">Modificar datos de la empresa</button></a>
+    </div>
+
+    <h1>Cuenta de la empresa</h1>
+    <%
+        if(asi!=null){
+    %>
+    <table border="1">
+        <tr>
+            <th>Número de cuenta</th>
+            <th>Saldo</th>
+            <th>Activa</th>
+            <%
+                if(cb!= null && cb.getActivo()==0){
+            %>
+            <th>Desbloqueo</th>
             <%
                 }
             %>
-        </table>
+        </tr>
+        <tr> <%
+            if(cb!=null){
+        %>
+            <td><%= cb.getId() %> </td>
+            <td><%= cb.getSaldo() %> <%=cb.getDivisaByDivisaId().getSimbolo()%></td>
+            <td><%=cb.getActivo()%></td>
+            <%
+                if(cb.getActivo()==0 && solicitud==null){
+            %>
+            <td>
+                <div class="button-container">
+                    <a href="/empresa/solicitudactivacion?id=<%=cb.getId() %>"><button type="submit">Desbloquear</button></a>
+                </div>
+            </td>
+            <%
+                } else if(cb.getActivo()==0){
+            %>
+            <td>Solicitud en curso</td>
+            <%
+                }
+            %>
+            <%
+                }
+            %>
+        </tr>
+    </table>
+<%
+    } else {
+            out.println("Su solicitud de alta no ha sido aceptada todavía. Por lo tanto, no tiene acceso a la cuenta de la empresa");
+    }
+%>
+    <%
+        if(cb!=null && cb.getActivo()!=0){
+    %>
+    <div class="button-container">
+        <a href="/empresa/transferencia?id=<%= e.getId() %>"><button type="submit">Realizar transferencia</button></a>
+    </div>
+    <div class="button-container">
+        <a href="/empresa/cambiodivisa?id=<%= cb.getId() %>"><button type="submit">Realizar cambio de divisa de cuenta</button></a>
     </div>
     <%
         }
     %>
-
+    <%
+        if(e.getSubrol().equalsIgnoreCase("socio")){
+    %>
     <div class="button-container">
-        <a href="/transferencia?id=<%= e.getId() %>"><button type="submit">Realizar transferencia</button></a>
+        <a href="/empresa/personal"><button type="submit">Ver personal de la empresa</button></a>
     </div>
-
-    <h1>Listado de operaciones realizadas por cualquier s/a de la cuenta de la empresa y filtrarlos</h1>
-    <div class="table-container">
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Cantidad</th>
-                <th>Cuenta origen</th>
-                <th>Cuenta destino</th>
-            </tr>
-            <%
-                for(OperacionBancariaEntity o : op) {
-            %>
-            <tr>
-                <td><%= o.getId() %></td>
-                <td><%= o.getFecha() %></td>
-                <td><%= o.getCantidad()%></td>
-                <td><%= o.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
-                <td><%= o.getCuentaBancariaByIdCuentaDestino().getId() %></td>
-            </tr>
-            <%
-                }
-            %>
-        </table>
-    </div>
-
+    <%
+        }
+    %>
+    <%
+        if(cb!=null){
+    %>
     <div class="button-container">
-        <button type="submit">Desbloquear mi cuenta</button>
+        <a href="/empresa/operaciones"><button type="submit">Ver operaciones</button></a>
     </div>
+    <%
+        }
+    %>
 </div>
 </body>
 </html>

@@ -75,12 +75,11 @@
 <body>
 <div class="container">
 <h1>REGISTRO DE EMPRESA</h1>
-    <form:form action="/guardar" method="post" modelAttribute="usuario">
+    <form:form action="/empresa/registrocompletado" method="post" modelAttribute="empresa">
         <form:hidden path="apellido" value=" "/>
         <form:hidden path="id"/>
-        <form:hidden path="rol" value="empresa"/>
+        <form:hidden path="rol" value="Empresa"/>
         <form:hidden path="subrol" value=" "/>
-        <form:hidden path="bloqueo" value="0"/>
         <table>
             <tr><td>CIF(*) <form:input path="identificacion"/><td></tr>
             <tr><td>Nombre de la empresa(*) <form:input path="nombre"/></td></tr>

@@ -9,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaBancariaEntity corigen = (CuentaBancariaEntity) request.getAttribute("cuentaorigen");
+    CuentaBancariaEntity cuentaOrigen = (CuentaBancariaEntity) request.getAttribute("cuentaorigen");
 %>
 <html>
 <head>
@@ -75,9 +75,9 @@
 <body>
 <div class="container">
     <h1>Transferencia</h1>
-    <form:form action="/transhecha" method="post" modelAttribute="op">
+    <form:form action="/empresa/transhecha" method="post" modelAttribute="operacion">
         <form:hidden path="id" />
-        <form:hidden path="cuentaBancariaByIdCuentaOrigen" value="<%=corigen.getId()%>" />
+        <form:hidden path="cuentaBancariaByIdCuentaOrigen" value="<%=cuentaOrigen.getId()%>" />
         <label for="cantidad">Cantidad:</label>
         <form:input path="cantidad" id="cantidad" />
         <label for="cuenta">Cuenta:</label>

@@ -23,6 +23,9 @@ public class OperacionBancariaEntity {
     @ManyToOne
     @JoinColumn(name = "id_cuenta_destino", referencedColumnName = "id", nullable = false)
     private CuentaBancariaEntity cuentaBancariaByIdCuentaDestino;
+    @ManyToOne
+    @JoinColumn(name = "usuario", referencedColumnName = "id")
+    private UsuarioEntity usuarioByUsuario;
 
     public Integer getId() {
         return id;
@@ -75,5 +78,13 @@ public class OperacionBancariaEntity {
 
     public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaEntity cuentaBancariaByIdCuentaDestino) {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
+    }
+
+    public UsuarioEntity getUsuarioByUsuario() {
+        return usuarioByUsuario;
+    }
+
+    public void setUsuarioByUsuario(UsuarioEntity usuarioByUsuario) {
+        this.usuarioByUsuario = usuarioByUsuario;
     }
 }

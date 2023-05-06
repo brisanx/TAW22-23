@@ -101,7 +101,7 @@
     <form action="/registrocliente" method="get">
         <button type="submit">Registrarse como cliente</button>
     </form>
-    <form action="/registro" method="get">
+    <form action="/empresa/registro" method="get">
         <button type="submit">Registrarse como empresa</button>
     </form>
 </div>
