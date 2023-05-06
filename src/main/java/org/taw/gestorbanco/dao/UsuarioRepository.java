@@ -39,4 +39,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
 
     @Query("select u from UsuarioEntity u where u.identificacion = :identificacion and u.subrol = 'socio'")
     UsuarioEntity buscarSocioOriginal(String identificacion);
+
+    @Query("select u from UsuarioEntity  u where u.email = :email")
+    UsuarioEntity findByEmail(String email);
 }

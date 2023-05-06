@@ -23,6 +23,9 @@ public class CuentaBancariaDTO {
     private Collection<OperacionBancariaEntity> operacionBancariasById_0;
     private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
 
+    public CuentaBancariaDTO() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -62,7 +65,13 @@ public class CuentaBancariaDTO {
     public void setActivo(Byte activo) {
         this.activo = activo;
     }
+    public DivisaEntity getDivisaByDivisaId() {
+        return divisaByDivisaId;
+    }
 
+    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
+        this.divisaByDivisaId = divisaByDivisaId;
+    }
 
     @Override
     public boolean equals(Object o) {

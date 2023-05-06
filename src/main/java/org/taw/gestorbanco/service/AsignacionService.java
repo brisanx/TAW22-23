@@ -6,18 +6,25 @@ import org.taw.gestorbanco.dao.AsignacionRepository;
 import org.taw.gestorbanco.dto.AsignacionDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 
-/**
- * @author Jose Torres
- */
 @Service
 public class AsignacionService {
     @Autowired
     protected AsignacionRepository asignacionRepository;
 
-    public AsignacionDTO doAsignarCuentaACliente(Integer userId, Integer cuentaId){
-        AsignacionEntity asignacion;
-        asignacion = new AsignacionEntity();
+    public AsignacionDTO buscarAsignacion(Integer id) {
+        AsignacionEntity asignacionEmpresa = this.asignacionRepository.findByUsuarioIdEmpresa(id);
+        return asignacionEmpresa.toDTO();
+    }
 
-        asignacion.setUsuarioId(userId);
+    public void guardarAsignacion(AsignacionDTO dto) {
+        AsignacionEntity asignacion = new AsignacionEntity();
+        asignacion.setUsuarioId(dto.getUsuarioId());
+        asignacion.setCuentaBancariaId(dto.getCuentaBancariaId());
+        this.asignacionRepository.save(asignacion);
+    }
+
+    public void eliminarAsignacion(Integer id) {
+        AsignacionEntity asignacion = this.asignacionRepository.findByUsuarioIdEmpresa(id);
+        this.asignacionRepository.delete(asignacion);
     }
 }

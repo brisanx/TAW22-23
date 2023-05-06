@@ -8,21 +8,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.taw.gestorbanco.dao.AsignacionRepository;
 import org.taw.gestorbanco.dao.UsuarioRepository;
+import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.UsuarioEntity;
+import org.taw.gestorbanco.service.UsuarioService;
 
 import javax.servlet.http.HttpSession;
 
 /**
- * @author Alba Sánchez Ibáñez, José Torres Postigo 3ºIngeniería del Software
+ * @author Alba Sánchez Ibáñez (80%), José Torres Postigo (20%)
  */
 @Controller
 public class AccesoController {
     @Autowired
-    protected UsuarioRepository usuarioRepository;
-    @Autowired
-    protected AsignacionRepository asignacionRepository;
-
+    protected UsuarioService usuarioService;
     @GetMapping("/")
     public String doInicio(){
         return "principal";
@@ -42,18 +41,16 @@ public class AccesoController {
     public String doAutenticar (@RequestParam("usuario") String user,
                                 @RequestParam("contrasena") String contrasena,
                                 Model model, HttpSession session) {
-        UsuarioEntity usuario = this.usuarioRepository.autenticar(user,contrasena);
+        UsuarioDTO usuario = this.usuarioService.doAutenticarUsuario(user,contrasena);
+
         String urlTo = "/";
         if(usuario!=null){
+            session.setAttribute("user", usuario);
             urlTo = usuario.getRol().equalsIgnoreCase("Particular") ?
                     "redirect:/paginaCliente" : "redirect:/empresa/paginaempresa";
-        }
-        if (usuario == null) {
+        } else {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "loginusuario";
-        } else {
-            session.setAttribute("user", usuario);
-            AsignacionEntity asi = this.asignacionRepository.findByUsuarioIdEmpresa(usuario.getId());
         }
         return urlTo;
     }

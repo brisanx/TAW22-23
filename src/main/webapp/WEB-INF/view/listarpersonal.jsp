@@ -3,7 +3,7 @@
 <%@ page import="org.taw.gestorbanco.entity.AsignacionEntity" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
-  User: albas
+  User: Alba Sánchez Ibáñez
   Date: 06/05/2023
   Time: 1:46
   To change this template use File | Settings | File Templates.

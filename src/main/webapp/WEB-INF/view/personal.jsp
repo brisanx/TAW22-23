@@ -1,8 +1,7 @@
-<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: albas
+  User: Alba Sánchez Ibáñez
   Date: 22/04/2023
   Time: 12:34
   To change this template use File | Settings | File Templates.
@@ -77,21 +76,21 @@
 <body>
 <div class="container">
     <h1>GESTIÓN DE PERSONAS RELACIONADAS CON LA EMPRESA</h1>
-    <form:form action="/empresa/registropersonal" method="post" modelAttribute="personal">
+    <form:form action="/empresa/guardarpersonal" method="post" modelAttribute="personal">
         <form:hidden path="id"/>
         <form:hidden path="rol" value="Empresa"/>
-        <form:hidden path="identificacion" value="${idEmpresa}"/>
+        <form:hidden path="identificacion"/>
         <table>
-            <tr><td>Nombre: <form:input path="nombre"/></td></tr>
-            <tr><td>Apellidos: <form:input path="apellido"/></td></tr>
+            <tr><td>Nombre(*): <form:input path="nombre"/></td></tr>
+            <tr><td>Apellidos(*): <form:input path="apellido"/></td></tr>
             <tr><td>Email(*): <form:input path="email"/></td></tr>
             <tr><td>Dirección <form:input path="direccion"/></td></tr>
-            <tr><td>Teléfono <form:input path="telefono"/></td></tr>
+            <tr><td>Teléfono: <form:input path="telefono"/></td></tr>
             <tr><td>Selecciona rol... <form:select path="subrol">
                 <form:option value="socio">Socio</form:option>
                 <form:option value="autorizado">Autorizado</form:option>
             </form:select></td></tr>
-            <tr><td>Contraseña(*) <form:password path="contrasena"/></td></tr>
+            <tr><td>Contraseña(*): <form:password path="contrasena"/></td></tr>
             <tr><td> <form:button>Registrar</form:button></td></tr>
         </table>
     </form:form>

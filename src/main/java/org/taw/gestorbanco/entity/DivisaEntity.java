@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.DivisaDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -85,5 +87,14 @@ public class DivisaEntity {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+    public DivisaDTO toDTO() {
+        DivisaDTO divisaDTO = new DivisaDTO();
+        divisaDTO.setId(this.id);
+        divisaDTO.setNombre(this.nombre);
+        divisaDTO.setSimbolo(this.simbolo);
+        divisaDTO.setRatioDeCambio(this.ratioDeCambio);
+
+        return divisaDTO;
     }
 }

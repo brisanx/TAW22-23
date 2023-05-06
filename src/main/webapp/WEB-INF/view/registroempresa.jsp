@@ -1,9 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: albas
+  User: Alba Sánchez Ibáñez
   Date: 19/04/2023
-  Time: 22:16
+  Time: 11:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -79,14 +79,14 @@
         <form:hidden path="apellido" value=" "/>
         <form:hidden path="id"/>
         <form:hidden path="rol" value="Empresa"/>
-        <form:hidden path="subrol" value=" "/>
+        <form:hidden path="subrol" value=""/>
         <table>
-            <tr><td>CIF(*) <form:input path="identificacion"/><td></tr>
-            <tr><td>Nombre de la empresa(*) <form:input path="nombre"/></td></tr>
-            <tr><td>Email(*) <form:input path="email"/></td></tr>
-            <tr><td>Dirección <form:input path="direccion"/></td></tr>
-            <tr><td>Teléfono <form:input path="telefono"/></td></tr>
-            <tr><td>Contraseña(*) <form:password path="contrasena"/></td></tr>
+            <tr><td>CIF(*): <form:input path="identificacion"/><td></tr>
+            <tr><td>Nombre de la empresa(*): <form:input path="nombre"/></td></tr>
+            <tr><td>Email(*): <form:input path="email"/></td></tr>
+            <tr><td>Dirección: <form:input path="direccion"/></td></tr>
+            <tr><td>Teléfono: <form:input path="telefono"/></td></tr>
+            <tr><td>Contraseña(*): <form:password path="contrasena"/></td></tr>
             <tr><td> <form:button>Registrar</form:button></td></tr>
         </table>
     </form:form>

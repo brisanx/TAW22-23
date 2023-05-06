@@ -2,16 +2,27 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.taw.gestorbanco.entity.*" %>
+<%@ page import="org.taw.gestorbanco.dto.UsuarioDTO" %>
+<%@ page import="org.taw.gestorbanco.dto.AsignacionDTO" %>
+<%@ page import="org.taw.gestorbanco.dto.SolicitudActivacionDTO" %>
+<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Alba Sánchez Ibáñez
+  Date: 22/04/2023
+  Time: 12:34
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    AsignacionEntity asi = (AsignacionEntity) request.getAttribute("asignacion");
-    UsuarioEntity e = (UsuarioEntity) request.getAttribute("usuariosocio");
+    AsignacionDTO asi = (AsignacionDTO) request.getAttribute("asignacion");
+    UsuarioDTO e = (UsuarioDTO) request.getAttribute("usuariosocio");
 
-    SolicitudActivacionEntity solicitud = (SolicitudActivacionEntity) request.getAttribute("solicitudactivacion");
-    CuentaBancariaEntity cb = null;
+    SolicitudActivacionDTO solicitud = (SolicitudActivacionDTO) request.getAttribute("solicitudactivacion");
+    CuentaBancariaDTO cb = null;
 
     if(asi!=null){
-        cb = (CuentaBancariaEntity) request.getAttribute("cuenta");
+        cb = (CuentaBancariaDTO) request.getAttribute("cuenta");
     }
 %>
 <html>
@@ -179,7 +190,7 @@
             if(cb!=null){
         %>
             <td><%= cb.getId() %> </td>
-            <td><%= cb.getSaldo() %> <%=cb.getDivisaByDivisaId().getSimbolo()%></td>
+            <td><%= cb.getSaldo() %> <%=cb.getMoneda()%></td>
             <td><%=cb.getActivo()%></td>
             <%
                 if(cb.getActivo()==0 && solicitud==null){

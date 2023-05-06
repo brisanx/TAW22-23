@@ -1,15 +1,16 @@
 <%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
+<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: albas
-  Date: 01/05/2023
-  Time: 16:48
+  User: Alba Sánchez Ibáñez
+  Date: 18/04/2023
+  Time: 12:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaBancariaEntity cuentaOrigen = (CuentaBancariaEntity) request.getAttribute("cuentaorigen");
+    CuentaBancariaDTO cuentaOrigen = (CuentaBancariaDTO) request.getAttribute("cuentaorigen");
 %>
 <html>
 <head>
@@ -77,11 +78,11 @@
     <h1>Transferencia</h1>
     <form:form action="/empresa/transhecha" method="post" modelAttribute="operacion">
         <form:hidden path="id" />
-        <form:hidden path="cuentaBancariaByIdCuentaOrigen" value="<%=cuentaOrigen.getId()%>" />
+        <form:hidden path="cuentaBancariaByIdCuentaOrigen.id" value="<%=cuentaOrigen.getId()%>" />
         <label for="cantidad">Cantidad:</label>
         <form:input path="cantidad" id="cantidad" />
         <label for="cuenta">Cuenta:</label>
-        <form:input path="cuentaBancariaByIdCuentaDestino" id="cuenta" />
+        <form:input path="cuentaBancariaByIdCuentaDestino.id" id="cuenta"/>
         <form:button>Realizar</form:button>
     </form:form>
 </div>

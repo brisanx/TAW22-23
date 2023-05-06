@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %><%--
   Created by IntelliJ IDEA.
-  User: albas
+  User: Alba Sánchez Ibáñez
   Date: 05/05/2023
   Time: 19:57
   To change this template use File | Settings | File Templates.

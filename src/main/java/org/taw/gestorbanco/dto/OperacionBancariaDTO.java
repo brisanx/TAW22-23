@@ -1,6 +1,7 @@
 package org.taw.gestorbanco.dto;
 
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
+import org.taw.gestorbanco.entity.DivisaEntity;
 import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import java.sql.Timestamp;
