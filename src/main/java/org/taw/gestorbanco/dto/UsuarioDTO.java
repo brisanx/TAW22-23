@@ -1,10 +1,10 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.*;
-
-import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * @author Jose Torres
+ */
 public class UsuarioDTO {
     private Integer id;
     private String identificacion;
@@ -16,11 +16,6 @@ public class UsuarioDTO {
     private String subrol;
     private String direccion;
     private String telefono;
-    private Collection<AsignacionEntity> asignacionsById;
-    private Collection<ConversacionEntity> conversacionsById;
-    private Collection<CuentaBancariaEntity> cuentaBancariasById;
-    private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
-    private Collection<SolicitudAltaEntity> solicitudAltasById;
 
     public Integer getId() {
         return id;
@@ -102,30 +97,6 @@ public class UsuarioDTO {
         this.telefono = telefono;
     }
 
-    public Collection<ConversacionEntity> getConversacionsById() {
-        return conversacionsById;
-    }
-
-    public void setConversacionsById(Collection<ConversacionEntity> conversacionsById) {
-        this.conversacionsById = conversacionsById;
-    }
-
-    public Collection<SolicitudActivacionEntity> getSolicitudActivacionsById() {
-        return solicitudActivacionsById;
-    }
-
-    public void setSolicitudActivacionsById(Collection<SolicitudActivacionEntity> solicitudActivacionsById) {
-        this.solicitudActivacionsById = solicitudActivacionsById;
-    }
-
-    public Collection<SolicitudAltaEntity> getSolicitudAltasById() {
-        return solicitudAltasById;
-    }
-
-    public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
-        this.solicitudAltasById = solicitudAltasById;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,11 +110,5 @@ public class UsuarioDTO {
         return Objects.hash(id);
     }
 
-    public Collection<AsignacionEntity> getAsignacionsById() {
-        return asignacionsById;
-    }
 
-    public void setAsignacionsById(Collection<AsignacionEntity> asignacionsById) {
-        this.asignacionsById = asignacionsById;
-    }
 }

@@ -8,6 +8,9 @@ import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * @author Jose Torres
+ */
 public class CuentaBancariaDTO {
     private Integer id;
     private String moneda;
@@ -60,45 +63,6 @@ public class CuentaBancariaDTO {
         this.activo = activo;
     }
 
-    public Collection<AsignacionEntity> getAsignacionsById() {
-        return asignacionsById;
-    }
-
-    public void setAsignacionsById(Collection<AsignacionEntity> asignacionsById) {
-        this.asignacionsById = asignacionsById;
-    }
-
-    public DivisaEntity getDivisaByDivisaId() {
-        return divisaByDivisaId;
-    }
-
-    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
-        this.divisaByDivisaId = divisaByDivisaId;
-    }
-
-    public Collection<OperacionBancariaEntity> getOperacionBancariasById() {
-        return operacionBancariasById;
-    }
-
-    public void setOperacionBancariasById(Collection<OperacionBancariaEntity> operacionBancariasById) {
-        this.operacionBancariasById = operacionBancariasById;
-    }
-
-    public Collection<OperacionBancariaEntity> getOperacionBancariasById_0() {
-        return operacionBancariasById_0;
-    }
-
-    public void setOperacionBancariasById_0(Collection<OperacionBancariaEntity> operacionBancariasById_0) {
-        this.operacionBancariasById_0 = operacionBancariasById_0;
-    }
-
-    public Collection<SolicitudActivacionEntity> getSolicitudActivacionsById() {
-        return solicitudActivacionsById;
-    }
-
-    public void setSolicitudActivacionsById(Collection<SolicitudActivacionEntity> solicitudActivacionsById) {
-        this.solicitudActivacionsById = solicitudActivacionsById;
-    }
 
     @Override
     public boolean equals(Object o) {

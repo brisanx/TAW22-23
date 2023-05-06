@@ -1,5 +1,8 @@
 package org.taw.gestorbanco.dto;
 
+/**
+ * @author Jose Torres
+ */
 public class AsignacionDTO {
     private Integer cuentaBancariaId;
     private Integer usuarioId;
