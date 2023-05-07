@@ -1,11 +1,9 @@
 package org.taw.gestorbanco.dto;
 
-import java.io.Serializable;
-
 /**
  * @author Jose Torres
  */
-public class AsignacionDTO implements Serializable {
+public class AsignacionDTO {
     private Integer cuentaBancariaId;
     private Integer usuarioId;
 

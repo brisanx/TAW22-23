@@ -1,4 +1,5 @@
 <%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,14 +10,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaBancariaDTO cuenta = (CuentaBancariaDTO) request.getAttribute("cuenta");
+    List<CuentaBancariaDTO> cuentas = (List<CuentaBancariaDTO>) request.getAttribute("cuentas");
 %>
 <html>
 <head>
     <title></title>
 </head>
 <body>
-${pageContext.session.id}
 <h3>Bienvenido, ${user.email}</h3>
 <table border="1">
     <tr>
@@ -26,6 +26,7 @@ ${pageContext.session.id}
         <th>E-mail</th>
         <th>Dirección</th>
         <th>Teléfono</th>
+
     </tr>
     <tr>
         <td>${user.identificacion}</td>
@@ -38,15 +39,27 @@ ${pageContext.session.id}
 </table>
 <br>
 <br>
+
+<%
+    if(cuentas.isEmpty()) {
+        out.println("No puedes acceder a tu cuenta hasta que un gestor haya aprobado la solicitud de alta");
+    } else {
+%>
+
 <table border="1">
     <tr>
         <th>ID CUENTA</th>
         <th>SALDO</th>
         <th>ACTIVIDAD</th>
-        <th>SOSPECHOSA</th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
     <tr>
+        <%
+            for(CuentaBancariaDTO cuenta : cuentas){
+
+        %>
         <td><%=cuenta.getId()%></td>
         <td><%=cuenta.getSaldo()%></td>
         <td>
@@ -63,28 +76,27 @@ ${pageContext.session.id}
             %>
         </td>
         <td>
-            <%
-                if(cuenta.getSospechosa() == 0){
-            %>
-            No
-            <%
-            } else {
-            %>
-            Si
-            <%
-                }
-            %>
+            <a href="/cambiodivisa?id=<%=cuenta.getId()%>"><button>Cambiar divisa</button></a>
         </td>
         <td>
             <%
-                if(cuenta.getSospechosa() == 1 || cuenta.getActivo() == 0) {
+                if(cuenta.getActivo() == 0) {
             %>
             <a href="/solicitarActivacion">Solicitar activación</a>
             <%
                 }
+
             %>
         </td>
+        <td><a href="/transferenciaCliente?id=<%=cuenta.getId()%>">Hacer transferencia</a></td>
+
     </tr>
+        <%
+            }
+        %>
 </table>
+<%
+    }
+%>
 </body>
 </html>

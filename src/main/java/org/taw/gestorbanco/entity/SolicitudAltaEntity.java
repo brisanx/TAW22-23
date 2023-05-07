@@ -1,7 +1,8 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "solicitud_alta", schema = "gestor_banco", catalog = "")
@@ -12,7 +13,7 @@ public class SolicitudAltaEntity {
     private Integer idSolicitud;
     @Basic
     @Column(name = "fecha_solicitud", nullable = false)
-    private Date fechaSolicitud;
+    private Timestamp fechaSolicitud;
     @ManyToOne
     @JoinColumn(name = "id_gestor", referencedColumnName = "id_gestor", nullable = false)
     private EmpleadoEntity empleadoByIdGestor;
@@ -31,11 +32,11 @@ public class SolicitudAltaEntity {
         this.idSolicitud = idSolicitud;
     }
 
-    public Date getFechaSolicitud() {
+    public Timestamp getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
+    public void setFechaSolicitud(Timestamp fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
@@ -43,21 +44,13 @@ public class SolicitudAltaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SolicitudAltaEntity that = (SolicitudAltaEntity) o;
-
-        if (idSolicitud != null ? !idSolicitud.equals(that.idSolicitud) : that.idSolicitud != null) return false;
-        if (fechaSolicitud != null ? !fechaSolicitud.equals(that.fechaSolicitud) : that.fechaSolicitud != null)
-            return false;
-
-        return true;
+        return Objects.equals(idSolicitud, that.idSolicitud) && Objects.equals(fechaSolicitud, that.fechaSolicitud);
     }
 
     @Override
     public int hashCode() {
-        int result = idSolicitud != null ? idSolicitud.hashCode() : 0;
-        result = 31 * result + (fechaSolicitud != null ? fechaSolicitud.hashCode() : 0);
-        return result;
+        return Objects.hash(idSolicitud, fechaSolicitud);
     }
 
     public EmpleadoEntity getEmpleadoByIdGestor() {

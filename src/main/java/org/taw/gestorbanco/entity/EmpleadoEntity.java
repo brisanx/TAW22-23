@@ -1,7 +1,10 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.EmpleadoDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "empleado", schema = "gestor_banco", catalog = "")
@@ -73,26 +76,13 @@ public class EmpleadoEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         EmpleadoEntity that = (EmpleadoEntity) o;
-
-        if (idGestor != null ? !idGestor.equals(that.idGestor) : that.idGestor != null) return false;
-        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (contrasena != null ? !contrasena.equals(that.contrasena) : that.contrasena != null) return false;
-        if (rol != null ? !rol.equals(that.rol) : that.rol != null) return false;
-
-        return true;
+        return Objects.equals(idGestor, that.idGestor) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(contrasena, that.contrasena) && Objects.equals(rol, that.rol);
     }
 
     @Override
     public int hashCode() {
-        int result = idGestor != null ? idGestor.hashCode() : 0;
-        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (contrasena != null ? contrasena.hashCode() : 0);
-        result = 31 * result + (rol != null ? rol.hashCode() : 0);
-        return result;
+        return Objects.hash(idGestor, nombre, email, contrasena, rol);
     }
 
     public Collection<ConversacionEntity> getConversacionsByIdGestor() {
@@ -117,5 +107,14 @@ public class EmpleadoEntity {
 
     public void setSolicitudAltasByIdGestor(Collection<SolicitudAltaEntity> solicitudAltasByIdGestor) {
         this.solicitudAltasByIdGestor = solicitudAltasByIdGestor;
+    }
+    public EmpleadoDTO toDTO() {
+        EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+        empleadoDTO.setIdGestor(this.idGestor);
+        empleadoDTO.setNombre(this.nombre);
+        empleadoDTO.setEmail(this.email);
+        empleadoDTO.setRol(this.rol);
+
+        return empleadoDTO;
     }
 }

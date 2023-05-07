@@ -1,28 +1,24 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.DivisaEntity;
-import org.taw.gestorbanco.entity.OperacionBancariaEntity;
-import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Objects;
 
 /**
  * @author Jose Torres
  */
-public class CuentaBancariaDTO implements Serializable {
+public class CuentaBancariaDTO {
     private Integer id;
     private String moneda;
     private Double saldo;
     private Byte sospechosa;
     private Byte activo;
-    private Collection<AsignacionEntity> asignacionsById;
-    private DivisaEntity divisaByDivisaId;
-    private Collection<OperacionBancariaEntity> operacionBancariasById;
-    private Collection<OperacionBancariaEntity> operacionBancariasById_0;
-    private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
+
+    private DivisaDTO divisaByDivisaId;
+
+
+    public CuentaBancariaDTO() {
+    }
 
     public Integer getId() {
         return id;
@@ -63,7 +59,13 @@ public class CuentaBancariaDTO implements Serializable {
     public void setActivo(Byte activo) {
         this.activo = activo;
     }
+    public DivisaDTO getDivisaByDivisaId() {
+        return divisaByDivisaId;
+    }
 
+    public void setDivisaByDivisaId(DivisaDTO divisaByDivisaId) {
+        this.divisaByDivisaId = divisaByDivisaId;
+    }
 
     @Override
     public boolean equals(Object o) {

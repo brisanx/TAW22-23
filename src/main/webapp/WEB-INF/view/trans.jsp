@@ -17,12 +17,14 @@
     <title>Transferencia</title>
 </head>
 <body>
-   <form:form action="/transRealizada" method="post" modelAttribute="operacion">
-        <form:hidden path="id"/>
-       <form:hidden path="cuentaBancariaByIdCuentaOrigen" value="<%=corigen.getId()%>"/>
-        Cantidad: <form:input path="cantidad"/>
-        Cuenta: <form:input path="cuentaBancariaByIdCuentaDestino"/>
-       <form:button>Realizar</form:button>
-   </form:form>
+<form:form action="/transRealizada" method="post" modelAttribute="operacion">
+    <form:hidden path="id" />
+    <form:hidden path="cuentaBancariaByIdCuentaOrigen.id" value="<%=corigen.getId()%>" />
+    <label for="cantidad">Cantidad:</label>
+    <form:input path="cantidad" id="cantidad" />
+    <label for="cuenta">Cuenta:</label>
+    <form:input path="cuentaBancariaByIdCuentaDestino.id" id="cuenta"/>
+    <form:button>Realizar</form:button>
+</form:form>
 </body>
 </html>

@@ -6,8 +6,21 @@ import org.springframework.data.repository.query.Param;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.AsignacionEntityPK;
 
+import java.util.List;
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo, Óscar Hidalgo Puertas
+ */
 public interface AsignacionRepository extends JpaRepository<AsignacionEntity, AsignacionEntityPK> {
 
     @Query("select a from AsignacionEntity a where a.usuarioId= :id")
-    AsignacionEntity findByUsuarioId(@Param("id") Integer id);
+    List<AsignacionEntity> findByUsuarioId(@Param("id") Integer id);
+
+    @Query("select a from AsignacionEntity a where a.cuentaBancariaId= :id")
+    List<AsignacionEntity> asignacionesDeLaEmpresa(@Param("id") Integer id);
+
+    @Query("select a from AsignacionEntity a where a.usuarioId= :id")
+    List<AsignacionEntity> asignaciones(@Param("id") Integer id);
+
+    @Query("select asi.cuentaBancariaId from AsignacionEntity asi where asi.usuarioId = :user ")
+    List<Integer> cuentasAsignadasPorUsuario(Integer user);
 }

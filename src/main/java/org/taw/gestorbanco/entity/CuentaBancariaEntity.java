@@ -1,7 +1,10 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cuenta_bancaria", schema = "gestor_banco", catalog = "")
@@ -78,26 +81,13 @@ public class CuentaBancariaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CuentaBancariaEntity that = (CuentaBancariaEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (saldo != null ? !saldo.equals(that.saldo) : that.saldo != null) return false;
-        if (moneda != null ? !moneda.equals(that.moneda) : that.moneda != null) return false;
-        if (sospechosa != null ? !sospechosa.equals(that.sospechosa) : that.sospechosa != null) return false;
-        if (activo != null ? !activo.equals(that.activo) : that.activo != null) return false;
-
-        return true;
+        return Objects.equals(id, that.id) && Objects.equals(saldo, that.saldo) && Objects.equals(moneda, that.moneda) && Objects.equals(sospechosa, that.sospechosa) && Objects.equals(activo, that.activo);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (saldo != null ? saldo.hashCode() : 0);
-        result = 31 * result + (moneda != null ? moneda.hashCode() : 0);
-        result = 31 * result + (sospechosa != null ? sospechosa.hashCode() : 0);
-        result = 31 * result + (activo != null ? activo.hashCode() : 0);
-        return result;
+        return Objects.hash(id, saldo, moneda, sospechosa, activo);
     }
 
     public Collection<AsignacionEntity> getAsignacionsById() {
@@ -138,5 +128,15 @@ public class CuentaBancariaEntity {
 
     public void setSolicitudActivacionsById(Collection<SolicitudActivacionEntity> solicitudActivacionsById) {
         this.solicitudActivacionsById = solicitudActivacionsById;
+    }
+
+    public CuentaBancariaDTO toDTO() {
+        CuentaBancariaDTO cuentaBancariaDTO = new CuentaBancariaDTO();
+        cuentaBancariaDTO.setId(id);
+        cuentaBancariaDTO.setSaldo(saldo);
+        cuentaBancariaDTO.setMoneda(moneda);
+        cuentaBancariaDTO.setSospechosa(sospechosa);
+        cuentaBancariaDTO.setActivo(activo);
+        return cuentaBancariaDTO;
     }
 }

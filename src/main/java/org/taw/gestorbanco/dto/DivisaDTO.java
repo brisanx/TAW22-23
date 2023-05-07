@@ -1,12 +1,9 @@
 package org.taw.gestorbanco.dto;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
 /**
  * @author Jose Torres
  */
-public class DivisaDTO implements Serializable {
+public class DivisaDTO {
     private Integer id;
     private String nombre;
     private String simbolo;

@@ -1,20 +1,26 @@
 package org.taw.gestorbanco.dto;
 
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
+import org.taw.gestorbanco.entity.DivisaEntity;
+import org.taw.gestorbanco.entity.UsuarioEntity;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author Jose Torres
+ * @author José Torres Postigo (65%), Alba Sánchez Ibáñez (35%)
  */
-public class OperacionBancariaDTO implements Serializable {
+public class OperacionBancariaDTO {
     private Integer id;
     private Timestamp fecha;
     private Double cantidad;
-    private CuentaBancariaEntity cuentaBancariaByIdCuentaOrigen;
-    private CuentaBancariaEntity cuentaBancariaByIdCuentaDestino;
+    private CuentaBancariaDTO cuentaBancariaByIdCuentaOrigen;
+    private CuentaBancariaDTO cuentaBancariaByIdCuentaDestino;
+
+    private UsuarioDTO usuario;
+
+    public OperacionBancariaDTO() {
+    }
 
     public Integer getId() {
         return id;
@@ -40,22 +46,29 @@ public class OperacionBancariaDTO implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public CuentaBancariaEntity getCuentaBancariaByIdCuentaOrigen() {
+    public CuentaBancariaDTO getCuentaBancariaByIdCuentaOrigen() {
         return cuentaBancariaByIdCuentaOrigen;
     }
 
-    public void setCuentaBancariaByIdCuentaOrigen(CuentaBancariaEntity cuentaBancariaByIdCuentaOrigen) {
+    public void setCuentaBancariaByIdCuentaOrigen(CuentaBancariaDTO cuentaBancariaByIdCuentaOrigen) {
         this.cuentaBancariaByIdCuentaOrigen = cuentaBancariaByIdCuentaOrigen;
     }
 
-    public CuentaBancariaEntity getCuentaBancariaByIdCuentaDestino() {
+    public CuentaBancariaDTO getCuentaBancariaByIdCuentaDestino() {
         return cuentaBancariaByIdCuentaDestino;
     }
 
-    public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaEntity cuentaBancariaByIdCuentaDestino) {
+    public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaDTO cuentaBancariaByIdCuentaDestino) {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
     }
 
+    public UsuarioDTO getUsuario(){
+        return this.usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario){
+        this.usuario = usuario;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

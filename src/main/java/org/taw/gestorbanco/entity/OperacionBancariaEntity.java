@@ -4,6 +4,7 @@ import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "operacion_bancaria", schema = "gestor_banco", catalog = "")
@@ -24,6 +25,9 @@ public class OperacionBancariaEntity {
     @ManyToOne
     @JoinColumn(name = "id_cuenta_destino", referencedColumnName = "id", nullable = false)
     private CuentaBancariaEntity cuentaBancariaByIdCuentaDestino;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private UsuarioEntity usuarioByUsuario;
 
     public Integer getId() {
         return id;
@@ -53,22 +57,13 @@ public class OperacionBancariaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         OperacionBancariaEntity that = (OperacionBancariaEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
-        if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
-
-        return true;
+        return Objects.equals(id, that.id) && Objects.equals(fecha, that.fecha) && Objects.equals(cantidad, that.cantidad);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-        result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
-        return result;
+        return Objects.hash(id, fecha, cantidad);
     }
 
     public CuentaBancariaEntity getCuentaBancariaByIdCuentaOrigen() {
@@ -87,12 +82,23 @@ public class OperacionBancariaEntity {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
     }
 
-    public OperacionBancariaDTO toDTO() {
-        OperacionBancariaDTO dto = new OperacionBancariaDTO();
-        dto.setId(id);
-        dto.setFecha(fecha);
-        dto.setCantidad(cantidad);
+    public UsuarioEntity getUsuarioByUsuario() {
+        return usuarioByUsuario;
+    }
 
-        return dto;
+    public void setUsuarioByUsuario(UsuarioEntity usuarioByUsuario) {
+        this.usuarioByUsuario = usuarioByUsuario;
+    }
+
+    public OperacionBancariaDTO toDTO() {
+        OperacionBancariaDTO operacionDTO = new OperacionBancariaDTO();
+        operacionDTO.setId(id);
+        operacionDTO.setFecha(fecha);
+        operacionDTO.setCantidad(cantidad);
+        operacionDTO.setCuentaBancariaByIdCuentaOrigen(cuentaBancariaByIdCuentaOrigen.toDTO());
+        operacionDTO.setCuentaBancariaByIdCuentaDestino(cuentaBancariaByIdCuentaDestino.toDTO());
+        operacionDTO.setUsuario(usuarioByUsuario.toDTO());
+
+        return operacionDTO;
     }
 }

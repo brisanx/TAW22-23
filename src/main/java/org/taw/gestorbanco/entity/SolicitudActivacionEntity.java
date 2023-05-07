@@ -1,7 +1,10 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.SolicitudActivacionDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "solicitud_activacion", schema = "gestor_banco", catalog = "")
@@ -43,21 +46,13 @@ public class SolicitudActivacionEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SolicitudActivacionEntity that = (SolicitudActivacionEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (fechaSolicitud != null ? !fechaSolicitud.equals(that.fechaSolicitud) : that.fechaSolicitud != null)
-            return false;
-
-        return true;
+        return Objects.equals(id, that.id) && Objects.equals(fechaSolicitud, that.fechaSolicitud);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fechaSolicitud != null ? fechaSolicitud.hashCode() : 0);
-        return result;
+        return Objects.hash(id, fechaSolicitud);
     }
 
     public UsuarioEntity getUsuarioByUsuarioId() {
@@ -82,5 +77,15 @@ public class SolicitudActivacionEntity {
 
     public void setCuentaBancariaByCuentaBancariaId(CuentaBancariaEntity cuentaBancariaByCuentaBancariaId) {
         this.cuentaBancariaByCuentaBancariaId = cuentaBancariaByCuentaBancariaId;
+    }
+
+    public SolicitudActivacionDTO toDTO() {
+        SolicitudActivacionDTO solicitudActivacionDTO = new SolicitudActivacionDTO();
+        solicitudActivacionDTO.setId(id);
+        solicitudActivacionDTO.setFechaSolicitud(fechaSolicitud);
+        solicitudActivacionDTO.setUsuarioByUsuarioId(usuarioByUsuarioId.toDTO());
+        solicitudActivacionDTO.setEmpleadoByEmpleadoIdGestor(empleadoByEmpleadoIdGestor.toDTO());
+        solicitudActivacionDTO.setCuentaBancariaByCuentaBancariaId(cuentaBancariaByCuentaBancariaId.toDTO());
+        return solicitudActivacionDTO;
     }
 }

@@ -11,10 +11,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    List<OperacionBancariaDTO> operaciones = (List<OperacionBancariaDTO>) request.getAttribute("operaciones");
-    CuentaBancariaDTO cuenta = (CuentaBancariaDTO) request.getAttribute("cuenta");
-%>
+
 <html>
 <head>
     <style>
@@ -90,39 +87,12 @@
     <br>
     <a href="/modificarDatos"><button>Modificar mis Datos</button></a>
 
-    <%
-        if(cuenta.getActivo() == 1 && cuenta.getSospechosa() == 0) {
-    %>
     <div class="button-container">
-        <a href="/transferenciaCliente"><button type="submit">Realizar transferencia</button></a>
+        <a href="/operaciones"><button type="submit">Ver operaciones</button></a>
     </div>
-
-    <%
-        }
-    %>
+    <div class="button-container">
+        <a href="/nuevaCuentaBancaria"><button>Solicitar una cuenta nueva</button></a>
+    </div>
     <a href="/logout"><button>Salir</button></a>
-
-    <h4>Operaciones realizadas</h4>
-    <table>
-        <tr>
-            <th>FECHA</th>
-            <th>CANTIDAD</th>
-            <th>CUENTA ORIGEN</th>
-            <th>CUENTA DESTINO</th>
-        </tr>
-        <%
-            for(OperacionBancariaDTO op : operaciones) {
-        %>
-        <tr>
-            <td><%=op.getFecha()%></td>
-            <td><%=op.getCantidad()%></td>
-            <%--<td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
-            <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>--%>
-        </tr>
-        <%
-            }
-        %>
-    </table>
-
 </body>
 </html>

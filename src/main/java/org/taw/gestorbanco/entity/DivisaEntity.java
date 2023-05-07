@@ -1,8 +1,11 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.DivisaDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "divisa", schema = "gestor_banco", catalog = "")
@@ -61,25 +64,13 @@ public class DivisaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         DivisaEntity that = (DivisaEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (simbolo != null ? !simbolo.equals(that.simbolo) : that.simbolo != null) return false;
-        if (ratioDeCambio != null ? !ratioDeCambio.equals(that.ratioDeCambio) : that.ratioDeCambio != null)
-            return false;
-
-        return true;
+        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(simbolo, that.simbolo) && Objects.equals(ratioDeCambio, that.ratioDeCambio);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        result = 31 * result + (simbolo != null ? simbolo.hashCode() : 0);
-        result = 31 * result + (ratioDeCambio != null ? ratioDeCambio.hashCode() : 0);
-        return result;
+        return Objects.hash(id, nombre, simbolo, ratioDeCambio);
     }
 
     public Collection<CuentaBancariaEntity> getCuentaBancariasById() {
@@ -96,5 +87,14 @@ public class DivisaEntity {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+    public DivisaDTO toDTO() {
+        DivisaDTO divisaDTO = new DivisaDTO();
+        divisaDTO.setId(this.id);
+        divisaDTO.setNombre(this.nombre);
+        divisaDTO.setSimbolo(this.simbolo);
+        divisaDTO.setRatioDeCambio(this.ratioDeCambio);
+
+        return divisaDTO;
     }
 }
