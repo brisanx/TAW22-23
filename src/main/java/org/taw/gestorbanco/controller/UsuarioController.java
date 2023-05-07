@@ -36,7 +36,7 @@ public class UsuarioController {
 
     @PostMapping("/guardarcliente")
     public String doGuardarCliente(@ModelAttribute("usuario") UsuarioDTO usuario){
-        this.usuarioService.guardarUsuario(usuario);
+      //  this.usuarioService.guardarUsuario(usuario);
         return "homeCliente";
     }
 }

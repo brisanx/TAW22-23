@@ -1,6 +1,7 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -14,14 +15,30 @@ public class ConversacionEntity {
     @Basic
     @Column(name = "numero_mensaje", nullable = true)
     private Integer numeroMensaje;
+
+    @Basic
+    @Column(name = "fecha_apertura", nullable = true)
+    private Timestamp fechaApertura;
+    @Basic
+    @Column(name = "fecha_cierre", nullable = true)
+    private Timestamp fechaCierre;
+
+    @Basic
+    @Column(name = "estado", nullable = true)
+    private Integer estado;
+
     @ManyToOne
     @JoinColumn(name = "empleado_id_gestor", referencedColumnName = "id_gestor", nullable = false)
     private EmpleadoEntity empleadoByEmpleadoIdGestor;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private UsuarioEntity usuarioByUsuarioId;
-    @OneToMany(mappedBy = "conversacionByConversacionIdConver")
+    @OneToMany(mappedBy = "conversacionByConversacionIdConver",cascade = {CascadeType.ALL})
     private Collection<MensajeEntity> mensajesByIdConver;
+
+
+
+
 
     public Integer getIdConver() {
         return idConver;
@@ -29,6 +46,30 @@ public class ConversacionEntity {
 
     public void setIdConver(Integer idConver) {
         this.idConver = idConver;
+    }
+
+    public Timestamp getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(Timestamp fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+
+    public Timestamp getFechaCierre() {
+        return fechaCierre;
+    }
+
+    public void setFechaCierre(Timestamp fechaCierre) {
+        this.fechaCierre = fechaCierre;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public Integer getNumeroMensaje() {
