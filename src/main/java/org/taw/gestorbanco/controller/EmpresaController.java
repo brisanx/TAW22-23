@@ -101,7 +101,7 @@ public class EmpresaController {
     @GetMapping("/paginaempresa")
     public String doPaginaPrincipalEmpresa(Model model, HttpSession sesion){
         UsuarioDTO usuario = (UsuarioDTO) sesion.getAttribute("user");
-        if (usuario != null && ((usuario.getSubrol().equalsIgnoreCase("")) || (usuario.getSubrol()==null))){
+        if (usuario != null && ((usuario.getSubrol()==null)) || (usuario.getSubrol().equalsIgnoreCase(""))){
             model.addAttribute("empresa", usuario);
             AsignacionDTO asignacionEmpresa = this.asignacionService.buscarAsignacion(usuario.getId());
             if(asignacionEmpresa == null) {

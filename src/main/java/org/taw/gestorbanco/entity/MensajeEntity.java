@@ -1,6 +1,7 @@
 package org.taw.gestorbanco.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +17,13 @@ public class MensajeEntity {
     @Basic
     @Column(name = "texto", nullable = true, length = 500)
     private String texto;
+    @Basic
+    @Column(name = "sender", nullable = true, length = 500)
+    private String sender;
+    @Basic
+    @Column(name = "fecha", nullable = false)
+    private Timestamp fecha;
+
     @ManyToOne
     @JoinColumn(name = "conversacion_id_conver", referencedColumnName = "id_conver", nullable = false)
     private ConversacionEntity conversacionByConversacionIdConver;
@@ -32,6 +40,13 @@ public class MensajeEntity {
         return longitud;
     }
 
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
     public void setLongitud(Integer longitud) {
         this.longitud = longitud;
     }
@@ -42,6 +57,14 @@ public class MensajeEntity {
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
     }
 
     @Override

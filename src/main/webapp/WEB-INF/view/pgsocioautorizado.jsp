@@ -247,6 +247,7 @@
     <%
         }
     %>
+    <a href="/home/user/conversacion"><button type="submit">Chat</button></a>
 </div>
 </body>
 </html>
