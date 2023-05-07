@@ -33,8 +33,8 @@ public class ConversacionService {
          ConversacionEntity conversacion = new ConversacionEntity();
          conversacion.setEstado(1);
          conversacion.setNumeroMensaje(0);
-         conversacion.setUsuarioByUsuarioId(usuarioRepository.findById(1).get());
-            conversacion.setEmpleadoByEmpleadoIdGestor(empleadoRepository.findById(1).get());
+         conversacion.setUsuarioByUsuarioId(usuarioRepository.findById(idUsuario).get());
+            conversacion.setEmpleadoByEmpleadoIdGestor(empleadoRepository.findById(gestorId).get());
          conversacion.setFechaApertura(new Timestamp(System.currentTimeMillis()));
          conversacionRepository.save(conversacion);
          return conversacion;
