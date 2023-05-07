@@ -47,7 +47,7 @@ public class AccesoController {
         if(usuario!=null){
             session.setAttribute("user", usuario);
             urlTo = usuario.getRol().equalsIgnoreCase("Particular") ?
-                    "redirect:/paginaCliente" : "redirect:/empresa/paginaempresa";
+                    "redirect:/home/user/conversacion" : "redirect:/home/user/conversacion";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "loginusuario";
