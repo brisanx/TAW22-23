@@ -1,10 +1,12 @@
 <%@ page import="org.taw.gestorbanco.entity.ConversacionEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.taw.gestorbanco.entity.EmpleadoEntity" %>
+<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<ConversacionEntity> conversaciones = (List<ConversacionEntity>) request.getAttribute("conversaciones");
     List<EmpleadoEntity> gestores = (List< EmpleadoEntity>) request.getAttribute("gestores");
+    List<UsuarioEntity> usuarios = (List< UsuarioEntity>) request.getAttribute("usuarios");
 %>
 <html>
 <head>
@@ -77,7 +79,7 @@
 <body>
 <div class="container">
     <h1>Bienvenido a Cajasoft</h1>
-    <h3>Gestión conversaciones</h3>
+    <h3>Gestión conversaciones gestores</h3>
 
     <c:if test="${error != null}" >
         <p style="color:red;">
@@ -86,10 +88,54 @@
     </c:if>
 
     <h1>Listado de conversaciones</h1>
-
+    <h3>Busqueda conversaciones gestores</h3>
+    <form action="/home/gestor/conversacion/buscar" method="post">
+      <table>
+        <tr>
+        <td>
+        Asistente:
+            <select name="empleadoId">
+                <option value="0">  </option>
+                <%
+                    for (EmpleadoEntity conv: gestores) {
+                %>
+                <option value="<%=conv.getIdGestor()%>"><%=conv.getNombre()%> <%=conv.getEmail()%></option>
+                <% } %>
+            </select>
+        </td>
+           <td>
+               Usuario:
+               <select name="userId">
+                   <option value="0">  </option>
+                   <%
+                       for (UsuarioEntity user: usuarios) {
+                   %>
+                   <option value="<%=user.getId()%>"><%=user.getNombre()%> <%=user.getEmail()%></option>
+                   <% } %>
+               </select>
+           </td>
+           <td>
+               Estado:
+               <select name="estado">
+                   <option value="0">  </option>
+                   <option value="1">Abierto</option>
+                     <option value="2">Cerrado</option>
+               </select>
+           </td>
+           <td>
+               Numero mensajes:
+               <input type="number" name="numeroMensajesInternal">
+              </td>
+         <td>
+          <button type="submit">Buscar conversacion</button>
+         </td>
+       </tr>
+        </table>
+    </form>
     <table border="1">
         <tr>
             <th>ASISTENTE</th>
+            <th>USUARIO</th>
             <th>NUMERO MENSAJES</th>
             <th>ESTADO</th>
             <th>FECHA APERTURA</th>
@@ -101,33 +147,21 @@
         %>
         <tr>
             <td><%= conv.getEmpleadoByEmpleadoIdGestor().getNombre() %></td>
+            <td><%= conv.getUsuarioByUsuarioId().getEmail() %></td>
             <td><%= conv.getNumeroMensaje() %></td>
             <td><% if (conv.getEstado()==2)  {%> Cerrado <% }  else {%> Abierto <% }%>  </td>
             <td><%= conv.getFechaApertura() %></td>
             <td><%= conv.getFechaCierre() %></td>
-            <td> <% if (conv.getEstado()!=2)  {%> <form action="/home/user/conversacion/chat/<%=conv.getIdConver()%>" method="get">
+            <td> <% if (conv.getEstado()!=2)  {%> <form action="/home/gestor/conversacion/chat/<%=conv.getIdConver()%>" method="get">
                 <button type="submit">Acceder chat</button>
             </form> <% }%> </td>
-            <td><% if (conv.getEstado()!=2)  {%> <form action="/home/user/conversacion/chat/cerrar/<%=conv.getIdConver()%>" method="get">
-                <button type="submit">Cerrar chat</button>
-            </form> <% }%> </td>
+
 
         </tr>
 
         <% } %>
     </table>
-    <form action="/home/user/conversacion/insertar" method="post">
-        <select name="gestor">
-            <%
-                for (EmpleadoEntity conv: gestores) {
-            %>
-            <option value="<%=conv.getIdGestor()%>"><%=conv.getNombre()%> <%=conv.getEmail()%></option>
-            <% } %>
-        </select>
 
-        <button type="submit">Crear chat</button>
-    </form>
 </div>
 </body>
 </html>
->>>>>>> 25b352b (Chat)

@@ -11,4 +11,7 @@ import java.util.List;
 public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity,Integer> {
         @Query("select e from EmpleadoEntity e where e.rol='gestor' ")
         List<EmpleadoEntity> todosLosGestores();
+
+        @Query("select e from EmpleadoEntity e where e.rol='asistente' ")
+        List<EmpleadoEntity> todosLosAsistentes();
 }

@@ -13,6 +13,8 @@ import org.taw.gestorbanco.entity.EmpleadoEntity;
 import org.taw.gestorbanco.entity.UsuarioEntity;
 import org.taw.gestorbanco.service.ConversacionService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -22,11 +24,12 @@ public class ConversacionController {
     @Autowired
     private ConversacionService conversacionService;
 
+
     @GetMapping("/home/user/conversacion")
     public String homeUserConversacion(Model model, HttpSession session){
         UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("user");;
         model.addAttribute("conversaciones", this.conversacionService.listarConversaciones(usuarioDTO));
-        List<EmpleadoEntity> gestores = conversacionService.getTodosLosGestores();
+        List<EmpleadoEntity> gestores = conversacionService.todosLosAsistentes();
         model.addAttribute("gestores", gestores);
         return "usuarioChat";
     }
