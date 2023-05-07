@@ -230,7 +230,7 @@
         }
     %>
     <%
-        if(e.getSubrol().equalsIgnoreCase("socio")){
+        if(e.getSubrol().equalsIgnoreCase("socio") && cb!=null){
     %>
     <div class="button-container">
         <a href="/empresa/personal"><button type="submit">Ver personal de la empresa</button></a>

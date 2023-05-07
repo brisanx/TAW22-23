@@ -228,17 +228,22 @@ public class EmpresaController {
         UsuarioDTO usuario = (UsuarioDTO) sesion.getAttribute("user");
         operacionOrigen.setUsuario(usuario);
         operacionOrigen.setFecha(Timestamp.valueOf(LocalDateTime.now()));
-        operacionOrigen = this.operacionBancariaService.setId(operacionOrigen);
 
         this.operacionBancariaService.guardarOperacionBancaria(operacionOrigen);
         this.cuentaBancariaService.ajustarSaldos(operacionOrigen);
+        operacionOrigen = this.operacionBancariaService.setId(operacionOrigen);
 
-        DivisaDTO divisa = this.divisaService.buscarDivisa(operacionOrigen);
+        DivisaDTO divisa = this.divisaService.buscarDivisaOrigen(operacionOrigen);
+        DivisaDTO divisaDestino = this.divisaService.buscarDivisaDestino(operacionOrigen);
 
         OperacionBancariaDTO operacionDestino = new OperacionBancariaDTO();
         operacionDestino.setUsuario(usuario);
-        operacionDestino.setFecha(operacionOrigen.getFecha());;
-        operacionDestino.setCantidad(-operacionOrigen.getCantidad() * divisa.getRatioDeCambio());
+        operacionDestino.setFecha(operacionOrigen.getFecha());
+
+        Double cantidad = -operacionOrigen.getCantidad();
+        cantidad = cantidad/divisa.getRatioDeCambio();
+
+        operacionDestino.setCantidad(cantidad * divisaDestino.getRatioDeCambio());
         operacionDestino.setCuentaBancariaByIdCuentaDestino(operacionOrigen.getCuentaBancariaByIdCuentaOrigen());
         operacionDestino.setCuentaBancariaByIdCuentaOrigen(operacionOrigen.getCuentaBancariaByIdCuentaDestino());
 

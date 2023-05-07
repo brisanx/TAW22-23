@@ -30,7 +30,13 @@ public class DivisaService {
         return dtos;
     }
 
-    public DivisaDTO buscarDivisa(OperacionBancariaDTO dto) {
+    public DivisaDTO buscarDivisaOrigen(OperacionBancariaDTO dto) {
+        OperacionBancariaEntity op = this.operacionBancariaRepository.findById(dto.getId()).orElse(null);
+        DivisaEntity divisa = op.getCuentaBancariaByIdCuentaOrigen().getDivisaByDivisaId();
+        return divisa.toDTO();
+    }
+
+    public DivisaDTO buscarDivisaDestino(OperacionBancariaDTO dto) {
         OperacionBancariaEntity op = this.operacionBancariaRepository.findById(dto.getId()).orElse(null);
         DivisaEntity divisa = op.getCuentaBancariaByIdCuentaDestino().getDivisaByDivisaId();
         return divisa.toDTO();
