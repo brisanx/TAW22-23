@@ -174,8 +174,29 @@
         </tr>
 
         <% } %>
-    </table>
 
+    </table>
+    <h1>Mensajes usuario</h1>
+    <tr>
+
+        <td>
+            <form action="/home/gestor/conversacion/chat/user" method="post">
+
+                Usuario:
+                <select name="id">
+                    <option value="0">  </option>
+                    <%
+                        for (UsuarioEntity user: usuarios) {
+                    %>
+                    <option value="<%=user.getId()%>"><%=user.getNombre()%> <%=user.getEmail()%></option>
+                    <% } %>
+                </select>
+                <button type="submit">Ver mensajes usuarios</button>
+            </form>
+        </td>
+    </tr>
 </div>
+
+
 </body>
 </html>

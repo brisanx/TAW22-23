@@ -39,17 +39,17 @@ public class ConversacionGestorController {
         session.setAttribute("id",id);
         model.addAttribute("mensajes", this.conversacionService.listarMensajes(Integer.parseInt(id)));
         model.addAttribute("lectura", true);
-        return "chat";
+        return "gstChat";
     }
 
-    @GetMapping("/home/gestor/conversacion/chat/user/{id}")
-    public String chatUserConversacion(@PathVariable String id ,  Model model, HttpSession session){
+    @PostMapping("/home/gestor/conversacion/chat/user")
+    public String chatUserConversacion(@RequestParam String id ,  Model model, HttpSession session){
         EmpleadoDTO empleadoDTO = (EmpleadoDTO) session.getAttribute("user");
         session.setAttribute("sender",empleadoDTO.getEmail());
         session.setAttribute("id",id);
         model.addAttribute("mensajes", this.conversacionService.listarMensajesUser(Integer.parseInt(id)));
         model.addAttribute("lectura", false);
-        return "chat";
+        return "gstChat";
     }
 
     @GetMapping("/home/gestor/conversacion/lectura/chat/{id}")
@@ -59,7 +59,7 @@ public class ConversacionGestorController {
         session.setAttribute("id",id);
         model.addAttribute("mensajes", this.conversacionService.listarMensajes(Integer.parseInt(id)));
         model.addAttribute("lectura", false);
-        return "chat";
+        return "gstChat";
     }
 
     @PostMapping("/home/gestor/conversacion/chat/insertar")
