@@ -1,8 +1,9 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.UsuarioDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name = "usuario", schema = "gestor_banco", catalog = "")
@@ -131,13 +132,37 @@ public class UsuarioEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UsuarioEntity that = (UsuarioEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(identificacion, that.identificacion) && Objects.equals(nombre, that.nombre) && Objects.equals(apellido, that.apellido) && Objects.equals(email, that.email) && Objects.equals(contrasena, that.contrasena) && Objects.equals(rol, that.rol) && Objects.equals(subrol, that.subrol) && Objects.equals(direccion, that.direccion) && Objects.equals(telefono, that.telefono);
+
+        UsuarioEntity usuario = (UsuarioEntity) o;
+
+        if (id != null ? !id.equals(usuario.id) : usuario.id != null) return false;
+        if (identificacion != null ? !identificacion.equals(usuario.identificacion) : usuario.identificacion != null)
+            return false;
+        if (nombre != null ? !nombre.equals(usuario.nombre) : usuario.nombre != null) return false;
+        if (apellido != null ? !apellido.equals(usuario.apellido) : usuario.apellido != null) return false;
+        if (email != null ? !email.equals(usuario.email) : usuario.email != null) return false;
+        if (contrasena != null ? !contrasena.equals(usuario.contrasena) : usuario.contrasena != null) return false;
+        if (rol != null ? !rol.equals(usuario.rol) : usuario.rol != null) return false;
+        if (subrol != null ? !subrol.equals(usuario.subrol) : usuario.subrol != null) return false;
+        if (direccion != null ? !direccion.equals(usuario.direccion) : usuario.direccion != null) return false;
+        if (telefono != null ? !telefono.equals(usuario.telefono) : usuario.telefono != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, identificacion, nombre, apellido, email, contrasena, rol, subrol, direccion, telefono);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (identificacion != null ? identificacion.hashCode() : 0);
+        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
+        result = 31 * result + (apellido != null ? apellido.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (contrasena != null ? contrasena.hashCode() : 0);
+        result = 31 * result + (rol != null ? rol.hashCode() : 0);
+        result = 31 * result + (subrol != null ? subrol.hashCode() : 0);
+        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
+        result = 31 * result + (telefono != null ? telefono.hashCode() : 0);
+        return result;
     }
 
     public Collection<AsignacionEntity> getAsignacionsById() {
@@ -170,5 +195,21 @@ public class UsuarioEntity {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+
+    public UsuarioDTO toDto() {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(this.id);
+        dto.setIdentificacion(this.identificacion);
+        dto.setNombre(this.nombre);
+        dto.setApellido(this.apellido);
+        dto.setEmail(this.email);
+        dto.setContrasena(this.contrasena);
+        dto.setRol(this.rol);
+        dto.setSubrol(this.subrol);
+        dto.setDireccion(this.direccion);
+        dto.setTelefono(this.telefono);
+
+        return dto;
     }
 }

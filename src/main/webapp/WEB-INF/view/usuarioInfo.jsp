@@ -2,7 +2,8 @@
 <%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
 <%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.taw.gestorbanco.entity.OperacionBancariaEntity" %><%--
+<%@ page import="org.taw.gestorbanco.entity.OperacionBancariaEntity" %>
+<%@ page import="org.taw.gestorbanco.dto.OperacionBancariaDTO" %><%--
   Created by IntelliJ IDEA.
   User: FERCA
   Date: 22/04/2023
@@ -10,22 +11,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    List<CuentaBancariaEntity> cuentas = (List<CuentaBancariaEntity>) request.getAttribute("cuentas");
-%>
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/tabla.css">
     <link rel="stylesheet" type="text/css" href="/formularioOp.css">
+    <link rel="stylesheet" type="text/css" href="/volverMenu.css">
 </head>
 <body>
-    <a href="redirect:/gestoria" class="boton">Volver menú</a>
-    <h1>Datos del cliente:</h1>
+    <div class="container">
+        <a href="/gestoria/inicio" class="boton">Volver menú</a>
+    </div>
+    <br><br>
+
+<h1>Datos del cliente:</h1>
     <jsp:include page="cabeceraUsuario.jsp"></jsp:include>
     <br><br>
     <div class="formulario">
-    <form:form action="/filtrarOperacion" modelAttribute="filtro" method="post">
+    <form:form action="/gestoria/filtrarOperacion" modelAttribute="filtro" method="post">
         <form:hidden path="id"></form:hidden>
         <label>Fecha </label><br>
         <label>Anterior/igual a:</label>
@@ -57,8 +60,8 @@
         <tbody>
     <h2>Cuentas bancarias e historial de operaciones</h2>
     <%
-        List<OperacionBancariaEntity> op = (List<OperacionBancariaEntity>) request.getAttribute("op");
-        for(OperacionBancariaEntity o:op){
+        List<OperacionBancariaDTO> op = (List<OperacionBancariaDTO>) request.getAttribute("op");
+        for(OperacionBancariaDTO o:op){
     %>
     <tr>
         <td><%=o.getCuentaBancariaByIdCuentaOrigen().getId()%></td>

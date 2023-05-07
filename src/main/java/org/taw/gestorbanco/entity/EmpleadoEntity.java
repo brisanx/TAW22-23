@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.EmpleadoDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -105,5 +107,12 @@ public class EmpleadoEntity {
 
     public void setSolicitudAltasByIdGestor(Collection<SolicitudAltaEntity> solicitudAltasByIdGestor) {
         this.solicitudAltasByIdGestor = solicitudAltasByIdGestor;
+    }
+
+    public EmpleadoDTO toDto(){
+        EmpleadoDTO em = new EmpleadoDTO();
+        em.setNombre(this.nombre);
+        em.setRol(this.rol);
+        return em;
     }
 }

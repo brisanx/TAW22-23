@@ -21,7 +21,7 @@
     <jsp:include page="cabeceraUsuario.jsp"></jsp:include>
   <br><br>
   <h2>Datos a rellenar:</h2>
-  <form:form action="/aceptarAlta" modelAttribute="cuentaNueva" method="post">
+  <form:form action="/gestoria/aceptarAlta" modelAttribute="cuentaNueva" method="post">
       <form:hidden path="user"></form:hidden>
       <form:hidden path="solId"></form:hidden>
       <div class="radio-buttons">

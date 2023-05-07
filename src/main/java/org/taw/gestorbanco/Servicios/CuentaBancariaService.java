@@ -1,0 +1,121 @@
+package org.taw.gestorbanco.Servicios;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+import org.taw.gestorbanco.dto.UsuarioDTO;
+import org.taw.gestorbanco.entity.*;
+import org.taw.gestorbanco.filtros.crudSospechoso;
+import org.taw.gestorbanco.repositories.ActivacionRepository;
+import org.taw.gestorbanco.repositories.AsignacionRepository;
+import org.taw.gestorbanco.repositories.CuentaBancariaRepository;
+import org.taw.gestorbanco.repositories.OperacionBancariaRepository;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class CuentaBancariaService {
+
+    Byte uno = 1;
+    Byte cero = 0;
+    @Autowired
+    protected CuentaBancariaRepository cuentaBancariaRepository;
+
+    @Autowired
+    protected OperacionBancariaRepository operacionBancariaRepository;
+
+    @Autowired
+    protected ActivacionRepository activacionRepository;
+    private AsignacionRepository asignacionRepository;
+
+    /*--------------------------------GESTORIA-----------------------------------*/
+
+    public List<CuentaBancariaDTO> tienenQueBloquearse(Timestamp fecha, Byte uno){
+        List<CuentaBancariaEntity> lista = cuentaBancariaRepository.filtroFecha(fecha, uno);
+        return this.conversion(lista);
+    }
+
+    public List<Timestamp> ultimaFechaOperacionBancaria(List<CuentaBancariaDTO> lista) {
+        ArrayList fechas = new ArrayList<Timestamp>();
+        lista.forEach((final CuentaBancariaDTO cu) -> fechas.add(cuentaBancariaRepository.verFechas(cu.getId())));
+        return fechas;
+    }
+
+    public void agregarCuentaSospechosa(crudSospechoso id){
+        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id.getId()).orElse(null);
+        cb.setSospechosa(uno);
+        cuentaBancariaRepository.save(cb);
+    }
+
+    public void eliminarCuentaSospechosa(crudSospechoso id){
+        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id.getId()).orElse(null);
+        cb.setSospechosa(cero);
+        cuentaBancariaRepository.save(cb);
+    }
+
+    public List<CuentaBancariaDTO> buscarCuentasSospechosas(){
+        List<CuentaBancariaEntity> cSospechosas = cuentaBancariaRepository.cuentasSospechosas(uno);
+        return this.conversion(cSospechosas);
+    }
+
+    public List<CuentaBancariaDTO> comienzoNoSospechosos(){
+        List<CuentaBancariaEntity> comienzo = cuentaBancariaRepository.findAll();
+        return this.conversion(comienzo);
+    }
+
+    public List<CuentaBancariaDTO> cuentasNoSospechosas(){
+        List<CuentaBancariaEntity> noSospechosos = cuentaBancariaRepository.noSospechosos(cero);
+        return this.conversion(noSospechosos);
+    }
+
+
+
+    public void aceptarActivacion (Integer id, Integer solID){
+        SolicitudActivacionEntity sol = activacionRepository.findById(solID).orElse(null);
+
+        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id).orElse(null);
+        cb.setActivo(uno);
+
+        OperacionBancariaEntity op = new OperacionBancariaEntity();
+        op.setCantidad(0.0);
+        op.setFecha(Timestamp.valueOf(LocalDateTime.now()));
+        op.setCuentaBancariaByIdCuentaDestino(cb);
+        op.setCuentaBancariaByIdCuentaOrigen(cb);
+        op.setUsuarioByUsuario(sol.getUsuarioByUsuarioId());
+
+        List<OperacionBancariaEntity> ops = (List<OperacionBancariaEntity>) cb.getOperacionBancariasById();
+        ops.add(op);
+        cb.setOperacionBancariasById(ops);
+
+        cuentaBancariaRepository.save(cb);
+        operacionBancariaRepository.save(op);
+        activacionRepository.deleteById(solID);
+    }
+
+    public void denegarActivacion(Integer solId){
+        activacionRepository.deleteById(solId);
+    }
+
+    public void desactivarCuenta(Integer id){
+        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id).orElse(null);
+        cb.setActivo(cero);
+        cuentaBancariaRepository.save(cb);
+    }
+
+    /*------------------------------------------------------------USUARIO-------------------------------*/
+    public List<CuentaBancariaDTO> obtenerCuentaBancaria(UsuarioDTO usuario){
+        List<Integer> asignacion = this.asignacionRepository.findByUsuarioId(usuario.getId());
+        List<CuentaBancariaEntity> lista = this.cuentaBancariaRepository.encontrarCuentaPorAsignacion(asignacion);
+
+        return this.conversion(lista);
+    }
+
+    public List<CuentaBancariaDTO> conversion(List<CuentaBancariaEntity> lista){
+        ArrayList cuentas = new ArrayList<CuentaBancariaDTO>();
+        lista.forEach((final CuentaBancariaEntity cu) -> cuentas.add(cu.toDto()));
+        return cuentas;
+    }
+}

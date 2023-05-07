@@ -1,4 +1,5 @@
-<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %><%--
+<%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
+<%@ page import="org.taw.gestorbanco.dto.UsuarioDTO" %><%--
   Created by IntelliJ IDEA.
   User: FERCA
   Date: 22/04/2023
@@ -12,7 +13,7 @@
 </head>
 <body>
 <%
-    UsuarioEntity usr = (UsuarioEntity) request.getAttribute("cliente");
+    UsuarioDTO usr = (UsuarioDTO) request.getAttribute("cliente");
 %>
 <table>
     <thead>

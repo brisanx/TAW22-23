@@ -2,6 +2,7 @@ package org.taw.gestorbanco.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.taw.gestorbanco.dto.CuentaBancariaDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
 
@@ -15,20 +16,16 @@ public interface CuentaBancariaRepository extends JpaRepository<CuentaBancariaEn
     public List<CuentaBancariaEntity> filtroFecha(Timestamp limite, Byte uno);
 
     @Query("SELECT MAX(o.fecha) FROM OperacionBancariaEntity o " +
-            "WHERE o.cuentaBancariaByIdCuentaOrigen IN :lista OR o.cuentaBancariaByIdCuentaDestino IN :lista " +
-            "GROUP BY CASE " +
-            "           WHEN o.cuentaBancariaByIdCuentaOrigen IN :lista THEN o.cuentaBancariaByIdCuentaOrigen.id " +
-            "           ELSE o.cuentaBancariaByIdCuentaDestino.id " +
-            "         END")
-    public List<Timestamp> verFechas(List<CuentaBancariaEntity> lista);
+            "WHERE o.cuentaBancariaByIdCuentaOrigen.id = :id OR o.cuentaBancariaByIdCuentaDestino.id = :id ")
+    public List<Timestamp> verFechas(Integer id);
 
 
     @Query("select c from CuentaBancariaEntity c where c.sospechosa = :uno")
     public List<CuentaBancariaEntity> cuentasSospechosas(Byte uno);
 
 
-    @Query("select c from CuentaBancariaEntity c where c not in :lista")
-    public List<CuentaBancariaEntity> noSospechosos(List<CuentaBancariaEntity> lista);
+    @Query("select c from CuentaBancariaEntity c where c.sospechosa = :cero")
+    public List<CuentaBancariaEntity> noSospechosos(Byte cero);
 
     @Query("select c from CuentaBancariaEntity c where c.id = " +
             "(select MAX(c2.id) from CuentaBancariaEntity c2)")
@@ -42,4 +39,7 @@ public interface CuentaBancariaRepository extends JpaRepository<CuentaBancariaEn
             "o.cuentaBancariaByIdCuentaOrigen.activo = :uno) " +
             "order by c.id")
     public List<CuentaBancariaEntity> encontrarTransferenciasSospechosas(List<CuentaBancariaEntity> sospechosas, Byte uno);
+
+    @Query("select c from CuentaBancariaEntity  c where c.id in :as")
+    public List<CuentaBancariaEntity> encontrarCuentaPorAsignacion(List<Integer> as);
 }

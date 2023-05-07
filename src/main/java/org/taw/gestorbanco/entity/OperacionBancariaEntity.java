@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.OperacionBancariaDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -23,6 +25,9 @@ public class OperacionBancariaEntity {
     @ManyToOne
     @JoinColumn(name = "id_cuenta_destino", referencedColumnName = "id", nullable = false)
     private CuentaBancariaEntity cuentaBancariaByIdCuentaDestino;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private UsuarioEntity usuarioByUsuario;
 
     public Integer getId() {
         return id;
@@ -75,5 +80,25 @@ public class OperacionBancariaEntity {
 
     public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaEntity cuentaBancariaByIdCuentaDestino) {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
+    }
+
+    public UsuarioEntity getUsuarioByUsuario() {
+        return usuarioByUsuario;
+    }
+
+    public void setUsuarioByUsuario(UsuarioEntity usuarioByUsuario) {
+        this.usuarioByUsuario = usuarioByUsuario;
+    }
+
+    public OperacionBancariaDTO toDto(){
+        OperacionBancariaDTO op = new OperacionBancariaDTO();
+
+        op.setId(this.id);
+        op.setCantidad(this.cantidad);
+        op.setFecha(this.fecha);
+        op.setCuentaBancariaByIdCuentaOrigen(this.cuentaBancariaByIdCuentaOrigen);
+        op.setCuentaBancariaByIdCuentaDestino(this.cuentaBancariaByIdCuentaDestino);
+
+        return op;
     }
 }

@@ -3,10 +3,9 @@ package org.taw.gestorbanco.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.taw.gestorbanco.Servicios.*;
+import org.taw.gestorbanco.dto.*;
 import org.taw.gestorbanco.entity.*;
 import org.taw.gestorbanco.filtros.clienteFiltro;
 import org.taw.gestorbanco.filtros.crudSospechoso;
@@ -14,6 +13,7 @@ import org.taw.gestorbanco.filtros.opbFiltro;
 import org.taw.gestorbanco.filtros.usuarioFiltro;
 import org.taw.gestorbanco.repositories.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,90 +21,86 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/gestoria")
 public class GestorController {
     Byte cero = 0;
     Byte uno = 1;
     @Autowired
-    protected UsuarioRepository usuarioRepository;
+    protected UsuarioService usuarioService;
 
     @Autowired
-    protected AltaRepository altaRepository;
+    protected SolAltaService solAltaService;
 
     @Autowired
-    protected DivisasRepository divisasRepository;
+    protected SolActivacionService solActivacionService;
 
     @Autowired
-    protected CuentaBancariaRepository cuentaBancariaRepository;
+    protected CuentaBancariaService cuentaBancariaService;
 
     @Autowired
-    protected ActivacionRepository activacionRepository;
+    protected AsignacionService asignacionService;
 
     @Autowired
-    protected OperacionBancariaRepository operacionBancariaRepository;
-
-    @Autowired
-    protected AsignacionRepository asignacionRepository;
+    protected OperacionBancariaService operacionBancariaService;
 
 
-    @GetMapping("/gestoria")
-    public String doListar(Model model){
+    @GetMapping("/inicio")
+    public String doListar(Model model, HttpSession session){
         usuarioFiltro uF = new usuarioFiltro();
         clienteFiltro cF = new clienteFiltro();
-        return  this.procesarFiltro(uF,cF, model);
+        return  this.procesarFiltro(uF,cF, model, session);
     }
 
     @PostMapping("/filtrarNombres")
-    public String doFiltrarN(@ModelAttribute("filtroN") usuarioFiltro usrF, Model model){
+    public String doFiltrarN(@ModelAttribute("filtroN") usuarioFiltro usrF, Model model, HttpSession session){
         clienteFiltro cF = new clienteFiltro();
-        return  this.procesarFiltro(usrF,cF, model);
+        return  this.procesarFiltro(usrF,cF, model, session);
     }
 
     @PostMapping("/filtrarTipo")
-    public String doFiltrarT (@ModelAttribute("filtroT") clienteFiltro cF, Model model){
+    public String doFiltrarT (@ModelAttribute("filtroT") clienteFiltro cF, Model model, HttpSession session){
         usuarioFiltro uF = new usuarioFiltro();
-        return this.procesarFiltro(uF, cF, model);
+        return this.procesarFiltro(uF, cF, model, session);
     }
 
-    public String procesarFiltro(usuarioFiltro usrF, clienteFiltro cF, Model model){
-        List<UsuarioEntity> lista;
-        System.out.println(cF.getTipo());
-        if((usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo() == null) || (usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo().equals(""))){
-            System.out.println("TODOS");
-            lista = usuarioRepository.findAll();
-        } else if (usrF == null || (usrF.getNombre() == null && usrF.getApellido() == null)) {
-            System.out.println("TIPOS");
-            lista = usuarioRepository.filtrarTipo(cF.getTipo());
-        } else if (cF.getTipo() == null && usrF.getNombre().equals("")) {
-            System.out.println("APELLIDOS");
-            lista = usuarioRepository.filtrarApellido(usrF.getApellido());
-        } else if (cF.getTipo() == null && usrF.getApellido().equals("")) {
-            System.out.println("NOMBRES");
-            lista = usuarioRepository.filtrarNombre(usrF.getNombre());
+    public String procesarFiltro(usuarioFiltro usrF, clienteFiltro cF, Model model, HttpSession session){
+        EmpleadoDTO empleado = (EmpleadoDTO) session.getAttribute("user");
+        String url = "";
+        System.out.println(empleado.getNombre());
+        if(empleado == null){
+            url = "principal";
         } else {
-            System.out.println("APELLIDOSNOMBRE");
-            System.out.println(usrF.getNombre());
-            System.out.println(usrF.getApellido());
-            lista = usuarioRepository.filtrarNombreApellido(usrF.getNombre(), usrF.getApellido());
+            List<UsuarioDTO> lista;
+            System.out.println(cF.getTipo());
+            if((usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo() == null) || (usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo().equals(""))){
+                System.out.println("TODOS");
+                lista = usuarioService.listarClientes();
+            } else {
+                lista = usuarioService.listarClientes(usrF.getNombre(), usrF.getApellido(), cF.getTipo());
+            }
+            model.addAttribute("filtroN", usrF);
+            model.addAttribute("filtroT", cF);
+
+            model.addAttribute("usuario", lista);
+
+            List<SolicitudAltaDTO> solicitudes = solAltaService.doListar();
+            model.addAttribute("pendientes", solicitudes);
+
+            List<SolicitudActivacionDTO> activaciones = solActivacionService.doListar();
+            model.addAttribute("activaciones", activaciones);
+
+            Timestamp fechaHace30Dias = Timestamp.valueOf(LocalDateTime.now().minus(30, ChronoUnit.DAYS));
+
+            List<CuentaBancariaDTO> menor30 = cuentaBancariaService.tienenQueBloquearse(fechaHace30Dias, uno);
+            List<Timestamp> fechas = cuentaBancariaService.ultimaFechaOperacionBancaria(menor30);
+            System.out.println("Cuentas " + menor30.size());
+            System.out.println("Fechas "+ fechas.size());
+            model.addAttribute("cDesactivar",menor30);
+            model.addAttribute("fechas", fechas);
+
+            url = "usuarios";
         }
-        model.addAttribute("filtroN", usrF);
-        model.addAttribute("filtroT", cF);
-
-        model.addAttribute("usuario", lista);
-
-        List<SolicitudAltaEntity> solicitudes = altaRepository.findAll();
-        model.addAttribute("pendientes", solicitudes);
-
-        List<SolicitudActivacionEntity> activaciones = activacionRepository.findAll();
-        model.addAttribute("activaciones", activaciones);
-
-        Timestamp fechaHace30Dias = Timestamp.valueOf(LocalDateTime.now().minus(30, ChronoUnit.DAYS));
-
-        List<CuentaBancariaEntity> menor30 = cuentaBancariaRepository.filtroFecha(fechaHace30Dias, uno);
-        List<Timestamp> fechas = cuentaBancariaRepository.verFechas(menor30);
-        model.addAttribute("cDesactivar",menor30);
-        model.addAttribute("fechas", fechas);
-
-        return "usuarios";
+        return url;
     }
 
     @GetMapping("/informacion")
@@ -119,7 +115,7 @@ public class GestorController {
     }
 
     public String procesarFiltroOp(@ModelAttribute("filtro") opbFiltro filtro, Integer userId, Model model){
-        UsuarioEntity user = usuarioRepository.findById(userId).orElse(null);
+        UsuarioDTO user = usuarioService.buscarUsuario(userId);
         if(filtro!=null) {
             System.out.println("Cantidad" + filtro.getCantidad());
             System.out.println("Fecha" + filtro.getFecha());
@@ -128,116 +124,73 @@ public class GestorController {
 
         }
 
-        List<Integer> asignaciones = asignacionRepository.cuentasAsignadasPorUsuario(userId);
-        List<OperacionBancariaEntity> operaciones = operacionBancariaRepository.operacionesPorAsignacion(asignaciones);
-        List<OperacionBancariaEntity> op = new ArrayList<>();
-        if((filtro.getCantidad() == null && filtro.getFecha() == null) || filtro.getCantidad() == null && filtro.getFecha().isEmpty()) {
-            filtro.setId(userId);
-            op = operacionBancariaRepository.operacionesPorAsignacion(asignaciones);
-        } else if (filtro.getCantidad() == null) {
-            System.out.println("1");
-            if(filtro.getMm()) {
-                op = operacionBancariaRepository.opsMenorFecha(operaciones, filtro.conversion());
-            } else{
-                System.out.println("1-2    " + filtro.conversion());
-                op = operacionBancariaRepository.opsMayorFecha(operaciones, filtro.conversion());
+        List<Integer> asignaciones = asignacionService.listaAsignacionesPorId(userId);
+        List<OperacionBancariaDTO> operaciones = new ArrayList<>();
+
+        try {
+            if((filtro.getCantidad() == null && filtro.getFecha() == null) || filtro.getCantidad() == null && filtro.getFecha().isEmpty()) {
+                filtro.setId(userId);
+                operaciones = operacionBancariaService.operacionesPorAignaciones(asignaciones);
+            } else  {
+                operaciones = operacionBancariaService.operacionesPorFiltro(filtro, asignaciones);
             }
-        } else if (filtro.getFecha().isEmpty()) {
-            System.out.println("2");
-            if(filtro.getMmc()){
-                op = operacionBancariaRepository.opsMenorCantidad(operaciones, filtro.getCantidad());
-            } else {
-                op = operacionBancariaRepository.opsMayorCantidad(operaciones, filtro.getCantidad());
-            }
-        } else {
-            System.out.println("3");
-            if(filtro.getMm() && filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMeMe(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else if (!filtro.getMm() && filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMaMe(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else if (filtro.getMm() && !filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMeMa(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else {
-                op = operacionBancariaRepository.opsMaMa(operaciones, filtro.getCantidad(), filtro.conversion());
-            }
+        } catch (NullPointerException e) {
+            System.out.println("Error");
         }
 
         model.addAttribute("filtro", filtro);
-        model.addAttribute("op", op);
+        model.addAttribute("op", operaciones);
         model.addAttribute("cliente", user);
         return "usuarioInfo";
     }
 
     @GetMapping("/volverGestoria")
     public String volverGestoria(){
-        return  "redirect:/gestoria";
+        return  "redirect:/gestoria/inicio";
     }
 
     @GetMapping("/aceptarAlta")
     public String doSolicitarAlta(@RequestParam("id") Integer id, @RequestParam("sol") Integer solID,
                                   Integer divisa){
         System.out.println(divisa);
-        DivisaEntity divisaSol = divisasRepository.findById(divisa).orElse(null);
+        solAltaService.aceptarSolicitud(id, solID, divisa);
+        solAltaService.eliminiarSolicitud(solID);
 
-        CuentaBancariaEntity cuentaNueva = new CuentaBancariaEntity();
-
-        cuentaNueva.setSaldo(0.0);
-        cuentaNueva.setMoneda(divisaSol.getNombre());
-        cuentaNueva.setSospechosa(cero);
-        cuentaNueva.setActivo(uno);
-        cuentaNueva.setDivisaByDivisaId(divisaSol);
-
-        cuentaBancariaRepository.save(cuentaNueva);
-        CuentaBancariaEntity laNueva = cuentaBancariaRepository.ultimaCuenta();
-
-        AsignacionEntity asignacion = new AsignacionEntity();
-        asignacion.setUsuarioId(id);
-        asignacion.setCuentaBancariaId(laNueva.getId());
-        System.out.println(asignacion.getUsuarioId().getClass() + "---" + asignacion.getCuentaBancariaId().getClass());
-        asignacionRepository.save(asignacion);
-
-        altaRepository.deleteById(solID);
-
-        return "redirect:/gestoria";
+        return "redirect:/gestoria/inicio";
     }
 
     @GetMapping("/denegarAlta")
     public String doDenegarAlta(@RequestParam("sol") Integer solID){
-        altaRepository.deleteById(solID);
-        return "redirect:/gestoria";
+        solAltaService.eliminiarSolicitud(solID);
+        return "redirect:/gestoria/inicio";
     }
 
     @PostMapping("/sospechoso/agregar")
     public String agregarSospechoso(@ModelAttribute("agragar") crudSospechoso id){
-        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id.getId()).orElse(null);
-        cb.setSospechosa(uno);
-        cuentaBancariaRepository.save(cb);
-
-        return "redirect:/sospechoso";
+        cuentaBancariaService.agregarCuentaSospechosa(id);
+        return "redirect:/gestoria/sospechoso";
     }
 
     @PostMapping("/sospechoso/eliminar")
     public String elimiarSospechosos(@ModelAttribute("eliminar") crudSospechoso id){
-        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id.getId()).orElse(null);
-        cb.setSospechosa(cero);
-        cuentaBancariaRepository.save(cb);
-        return "redirect:/sospechoso";
+        cuentaBancariaService.eliminarCuentaSospechosa(id);
+        return "redirect:/gestoria/sospechoso";
     }
 
     @GetMapping("/sospechoso")
     public String mostrarSospechosos(Model model){
-        List<CuentaBancariaEntity> cSospechosas = cuentaBancariaRepository.cuentasSospechosas(uno);
+        List<CuentaBancariaDTO> cSospechosas = cuentaBancariaService.buscarCuentasSospechosas();
         System.out.println("Sospechosas cantidad "+cSospechosas.size());
         if(cSospechosas.isEmpty()) {
-            //System.out.println("HAY Sospechosas");
-            List<CuentaBancariaEntity> comienzo = cuentaBancariaRepository.findAll();
+            List<CuentaBancariaDTO> comienzo = cuentaBancariaService.comienzoNoSospechosos();
             model.addAttribute("sospechosos", null);
             model.addAttribute("noSospechosos", comienzo);
         } else {
-            List<CuentaBancariaEntity> noSospechosos = cuentaBancariaRepository.noSospechosos(cSospechosas);
+            List<CuentaBancariaDTO> noSospechosos = cuentaBancariaService.cuentasNoSospechosas();
             model.addAttribute("noSospechosos", noSospechosos);
             model.addAttribute("sospechosos", cSospechosas);
         }
+
         crudSospechoso filtroA = new crudSospechoso();
         crudSospechoso filtroE = new crudSospechoso();
         model.addAttribute("filtroA", filtroA);
@@ -245,64 +198,45 @@ public class GestorController {
         model.addAttribute("cSospechosas", cSospechosas);
 
         if(cSospechosas.isEmpty()){
-            model.addAttribute("posSospechoso", null);
             model.addAttribute("opSospechosas", null);
         } else{
-            List<CuentaBancariaEntity> cuentasCuidado = cuentaBancariaRepository.encontrarTransferenciasSospechosas(cSospechosas, uno);
-            System.out.println("Cuentas "+ cuentasCuidado.size());
-            List<OperacionBancariaEntity> operaciones = operacionBancariaRepository.ultimasOperacionesSospechosas(cSospechosas, cuentasCuidado);
-            System.out.println("fechas "+ operaciones.size());
-            model.addAttribute("posSospechoso", cuentasCuidado);
+            List<OperacionBancariaDTO> operaciones = operacionBancariaService.operacionesSospechosas();
             model.addAttribute("opSospechosas", operaciones);
         }
-
 
         return "sospechosos";
     }
 
     @GetMapping("/aceptarActivacion")
     public String doAceptarActivacion(@RequestParam("id") Integer id, @RequestParam("sol") Integer solID){
-        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id).orElse(null);
-        cb.setActivo(uno);
+        cuentaBancariaService.aceptarActivacion(id, solID);
 
-        OperacionBancariaEntity op = new OperacionBancariaEntity();
-        op.setCantidad(0.0);
-        op.setFecha(Timestamp.valueOf(LocalDateTime.now()));
-        op.setCuentaBancariaByIdCuentaDestino(cb);
-        op.setCuentaBancariaByIdCuentaOrigen(cb);
-
-        List<OperacionBancariaEntity> ops = (List<OperacionBancariaEntity>) cb.getOperacionBancariasById();
-        ops.add(op);
-        cb.setOperacionBancariasById(ops);
-
-        cuentaBancariaRepository.save(cb);
-        operacionBancariaRepository.save(op);
-        activacionRepository.deleteById(solID);
-
-        return "redirect:/gestoria#solActivacion";
+        return "redirect:/gestoria/inicio";
     }
 
     @GetMapping("/denegarActivacion")
     public String doDenegarActivacion(@RequestParam("sol") Integer solID){
-        activacionRepository.deleteById(solID);
-        return "redirect:/gestoria#solActivacion";
+        cuentaBancariaService.denegarActivacion(solID);
+        return "redirect:/gestoria/inicio";
     }
     @GetMapping("/desactivarcuenta")
     public String desactivarCuenta(@RequestParam("idCuenta") Integer id){
-        CuentaBancariaEntity cb = cuentaBancariaRepository.findById(id).orElse(null);
-        cb.setActivo(cero);
-        cuentaBancariaRepository.save(cb);
+        cuentaBancariaService.desactivarCuenta(id);
 
-        return "redirect:/gestoria";
+        return "redirect:/gestoria/inicio";
     }
 
     @GetMapping("/bloquear")
     public String bloquearPorFraude(@RequestParam("id")Integer id) {
-        CuentaBancariaEntity cuenta = cuentaBancariaRepository.findById(id).orElse(null);
-        cuenta.setActivo(cero);
-        cuentaBancariaRepository.save(cuenta);
+        cuentaBancariaService.desactivarCuenta(id);
 
-        return "redirect:/sospechoso";
+        return "redirect:/gestoria/sospechoso";
+    }
+
+    @GetMapping("/cerrarSesion")
+    public String cerrarSesion(HttpSession session){
+        session.invalidate();
+        return "principal";
     }
 
 }

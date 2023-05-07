@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.AsignacionDTO;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -42,5 +44,14 @@ public class AsignacionEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cuentaBancariaId, usuarioId);
+    }
+
+    public AsignacionDTO toDto(){
+        AsignacionDTO as = new AsignacionDTO();
+
+        as.setCuentaId(this.cuentaBancariaId);
+        as.setUserId(this.usuarioId);
+
+        return as;
     }
 }

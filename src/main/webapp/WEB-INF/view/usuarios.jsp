@@ -5,6 +5,8 @@
 <%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="org.taw.gestorbanco.entity.SolicitudActivacionEntity" %>
+<%@ page import="org.springframework.web.bind.annotation.RequestMapping" %>
+<%@ page import="org.taw.gestorbanco.dto.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -17,21 +19,26 @@
 </head>
 
 <body>
+<%
+    EmpleadoDTO empleado = (EmpleadoDTO) session.getAttribute("user");
+%>
+<h3>Bienvenido <%=empleado.getNombre()%></h3><br>
 <p style="display: flex; justify-content: space-between;">
     <a href="#solAlta" style="order: 1"> Solicitudes de Alta </a>
     <a href="#solActivacion" style="order: 2"> Solicitudes Activación </a>
     <a href="#desactivar" style="order: 3"> Desactivar Cuentas </a>
-    <a href="/sospechoso" style="order: 4"> Gestión de Cuentas Sospechosas </a></p>
+    <a href="/gestoria/sospechoso" style="order: 4"> Gestión de Cuentas Sospechosas </a>
+    <a href="/gestoria/cerrarSesion" style="order: 5"> Cerrar Sesión</a></p>
 <h1>Usuarios</h1>
 <div class="formulario">
-    <form:form action="/filtrarNombres" modelAttribute="filtroN" method="post">
+    <form:form action="/gestoria/filtrarNombres" modelAttribute="filtroN" method="post">
         Nombre:<form:input path="nombre" maxlength="20" size="20"></form:input>
         Apellidos:<form:input path="apellido" maxlength="20" size="20"></form:input>
         <br>
         <form:button>Buscar</form:button>
     </form:form>
     <br>
-    <form:form action="/filtrarTipo" modelAttribute="filtroT" method="post">
+    <form:form action="/gestoria/filtrarTipo" modelAttribute="filtroT" method="post">
         <form:select path="tipo">
             <form:option value="">--Seleccione--</form:option>
             <form:option value="Particular">Particular</form:option>
@@ -57,11 +64,11 @@
     </thead>
     <tbody>
     <%
-        List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuario");
-        for (UsuarioEntity usr :usuarios) {
+        List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuario");
+        for (UsuarioDTO usr :usuarios) {
     %>
     <tr>
-        <td><%=usr.getId()%></td>
+        <td><%=usr.getIdentificacion()%></td>
         <td><%=usr.getNombre()%></td>
         <td><%=(usr.getApellido()==null)?"":usr.getApellido()%></td>
         <td><%=usr.getEmail()%></td>
@@ -69,7 +76,7 @@
         <td><%=(usr.getSubrol()==null)?"":usr.getSubrol()%></td>
         <td><%=usr.getDireccion()%></td>
         <td><%=usr.getTelefono()%></td>
-        <td><a href="/informacion?id=<%=usr.getId()%>">Más Información</a></td>
+        <td><a href="/gestoria/informacion?id=<%=usr.getId()%>">Más Información</a></td>
 
     </tr>
     <% } %>
@@ -93,8 +100,8 @@
     </tr>
     </thead>
     <%
-        List<SolicitudAltaEntity> pendientes = (List<SolicitudAltaEntity>) request.getAttribute("pendientes");
-        for (SolicitudAltaEntity pen : pendientes) {
+        List<SolicitudAltaDTO> pendientes = (List<SolicitudAltaDTO>) request.getAttribute("pendientes");
+        for (SolicitudAltaDTO pen : pendientes) {
     %>
     <tr>
         <td><%=pen.getUsuarioByUsuarioId().getIdentificacion()%></td>
@@ -103,8 +110,8 @@
         <td><%=pen.getUsuarioByUsuarioId().getAsignacionsById().size()%></td>
         <td><%=pen.getFechaSolicitud()%></td>
         <td><%=pen.getDivisaByDivisaId().getNombre()%></td>
-        <td> <a href="/aceptarAlta?id=<%=pen.getUsuarioByUsuarioId().getId()%>&sol=<%=pen.getIdSolicitud()%>&divisa=<%=pen.getDivisaByDivisaId().getId()%>">Aceptar</a></td>
-        <td> <a href="/denegarAlta?sol=<%=pen.getIdSolicitud()%>">Denegar</a></td>
+        <td> <a href="/gestoria/aceptarAlta?id=<%=pen.getUsuarioByUsuarioId().getId()%>&sol=<%=pen.getId()%>&divisa=<%=pen.getDivisaByDivisaId().getId()%>">Aceptar</a></td>
+        <td> <a href="/gestoria/denegarAlta?sol=<%=pen.getId()%>">Denegar</a></td>
     </tr>
 
     <%
@@ -129,17 +136,17 @@
         </tr>
         </thead>
         <%
-            List<SolicitudActivacionEntity> activaciones = (List<SolicitudActivacionEntity>) request.getAttribute("activaciones");
-            for (SolicitudActivacionEntity pen : activaciones) {
+            List<SolicitudActivacionDTO> activaciones = (List<SolicitudActivacionDTO>) request.getAttribute("activaciones");
+            for (SolicitudActivacionDTO pen : activaciones) {
         %>
         <tr>
             <td><%=pen.getCuentaBancariaByCuentaBancariaId().getId()%></td>
             <td><%=pen.getUsuarioByUsuarioId().getIdentificacion()%></td>
             <td><%=pen.getUsuarioByUsuarioId().getNombre()%></td>
-            <td><%=pen.getUsuarioByUsuarioId().getApellido()%></td>
+            <td><%=(pen.getUsuarioByUsuarioId().getApellido()==null)?"":pen.getUsuarioByUsuarioId().getApellido()%></td>
             <td><%=pen.getFechaSolicitud()%></td>
-            <td> <a href="/aceptarActivacion?id=<%=pen.getCuentaBancariaByCuentaBancariaId().getId()%>&sol=<%=pen.getId()%>">Aceptar</a></td>
-            <td> <a href="/denegarActivacion?sol=<%=pen.getId()%>">Denegar</a></td>
+            <td> <a href="/gestoria/aceptarActivacion?id=<%=pen.getCuentaBancariaByCuentaBancariaId().getId()%>&sol=<%=pen.getId()%>">Aceptar</a></td>
+            <td> <a href="/gestoria/denegarActivacion?sol=<%=pen.getId()%>">Denegar</a></td>
         </tr>
 
         <%
@@ -160,13 +167,13 @@
         </thread>
     <%
         List<Timestamp> fechas = (List<Timestamp>) request.getAttribute("fechas");
-        List<CuentaBancariaEntity> menor = (List<CuentaBancariaEntity>) request.getAttribute("cDesactivar");
+        List<CuentaBancariaDTO> menor = (List<CuentaBancariaDTO>) request.getAttribute("cDesactivar");
         for(int i=0; i<menor.size(); i++){
     %>
     <tr>
         <td><%=menor.get(i).getId()%></td>
         <td><%=fechas.get(i)%></td>
-        <td><a href="/desactivarcuenta?idCuenta=<%=menor.get(i).getId()%>"> Desactivar </a></td>
+        <td><a href="/gestoria/desactivarcuenta?idCuenta=<%=menor.get(i).getId()%>"> Desactivar </a></td>
     </tr>
 
     <%

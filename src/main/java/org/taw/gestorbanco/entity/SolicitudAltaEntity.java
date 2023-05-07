@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.SolicitudAltaDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -75,5 +77,16 @@ public class SolicitudAltaEntity {
 
     public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
         this.divisaByDivisaId = divisaByDivisaId;
+    }
+
+    public SolicitudAltaDTO toDto() {
+        SolicitudAltaDTO s = new SolicitudAltaDTO();
+        s.setId(this.idSolicitud);
+        s.setFechaSolicitud(this.fechaSolicitud);
+        s.setEmpleadoByIdGestor(this.empleadoByIdGestor);
+        s.setUsuarioByUsuarioId(this.usuarioByUsuarioId);
+        s.setDivisaByDivisaId(this.divisaByDivisaId);
+
+        return  s;
     }
 }

@@ -1,5 +1,8 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.SolicitudActivacionDTO;
+import org.taw.gestorbanco.dto.SolicitudAltaDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -75,5 +78,17 @@ public class SolicitudActivacionEntity {
 
     public void setCuentaBancariaByCuentaBancariaId(CuentaBancariaEntity cuentaBancariaByCuentaBancariaId) {
         this.cuentaBancariaByCuentaBancariaId = cuentaBancariaByCuentaBancariaId;
+    }
+
+    public SolicitudActivacionDTO toDto(){
+        SolicitudActivacionDTO sol = new SolicitudActivacionDTO();
+
+        sol.setId(this.id);
+        sol.setFechaSolicitud(this.fechaSolicitud);
+        sol.setEmpleadoByEmpleadoIdGestor(this.empleadoByEmpleadoIdGestor);
+        sol.setCuentaBancariaByCuentaBancariaId(this.cuentaBancariaByCuentaBancariaId);
+        sol.setUsuarioByUsuarioId(this.usuarioByUsuarioId);
+
+        return sol;
     }
 }

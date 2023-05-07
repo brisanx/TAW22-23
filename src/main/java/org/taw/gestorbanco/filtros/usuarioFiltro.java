@@ -6,6 +6,8 @@ public class usuarioFiltro {
 
 
     public usuarioFiltro() {
+        this.nombre = null;
+        this.apellido = null;
     }
 
     public String getNombre() {
