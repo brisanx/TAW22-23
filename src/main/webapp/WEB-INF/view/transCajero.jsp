@@ -1,6 +1,6 @@
-<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="org.taw.gestorbanco.dto.UsuarioDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -12,11 +12,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%
-    CuentaBancariaDTO corigen = (CuentaBancariaDTO) request.getAttribute("cOrigen");
+    //List<CuentaBancariaDTO> corigen = (List<CuentaBancariaDTO>) request.getAttribute("cOrigen");
+    UsuarioDTO user = (UsuarioDTO) request.getAttribute("user");
 %>
 <head>
     <title>Transferencia</title>
     <style>
+        table{
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+        }
         button {
             width: 200px;
             height: 110px;
@@ -36,15 +42,22 @@
 </head>
 <body>
 <h1 style="text-align: center">Realiza tu transferencia</h1>
-<form:form action="/cajero/confirmaTrans" method="post" modelAttribute="operacion">
-    <form:hidden path="id"/>
-    <form:hidden path="usuario"/>
-    <form:hidden path="fecha" value="<%=Timestamp.valueOf(LocalDateTime.now())%>"/>
-    Cuenta origen: <form:input readonly="true" path="cuentaBancariaByIdCuentaOrigen" value="<%=corigen.getId()%>"/><br>
-    Cantidad: <form:input path="cantidad"/><br>
-    Cuenta: <form:input path="cuentaBancariaByIdCuentaDestino"/><br>
-    <form:button>Realizar</form:button>
-</form:form>
+<table>
+    <tr>
+        <td>
+            <form:form action="/cajero/confirmaTrans" method="post" modelAttribute="operacion"><br>
+            <form:hidden path="id"/>
+            <form:hidden path="usuario" value="<%=user.getId()%>"/>
+            <form:hidden path="fecha" value="<%=Timestamp.valueOf(LocalDateTime.now())%>"/>
+            Cuenta origen (solo se muestran activas): <form:select path="cuentaBancariaByIdCuentaOrigen" items="${origen}" itemLabel="id" itemValue="id"/><br><br>
+            Cantidad: <form:input path="cantidad" size="6"/><br><br>
+            Cuenta destino: <form:input path="cuentaBancariaByIdCuentaDestino" maxlength="5" size="2"/><br><br>
+        </td>
+        <td><form:button>Realizar</form:button></td>
+    </form:form>
+    </tr>
+</table>
+
 
 </body>
 </html>

@@ -76,4 +76,13 @@ public class CuentaBancariaDTO {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public DivisaEntity getDivisaByDivisaId() {
+        return divisaByDivisaId;
+    }
+
+    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
+        this.divisaByDivisaId = divisaByDivisaId;
+    }
+
 }

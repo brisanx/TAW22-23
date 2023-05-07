@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dao.*;
 import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+import org.taw.gestorbanco.dto.SolicitudActivacionDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -54,4 +56,26 @@ public class SolicitudActivacionService {
 
         this.solicitudActivacionRepository.save(solicitud);
     }
-}
+
+    public void guardarSolicitud(SolicitudActivacionDTO dto) {
+        SolicitudActivacionEntity nuevaSolicitud = new SolicitudActivacionEntity();
+        nuevaSolicitud.setUsuarioByUsuarioId(this.usuarioRepository.findById(dto.getUsuarioByUsuarioId().getId()).orElse(null));
+        nuevaSolicitud.setFechaSolicitud(Timestamp.valueOf(LocalDateTime.now()));
+        nuevaSolicitud.setCuentaBancariaByCuentaBancariaId(this.cuentaBancariaRepository.findById(dto.getCuentaBancariaByCuentaBancariaId().getId()).orElse(null));
+        nuevaSolicitud.setEmpleadoByEmpleadoIdGestor(this.empleadoRepository.findById(dto.getEmpleadoByEmpleadoIdGestor().getIdGestor()).orElse(null));
+        this.solicitudActivacionRepository.save(nuevaSolicitud);
+    }
+
+    public SolicitudActivacionDTO buscarSolicitudActivacionPorUsuarioCuenta(UsuarioDTO u, CuentaBancariaDTO cb) {
+        UsuarioEntity usuario = this.usuarioRepository.findById(u.getId()).orElse(null);
+        CuentaBancariaEntity cuenta = this.cuentaBancariaRepository.findById(cb.getId()).orElse(null);
+        SolicitudActivacionEntity solicitud = this.solicitudActivacionRepository.buscarSolicitudActivacionPorUsuarioYCuenta(usuario, cuenta);
+
+        if (solicitud != null) {
+            return solicitud.toDTO();
+        } else {
+            return null;
+        }
+    }
+
+    }

@@ -11,4 +11,7 @@ public interface OperacionBancariaRepository extends JpaRepository<OperacionBanc
 
     @Query("SELECT op FROM OperacionBancariaEntity op WHERE op.cuentaBancariaByIdCuentaOrigen.id = :cuentaId")
     List<OperacionBancariaEntity> buscarOperacionesClientes(@Param("cuentaId")Integer cuentaBancariaId);
+
+    @Query("SELECT op FROM OperacionBancariaEntity op WHERE op.usuarioByUsuario.id = :usuarioId")
+    List<OperacionBancariaEntity> buscarOperacionesClientesUsr(@Param("usuarioId")Integer usuarioId);
 }

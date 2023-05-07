@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -138,5 +140,14 @@ public class CuentaBancariaEntity {
 
     public void setSolicitudActivacionsById(Collection<SolicitudActivacionEntity> solicitudActivacionsById) {
         this.solicitudActivacionsById = solicitudActivacionsById;
+    }
+    public CuentaBancariaDTO toDTO() {
+        CuentaBancariaDTO cuentaBancariaDTO = new CuentaBancariaDTO();
+        cuentaBancariaDTO.setId(id);
+        cuentaBancariaDTO.setSaldo(saldo);
+        cuentaBancariaDTO.setMoneda(moneda);
+        cuentaBancariaDTO.setSospechosa(sospechosa);
+        cuentaBancariaDTO.setActivo(activo);
+        return cuentaBancariaDTO;
     }
 }

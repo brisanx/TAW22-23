@@ -10,7 +10,6 @@
 <html>
 <%
     UsuarioDTO user = (UsuarioDTO) request.getAttribute("user");
-    CuentaBancariaDTO cuenta= (CuentaBancariaDTO) request.getAttribute("cuenta");
  %>
 <head>
     <title>Bienvenido <%=user.getNombre()%></title>
@@ -61,17 +60,17 @@
     <tr>
         <td><a href="/cajero/modificarDatos"><button>Modificar mis datos</button></a></td>
         <td><h1>Cuenta de <%=user.getNombre()%> <%=user.getApellido()%></h1></td>
-        <td><a href=""><button>Sacar dinero</button></a></td>
+        <td><a href="/cajero/sacarDinero"><button>Sacar dinero</button></a></td>
     </tr>
     <tr>
-        <td><a href=""><button>Hacer cambio de divisa</button></a></td>
-        <td><jsp:include page="cabeceraCliente.jsp"/></td>
+        <td><a href="/cajero/listarOP"><button>Ver listado de operaciones</button></a></td>
+        <td><jsp:include page="cabeceraCajero.jsp"/></td>
         <td><a href="/cajero/transferenciaCajero"><button>Hacer transferencia</button></a></td>
     </tr>
     <tr>
-        <td><a href=""><button>Ver listado de operaciones</button></a></td>
+        <td></td>
         <td><a href="/cajero/logout"><button id="exit">Cerrar sesión</button></a></td>
-        <td><a href=""><button>Solicitar desbloqueo</button></a></td>
+        <td></td>
     </tr>
 </table>
 

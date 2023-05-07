@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Jose Torres
+ * @author Jose Torres y Miguel Moya
  */
 @Service
 public class OperacionBancariaService {
@@ -31,6 +31,21 @@ public class OperacionBancariaService {
         List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesClientes(asignacion.getCuentaBancariaId());
 
         return this.listaOperacionesADTO(operaciones);
+    }
+    public List<OperacionBancariaDTO> listarTodasOperacionesClientes(UsuarioDTO usuario){
+        List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesClientesUsr(usuario.getId());
+        List<OperacionBancariaDTO> dtoList = new ArrayList<>();
+        for(OperacionBancariaEntity op:operaciones){
+            OperacionBancariaDTO dto = new OperacionBancariaDTO();
+            dto.setUsuario(op.getUsuarioByUsuario());
+            dto.setCantidad(op.getCantidad());
+            dto.setCuentaBancariaByIdCuentaDestino(op.getCuentaBancariaByIdCuentaDestino());
+            dto.setFecha(op.getFecha());
+            dto.setId(op.getId());
+            dto.setCuentaBancariaByIdCuentaOrigen(op.getCuentaBancariaByIdCuentaOrigen());
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
     public void guardarOperacionBancaria(OperacionBancariaDTO dto){
@@ -55,6 +70,19 @@ public class OperacionBancariaService {
         destino.setUsuarioByUsuario(origen.getUsuario());
         this.operacionBancariaRepository.save(destino);
 
+    }
+
+    public void guardarSacarDinero(OperacionBancariaDTO dto){
+        OperacionBancariaEntity operacion;
+        operacion = new OperacionBancariaEntity();
+
+        operacion.setFecha(Timestamp.valueOf(LocalDateTime.now()));
+        operacion.setCantidad(-dto.getCantidad());
+        operacion.setCuentaBancariaByIdCuentaDestino(dto.getCuentaBancariaByIdCuentaOrigen());
+        operacion.setCuentaBancariaByIdCuentaOrigen(dto.getCuentaBancariaByIdCuentaOrigen());
+        operacion.setUsuarioByUsuario(dto.getUsuario());
+
+        this.operacionBancariaRepository.save(operacion);
     }
 
 

@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.taw.gestorbanco.dto.CuentaBancariaDTO;
-import org.taw.gestorbanco.dto.OperacionBancariaDTO;
-import org.taw.gestorbanco.dto.UsuarioDTO;
-import org.taw.gestorbanco.service.CuentaBancariaService;
-import org.taw.gestorbanco.service.OperacionBancariaService;
-import org.taw.gestorbanco.service.UsuarioService;
+import org.taw.gestorbanco.dto.*;
+import org.taw.gestorbanco.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,6 +24,13 @@ public class CajeroController {
 
     @Autowired
     protected OperacionBancariaService operacionBancariaService;
+
+    @Autowired
+    protected DivisaService divisaService;
+    @Autowired
+    protected EmpleadoService empleadoService;
+    @Autowired
+    protected SolicitudActivacionService solicitudActivacionService;
 
     @GetMapping("/")
     protected String inicio(){
@@ -58,9 +62,16 @@ public class CajeroController {
     @GetMapping("/miCuenta")
     public String mostrarInfo(HttpSession session, Model model){
         UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
-        CuentaBancariaDTO cuenta = this.cuentaBancariaService.obtenerCuentaBancaria(usuario);
+        List<CuentaBancariaDTO> solicitudes = new ArrayList<>();
+        List<CuentaBancariaDTO> cuentas = this.cuentaBancariaService.obtenerCuentasBancarias(usuario);
         model.addAttribute("user", usuario);
-        model.addAttribute("cuenta", cuenta);
+        model.addAttribute("cuentas", cuentas);
+        for(CuentaBancariaDTO c:cuentas){
+            if(this.solicitudActivacionService.buscarSolicitudActivacionPorUsuarioCuenta(usuario, c)!=null){
+                solicitudes.add(this.solicitudActivacionService.buscarSolicitudActivacionPorUsuarioCuenta(usuario, c).getCuentaBancariaByCuentaBancariaId());
+            }
+        }
+        model.addAttribute("solicitudes", solicitudes);
         return "cajeroPrincipal";
     }
 
@@ -82,10 +93,16 @@ public class CajeroController {
     public String doTransferir(Model model, HttpSession sesion){
         OperacionBancariaDTO op = new OperacionBancariaDTO();
         UsuarioDTO user = (UsuarioDTO) sesion.getAttribute("user");
-        CuentaBancariaDTO origen = this.cuentaBancariaService.obtenerCuentaBancaria(user);
-
+        List<CuentaBancariaDTO> origenes = this.cuentaBancariaService.obtenerCuentasBancarias(user);
+        List<CuentaBancariaDTO> activas = new ArrayList<>();
+        for(CuentaBancariaDTO c:origenes){
+            if(c.getActivo()==1){
+                activas.add(c);
+            }
+        }
+        model.addAttribute("user", user);
         model.addAttribute("operacion", op);
-        model.addAttribute("cOrigen", origen);
+        model.addAttribute("origen", activas);
         return "transCajero";
     }
 
@@ -97,4 +114,71 @@ public class CajeroController {
 
         return "redirect:/cajero/miCuenta/";
     }
+
+    @GetMapping("/sacarDinero")
+    public String sacarDinero(Model model, HttpSession sesion){
+        OperacionBancariaDTO op = new OperacionBancariaDTO();
+        UsuarioDTO user = (UsuarioDTO) sesion.getAttribute("user");
+        List<CuentaBancariaDTO> origenes = this.cuentaBancariaService.obtenerCuentasBancarias(user);
+        List<CuentaBancariaDTO> activas = new ArrayList<>();
+        for(CuentaBancariaDTO c:origenes){
+            if(c.getActivo()==1){
+                activas.add(c);
+            }
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("operacion", op);
+        model.addAttribute("origen", activas);
+        return "sacarDinero";
+    }
+
+    @PostMapping("/confirmaSacar")
+    public String confirmaSacarDinero(@ModelAttribute("operacion") OperacionBancariaDTO op){
+        this.operacionBancariaService.guardarSacarDinero(op);
+        this.cuentaBancariaService.restarDineroSacado(op);
+
+        return "redirect:/cajero/miCuenta/";
+    }
+
+    @GetMapping("/listarOP")
+    public String doListar(Model model, HttpSession sesion){
+        UsuarioDTO user = (UsuarioDTO) sesion.getAttribute("user");
+        List<OperacionBancariaDTO> operaciones = this.operacionBancariaService.listarTodasOperacionesClientes(user);
+
+        model.addAttribute("ops", operaciones);
+        return "listarOpCajero";
+    }
+
+    @GetMapping("/cambiarDivisa")
+    public String doDivsa(@RequestParam("cuenta_id")Integer cuenta_id,Model model){
+        CuentaBancariaDTO cuenta = this.cuentaBancariaService.cuentaPorId(cuenta_id);
+        List<DivisaDTO> divisas = this.divisaService.buscarTodasLasDivisas();
+        model.addAttribute("cuenta", cuenta);
+        model.addAttribute("divisas", divisas);
+        return "cambioDivisaCajero";
+
+    }
+
+    @PostMapping("/confirmaCambioDivisa")
+    public String confirmaDivisa(@ModelAttribute("cuenta") CuentaBancariaDTO cuenta){
+        this.cuentaBancariaService.cambiarDivisa(cuenta);
+
+        return "redirect:/cajero/miCuenta/";
+    }
+
+    @GetMapping("/desbloqueo")
+    public String solicitarDesbloqueo(@RequestParam("cuenta_id") Integer cuenta_id ,HttpSession sesion){
+        UsuarioDTO usuarioActual = (UsuarioDTO) sesion.getAttribute("user");
+        SolicitudActivacionDTO nuevaSolicitud = new SolicitudActivacionDTO();
+        CuentaBancariaDTO cuenta = this.cuentaBancariaService.cuentaPorId(cuenta_id);
+        EmpleadoDTO gestor = this.empleadoService.buscarGestor();
+
+        nuevaSolicitud.setUsuarioByUsuarioId(usuarioActual);
+        nuevaSolicitud.setFechaSolicitud(Timestamp.valueOf(LocalDateTime.now()));
+        nuevaSolicitud.setCuentaBancariaByCuentaBancariaId(cuenta);
+        nuevaSolicitud.setEmpleadoByEmpleadoIdGestor(gestor);
+        this.solicitudActivacionService.guardarSolicitud(nuevaSolicitud);
+        return "redirect:/cajero/miCuenta/";
+    }
+
 }

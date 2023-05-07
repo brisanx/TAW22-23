@@ -110,5 +110,4 @@ public class UsuarioDTO {
         return Objects.hash(id);
     }
 
-
 }

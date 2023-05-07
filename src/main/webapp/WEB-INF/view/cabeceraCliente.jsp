@@ -1,4 +1,5 @@
 <%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaBancariaDTO cuenta = (CuentaBancariaDTO) request.getAttribute("cuenta");
+    List<CuentaBancariaDTO> cuentas = (List<CuentaBancariaDTO>) request.getAttribute("cuentas");
 %>
 <html>
 <head>
@@ -46,6 +47,10 @@ ${pageContext.session.id}
         <th>SOSPECHOSA</th>
         <th></th>
     </tr>
+    <%
+        for(CuentaBancariaDTO cuenta:cuentas){
+
+    %>
     <tr>
         <td><%=cuenta.getId()%></td>
         <td><%=cuenta.getSaldo()%></td>
@@ -85,6 +90,9 @@ ${pageContext.session.id}
             %>
         </td>
     </tr>
+    <%
+        }
+    %>
 </table>
 </body>
 </html>

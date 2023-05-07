@@ -42,4 +42,6 @@ public class DivisaDTO {
     public void setRatioDeCambio(Double ratioDeCambio) {
         this.ratioDeCambio = ratioDeCambio;
     }
+
+
 }

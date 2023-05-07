@@ -1,17 +1,13 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.CuentaBancariaEntity;
-import org.taw.gestorbanco.entity.EmpleadoEntity;
-import org.taw.gestorbanco.entity.UsuarioEntity;
-
 import java.sql.Timestamp;
 
 public class SolicitudActivacionDTO {
     private Integer id;
     private Timestamp fechaSolicitud;
-    private UsuarioEntity usuarioByUsuarioId;
-    private EmpleadoEntity empleadoByEmpleadoIdGestor;
-    private CuentaBancariaEntity cuentaBancariaByCuentaBancariaId;
+    private UsuarioDTO usuarioByUsuarioId;
+    private EmpleadoDTO empleadoByEmpleadoIdGestor;
+    private CuentaBancariaDTO cuentaBancariaByCuentaBancariaId;
 
     public Integer getId() {
         return id;
@@ -29,27 +25,28 @@ public class SolicitudActivacionDTO {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public UsuarioEntity getUsuarioByUsuarioId() {
+    public UsuarioDTO getUsuarioByUsuarioId() {
         return usuarioByUsuarioId;
     }
 
-    public void setUsuarioByUsuarioId(UsuarioEntity usuarioByUsuarioId) {
+    public void setUsuarioByUsuarioId(UsuarioDTO usuarioByUsuarioId) {
         this.usuarioByUsuarioId = usuarioByUsuarioId;
     }
 
-    public EmpleadoEntity getEmpleadoByEmpleadoIdGestor() {
+    public EmpleadoDTO getEmpleadoByEmpleadoIdGestor() {
         return empleadoByEmpleadoIdGestor;
     }
 
-    public void setEmpleadoByEmpleadoIdGestor(EmpleadoEntity empleadoByEmpleadoIdGestor) {
+    public void setEmpleadoByEmpleadoIdGestor(EmpleadoDTO empleadoByEmpleadoIdGestor) {
         this.empleadoByEmpleadoIdGestor = empleadoByEmpleadoIdGestor;
     }
 
-    public CuentaBancariaEntity getCuentaBancariaByCuentaBancariaId() {
+    public CuentaBancariaDTO getCuentaBancariaByCuentaBancariaId() {
         return cuentaBancariaByCuentaBancariaId;
     }
 
-    public void setCuentaBancariaByCuentaBancariaId(CuentaBancariaEntity cuentaBancariaByCuentaBancariaId) {
+    public void setCuentaBancariaByCuentaBancariaId(CuentaBancariaDTO cuentaBancariaByCuentaBancariaId) {
         this.cuentaBancariaByCuentaBancariaId = cuentaBancariaByCuentaBancariaId;
     }
+
 }
