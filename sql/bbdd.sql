@@ -121,6 +121,9 @@ CREATE TABLE IF NOT EXISTS `gestor_banco`.`conversacion` (
   `numero_mensaje` INT(11) NULL DEFAULT NULL,
   `empleado_id_gestor` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
+  `fecha_apertura` TIMESTAMP NULL DEFAULT NULL,
+  `fecha_cierre` TIMESTAMP NULL DEFAULT NULL,
+  `estado` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_conver`),
   INDEX `fk_conversacion_empleado1_idx` (`empleado_id_gestor` ASC) VISIBLE,
   INDEX `fk_conversacion_usuario1_idx` (`usuario_id` ASC) VISIBLE,
@@ -144,8 +147,10 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gestor_banco`.`mensaje` (
   `id_mensaje` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha` TIMESTAMP NULL DEFAULT NULL,
   `longitud` INT(11) NULL DEFAULT NULL,
   `texto` VARCHAR(500) NULL DEFAULT NULL,
+  `sender` VARCHAR(500) NULL DEFAULT NULL,
   `conversacion_id_conver` INT(11) NOT NULL,
   PRIMARY KEY (`id_mensaje`),
   INDEX `fk_mensaje_conversacion1_idx` (`conversacion_id_conver` ASC) VISIBLE,
