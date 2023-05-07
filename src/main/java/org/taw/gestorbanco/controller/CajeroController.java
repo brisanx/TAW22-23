@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.taw.gestorbanco.dto.*;
+import org.taw.gestorbanco.filtros.opbFiltro;
 import org.taw.gestorbanco.service.*;
 
 import javax.servlet.http.HttpSession;
@@ -62,7 +63,7 @@ public class CajeroController {
     @GetMapping("/miCuenta")
     public String mostrarInfo(HttpSession session, Model model){
         UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
-        List<CuentaBancariaDTO> solicitudes = new ArrayList<>();
+        List<CuentaBancariaDTO  > solicitudes = new ArrayList<>();
         List<CuentaBancariaDTO> cuentas = this.cuentaBancariaService.obtenerCuentasBancarias(usuario);
         model.addAttribute("user", usuario);
         model.addAttribute("cuentas", cuentas);
@@ -94,6 +95,7 @@ public class CajeroController {
         OperacionBancariaDTO op = new OperacionBancariaDTO();
         UsuarioDTO user = (UsuarioDTO) sesion.getAttribute("user");
         List<CuentaBancariaDTO> origenes = this.cuentaBancariaService.obtenerCuentasBancarias(user);
+        List<CuentaBancariaDTO> todasActivas = this.cuentaBancariaService.cuentasActivasTodas();
         List<CuentaBancariaDTO> activas = new ArrayList<>();
         for(CuentaBancariaDTO c:origenes){
             if(c.getActivo()==1){
@@ -103,6 +105,7 @@ public class CajeroController {
         model.addAttribute("user", user);
         model.addAttribute("operacion", op);
         model.addAttribute("origen", activas);
+        model.addAttribute("todasActivas", todasActivas);
         return "transCajero";
     }
 
@@ -143,10 +146,30 @@ public class CajeroController {
     @GetMapping("/listarOP")
     public String doListar(Model model, HttpSession sesion){
         UsuarioDTO user = (UsuarioDTO) sesion.getAttribute("user");
-        List<OperacionBancariaDTO> operaciones = this.operacionBancariaService.listarTodasOperacionesClientes(user);
+        opbFiltro filtro = null;
+        return procesarFiltro(filtro, user.getId(), model);
+    }
 
-        model.addAttribute("ops", operaciones);
+    public String procesarFiltro(opbFiltro filtro, Integer id, Model model){
+        UsuarioDTO user = this.usuarioService.usuarioPorId(id);
+        List<OperacionBancariaDTO> operaciones = this.operacionBancariaService.listarTodasOperacionesClientes(user, null);
+        List<OperacionBancariaDTO> op = new ArrayList<>();
+        if(filtro == null || (filtro.getCantidad() == null && filtro.getFecha() == null) || filtro.getCantidad() == null && filtro.getFecha().isEmpty()) {
+            op = operaciones;
+            filtro = new opbFiltro();
+            filtro.setId(id);
+        } else {
+            op = operacionBancariaService.listarTodasOperacionesClientes(user, filtro);
+        }
+
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("ops", op);
         return "listarOpCajero";
+    }
+
+    @PostMapping("/filtrarOperacion")
+    public String recibirFiltro(@ModelAttribute("filtro") opbFiltro filtro,  Model model){
+        return  this.procesarFiltro(filtro, filtro.getId(), model);
     }
 
     @GetMapping("/cambiarDivisa")

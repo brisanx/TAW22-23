@@ -24,7 +24,7 @@
             font-size: 18px;
         }
         button {
-            width: 200px;
+            width: 180px;
             height: 110px;
             background-color: #5b5b5b;
             border: none;
@@ -51,9 +51,9 @@
             <form:hidden path="fecha" value="<%=Timestamp.valueOf(LocalDateTime.now())%>"/>
             Cuenta origen (solo se muestran activas): <form:select path="cuentaBancariaByIdCuentaOrigen" items="${origen}" itemLabel="id" itemValue="id"/><br><br>
             Cantidad: <form:input path="cantidad" size="6"/><br><br>
-            Cuenta destino: <form:input path="cuentaBancariaByIdCuentaDestino" maxlength="5" size="2"/><br><br>
+            Cuenta destino (solo se muestran activas): <form:select path="cuentaBancariaByIdCuentaDestino" items="${todasActivas}" itemLabel="id" itemValue="id"/><br><br>
         </td>
-        <td><form:button>Realizar</form:button></td>
+        <td><form:button>Realizar transferencia</form:button></td>
     </form:form>
     </tr>
 </table>

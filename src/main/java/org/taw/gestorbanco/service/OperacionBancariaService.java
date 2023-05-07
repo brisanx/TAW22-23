@@ -8,6 +8,7 @@ import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.OperacionBancariaEntity;
+import org.taw.gestorbanco.filtros.opbFiltro;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -30,12 +31,40 @@ public class OperacionBancariaService {
                 this.asignacionRepository.findByUsuarioId(usuario.getId());
         List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesClientes(asignacion.getCuentaBancariaId());
 
-        return this.listaOperacionesADTO(operaciones);
+        return this.listaEntidadesADTO(operaciones);
     }
-    public List<OperacionBancariaDTO> listarTodasOperacionesClientes(UsuarioDTO usuario){
+    public List<OperacionBancariaDTO> listarTodasOperacionesClientes(UsuarioDTO usuario, opbFiltro filtro){
+        List<OperacionBancariaEntity> lista;
         List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesClientesUsr(usuario.getId());
+        if(filtro!=null){
+            if (filtro.getCantidad() == null) {
+                if (filtro.getMm()) {
+                    lista = operacionBancariaRepository.opsMenorFecha(operaciones, filtro.conversion());
+                } else {
+                    lista = operacionBancariaRepository.opsMayorFecha(operaciones, filtro.conversion());
+                }
+            } else if (filtro.getFecha().isEmpty()) {
+                if (filtro.getMmc()) {
+                    lista = operacionBancariaRepository.opsMenorCantidad(operaciones, filtro.getCantidad());
+                } else {
+                    lista = operacionBancariaRepository.opsMayorCantidad(operaciones, filtro.getCantidad());
+                }
+            } else {
+                if (filtro.getMm() && filtro.getMmc()) {
+                    lista = operacionBancariaRepository.opsMeMe(operaciones, filtro.getCantidad(), filtro.conversion());
+                } else if (!filtro.getMm() && filtro.getMmc()) {
+                    lista = operacionBancariaRepository.opsMaMe(operaciones, filtro.getCantidad(), filtro.conversion());
+                } else if (filtro.getMm() && !filtro.getMmc()) {
+                    lista = operacionBancariaRepository.opsMeMa(operaciones, filtro.getCantidad(), filtro.conversion());
+                } else {
+                    lista = operacionBancariaRepository.opsMaMa(operaciones, filtro.getCantidad(), filtro.conversion());
+                }
+            }
+        }else{
+            lista=operaciones;
+        }
         List<OperacionBancariaDTO> dtoList = new ArrayList<>();
-        for(OperacionBancariaEntity op:operaciones){
+        for(OperacionBancariaEntity op:lista){
             OperacionBancariaDTO dto = new OperacionBancariaDTO();
             dto.setUsuario(op.getUsuarioByUsuario());
             dto.setCantidad(op.getCantidad());
@@ -87,9 +116,9 @@ public class OperacionBancariaService {
 
 
 
-    private List<OperacionBancariaDTO> listaOperacionesADTO(List<OperacionBancariaEntity> operaciones) {
-        ArrayList<OperacionBancariaDTO> dtos = new ArrayList<OperacionBancariaDTO>();
-        operaciones.forEach((final OperacionBancariaEntity operacionBancaria) -> dtos.add(operacionBancaria.toDTO()));
+    private List<OperacionBancariaDTO> listaEntidadesADTO(List<OperacionBancariaEntity> lista) {
+        ArrayList dtos = new ArrayList<UsuarioDTO>();
+        lista.forEach(OperacionBancariaEntity -> dtos.add(OperacionBancariaEntity.toDTO()));
         return dtos;
     }
 }

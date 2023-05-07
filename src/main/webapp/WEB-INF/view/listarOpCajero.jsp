@@ -17,14 +17,16 @@
 <head>
     <title>Operaciones</title>
     <style>
-        td{
+        td {
             text-align: center;
         }
-        table{
+
+        table {
             margin: 0 auto;
             width: 90%;
             margin-bottom: 15px;
         }
+
         button {
             width: 200px;
             height: 110px;
@@ -37,17 +39,43 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #939393;
         }
-        a{
+
+        a {
             margin-left: 42%;
         }
     </style>
 </head>
 <body>
-<h1 style="text-align: center">Operaciones de <%=user.getNombre()%></h1>
+<h1 style="text-align: center">Operaciones de <%=user.getNombre()%> <%=user.getApellido()%>
+</h1>
+<table>
+    <tr>
+        <td>
+            <form:form action="/cajero/filtrarOperacion" modelAttribute="filtro" method="post">
+            <form:hidden path="id"></form:hidden>
+            <label>Por fecha:</label><br>
+            <label>Anterior/igual a:</label>
+            <input type="radio" name="mm" id="anterior" value="true"/>
+            <label>Posterior/igual a:</label>
+            <input type="radio" name="mm" id="posterior" value="false"/>
+            <input type="date" name="fecha" id="fecha"/><br><br>
 
+            <label>Por cantidad:</label><br>
+            <label>Menor/igual a:</label>
+            <input type="radio" name="mmc" id="anterior" value="true"/>
+            <label>Mayor/igual a:</label>
+            <input type="radio" name="mmc" id="posterior" value="false"/>
+            <input type="number" name="cantidad" id="cantidad" placeholder="Valor numérico"/><br><br>
+        </td>
+        <td>
+            <button type="submit">Filtrar</button>
+            </form:form></td>
+    </tr>
+</table>
 <table border="1">
     <tr>
         <th>ID</th>
@@ -57,19 +85,26 @@
         <th>C.DESTINO</th>
     </tr>
     <%
-        for(OperacionBancariaDTO op:operaciones){
+        for (OperacionBancariaDTO op : operaciones) {
     %>
     <tr>
-        <td><%=op.getId()%></td>
-        <td><%=op.getFecha()%></td>
-        <td><%=op.getCantidad()%></td>
-        <td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
-        <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%></td>
+        <td><%=op.getId()%>
+        </td>
+        <td><%=op.getFecha()%>
+        </td>
+        <td><%=op.getCantidad()%>
+        </td>
+        <td><%=op.getCuentaBancariaByIdCuentaOrigen().getId()%>
+        </td>
+        <td><%=op.getCuentaBancariaByIdCuentaDestino().getId()%>
+        </td>
     </tr>
     <%
         }
     %>
 </table>
-<a href="/cajero/miCuenta"><button>Volver</button></a>
+<a href="/cajero/miCuenta">
+    <button>Volver</button>
+</a>
 </body>
 </html>

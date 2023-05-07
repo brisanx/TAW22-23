@@ -82,4 +82,9 @@ public class UsuarioService {
 
         this.usuarioRepository.save(usuario);
     }
+
+    public UsuarioDTO usuarioPorId(Integer id){
+        UsuarioEntity user = this.usuarioRepository.getById(id);
+        return user.toDTO();
+    }
 }

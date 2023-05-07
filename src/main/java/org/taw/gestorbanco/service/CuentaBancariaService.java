@@ -117,4 +117,14 @@ public class CuentaBancariaService {
         cuenta.setMoneda(nueva.getNombre());
         this.cuentaBancariaRepository.save(cuenta);
     }
+
+    public List<CuentaBancariaDTO> cuentasActivasTodas(){
+        List<CuentaBancariaEntity>cEntity = this.cuentaBancariaRepository.cuentasActivas();
+        List<CuentaBancariaDTO> dtoList = new ArrayList<>();
+        for(CuentaBancariaEntity c:cEntity){
+            CuentaBancariaDTO dto = c.toDTO();
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 }

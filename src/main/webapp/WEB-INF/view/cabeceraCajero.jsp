@@ -45,7 +45,6 @@ ${pageContext.session.id}
     <th>SALDO</th>
     <th>DIVISA</th>
     <th>ACTIVIDAD</th>
-    <th>SOSPECHOSA</th>
     <th></th>
     <th></th>
   </tr>
@@ -66,19 +65,6 @@ ${pageContext.session.id}
       } else {
       %>
       Inactiva
-      <%
-        }
-      %>
-    </td>
-    <td>
-      <%
-        if(cuenta.getSospechosa() == 0){
-      %>
-      No
-      <%
-      } else {
-      %>
-      Si
       <%
         }
       %>

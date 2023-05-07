@@ -52,7 +52,7 @@
       Cantidad: <form:input path="cantidad" size="6"/><br><br>
       <form:hidden path="cuentaBancariaByIdCuentaDestino" value="1"/> <br><br>
     </td>
-    <td><form:button>Realizar</form:button></td>
+    <td><form:button>Retirar</form:button></td>
     </form:form>
   </tr>
 </table>
