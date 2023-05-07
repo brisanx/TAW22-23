@@ -6,6 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<MensajeEntity> mensajes = (List<MensajeEntity>) request.getAttribute("mensajes");
+    Boolean lectura = (Boolean) request.getAttribute("lectura");
 %>
 <html>
 <head>
@@ -98,7 +99,7 @@
         </p>
     </c:if>
 
-    <h1>Listado de conversaciones</h1>
+    <h1>Mensajes conversaciones</h1>
 
     <div id="outerDivWrapper">
         <div id="outerDiv">
@@ -117,9 +118,11 @@
             </div>
         </div>
     </div>
+    <% if (lectura)  {%>
     <form action="/home/user/conversacion/chat/insertar" method="post">
         <input type="text" name="texto"> <button type="submit">Enviar</button>
     </form>
+    <% } %>
     <form action="/home/user/conversacion" method="get">
         <button type="submit">Volver a gestión conversaciones</button>
     </form>

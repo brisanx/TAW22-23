@@ -105,6 +105,17 @@ public class ConversacionService {
          return this.mensajeRepository.findMensajeEntitiesByConversacionByConversacionIdConver(conversacion);
      }
 
+    public List<MensajeEntity> listarMensajesUser(int idUser){
+         List<ConversacionEntity> conversaciones = this.conversacionRepository.findConversacionEntitiesByUsuarioByUsuarioId(this.usuarioRepository.findById(idUser).get());
+            List<MensajeEntity> mensajes = new ArrayList<>();
+
+            for (ConversacionEntity conversacion : conversaciones) {
+                mensajes.addAll(conversacion.getMensajesByIdConver());
+            }
+
+        return mensajes;
+    }
+
      public List<EmpleadoEntity> todosLosAsistentes(){
         return this.empleadoRepository.todosLosAsistentes();
     }
@@ -112,7 +123,7 @@ public class ConversacionService {
     public List<UsuarioEntity> todosLosUsuarios(){
         return this.usuarioRepository.findAll();
     }
-     public List<ConversacionEntity> buscarQueryConversacionesEntity(int empleadoId, int usuarioId, int estado, Timestamp fechaApertura, Timestamp fechaCierre, int numeroMensaje) {
+     public List<ConversacionEntity> buscarQueryConversacionesEntity(int empleadoId, int usuarioId, int estado, Timestamp fechaApertura, Timestamp fechaCierre, int numeroMensaje, String order) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ConversacionEntity> query = cb.createQuery(ConversacionEntity.class);
         Root<ConversacionEntity> conversacionEntityRoot = query.from(ConversacionEntity.class);
@@ -135,7 +146,7 @@ public class ConversacionService {
         if (numeroMensaje != -1) {
             predicates.add(cb.equal(conversacionEntityRoot.get("numeroMensaje"), numeroMensaje));
         }
-        query.select(conversacionEntityRoot).where(predicates.toArray(new Predicate[]{}));
+        query.select(conversacionEntityRoot).where(predicates.toArray(new Predicate[]{})).orderBy(cb.asc(conversacionEntityRoot.get(order)));
 
          return entityManager.createQuery(query)
                  .getResultList();

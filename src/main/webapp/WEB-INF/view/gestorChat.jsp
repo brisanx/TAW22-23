@@ -122,10 +122,21 @@
                      <option value="2">Cerrado</option>
                </select>
            </td>
+        </tr>
+         <tr>
            <td>
                Numero mensajes:
                <input type="number" name="numeroMensajesInternal">
               </td>
+             <td>
+                 Ordernacion:
+                 <select name="order">
+                     <option value="idConver"> Id </option>
+                     <option value="empleadoByEmpleadoIdGestor">Asistente</option>
+                     <option value="usuarioByUsuarioId">Usuario</option>
+                     <option value="estado">Estado</option>
+                 </select>
+             </td>
          <td>
           <button type="submit">Buscar conversacion</button>
          </td>
@@ -146,16 +157,19 @@
             for (ConversacionEntity conv: conversaciones) {
         %>
         <tr>
-            <td><%= conv.getEmpleadoByEmpleadoIdGestor().getNombre() %></td>
-            <td><%= conv.getUsuarioByUsuarioId().getEmail() %></td>
+            <td><%= conv.getEmpleadoByEmpleadoIdGestor().getIdGestor() %> <%= conv.getEmpleadoByEmpleadoIdGestor().getNombre() %></td>
+            <td><%= conv.getUsuarioByUsuarioId().getId() %> <%= conv.getUsuarioByUsuarioId().getEmail() %></td>
             <td><%= conv.getNumeroMensaje() %></td>
             <td><% if (conv.getEstado()==2)  {%> Cerrado <% }  else {%> Abierto <% }%>  </td>
             <td><%= conv.getFechaApertura() %></td>
             <td><%= conv.getFechaCierre() %></td>
             <td> <% if (conv.getEstado()!=2)  {%> <form action="/home/gestor/conversacion/chat/<%=conv.getIdConver()%>" method="get">
                 <button type="submit">Acceder chat</button>
-            </form> <% }%> </td>
-
+            </form> <% }%>
+                <% if (conv.getEstado()==2)  {%> <form action="/home/gestor/conversacion/lectura/chat/<%=conv.getIdConver()%>" method="get">
+                    <button type="submit">Leer chat</button>
+                </form> <% }%>
+            </td>
 
         </tr>
 

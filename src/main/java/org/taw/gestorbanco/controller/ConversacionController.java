@@ -40,6 +40,17 @@ public class ConversacionController {
         session.setAttribute("sender",usuarioDTO.getEmail());
         session.setAttribute("id",id);
         model.addAttribute("mensajes", this.conversacionService.listarMensajes(Integer.parseInt(id)));
+        model.addAttribute("lectura", true);
+        return "chat";
+    }
+
+    @GetMapping("/home/user/conversacion/user/chat/{id}")
+    public String chatUserConversacion(@PathVariable String id ,  Model model, HttpSession session){
+        UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("user");
+        session.setAttribute("sender",usuarioDTO.getEmail());
+        session.setAttribute("id",id);
+        model.addAttribute("mensajes", this.conversacionService.listarMensajes(Integer.parseInt(id)));
+        model.addAttribute("lectura", true);
         return "chat";
     }
 
@@ -63,6 +74,7 @@ public class ConversacionController {
         String id= session.getAttribute("id").toString();
         this.conversacionService.crearMensaje(Integer.parseInt(id),sender,texto);
         model.addAttribute("mensajes", this.conversacionService.listarMensajes(Integer.parseInt(id)));
+        model.addAttribute("lectura", true);
         return "chat";
     }
 }
