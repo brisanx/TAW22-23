@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import java.util.List;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo, Óscar Hidalgo Puertas
+ */
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
     @Query("select u from UsuarioEntity u where u.email = :user and u.contrasena = :password")
     public UsuarioEntity autenticar (@Param("user") String user, @Param("password")String password);

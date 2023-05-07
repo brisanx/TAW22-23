@@ -1,11 +1,7 @@
 package org.taw.gestorbanco.dto;
 
-import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.DivisaEntity;
-import org.taw.gestorbanco.entity.OperacionBancariaEntity;
-import org.taw.gestorbanco.entity.SolicitudActivacionEntity;
 
-import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -17,11 +13,9 @@ public class CuentaBancariaDTO {
     private Double saldo;
     private Byte sospechosa;
     private Byte activo;
-    private Collection<AsignacionEntity> asignacionsById;
-    private DivisaEntity divisaByDivisaId;
-    private Collection<OperacionBancariaEntity> operacionBancariasById;
-    private Collection<OperacionBancariaEntity> operacionBancariasById_0;
-    private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
+
+    private DivisaDTO divisaByDivisaId;
+
 
     public CuentaBancariaDTO() {
     }
@@ -65,11 +59,11 @@ public class CuentaBancariaDTO {
     public void setActivo(Byte activo) {
         this.activo = activo;
     }
-    public DivisaEntity getDivisaByDivisaId() {
+    public DivisaDTO getDivisaByDivisaId() {
         return divisaByDivisaId;
     }
 
-    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
+    public void setDivisaByDivisaId(DivisaDTO divisaByDivisaId) {
         this.divisaByDivisaId = divisaByDivisaId;
     }
 

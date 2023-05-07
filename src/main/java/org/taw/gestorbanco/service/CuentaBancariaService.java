@@ -11,7 +11,9 @@ import org.taw.gestorbanco.dto.CuentaBancariaDTO;
 import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 import org.taw.gestorbanco.entity.CuentaBancariaEntity;
 import org.taw.gestorbanco.entity.DivisaEntity;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo
+ */
 @Service
 public class CuentaBancariaService {
     @Autowired
@@ -54,11 +56,12 @@ public class CuentaBancariaService {
     public void cambiarDivisa(CuentaBancariaDTO dto){
         CuentaBancariaEntity cuenta = this.cuentaBancariaRepository.findById(dto.getId()).orElse(null);
         DivisaEntity antigua = this.divisaRepository.buscarPorMoneda(dto.getMoneda());
-
-        cuenta.setSaldo((dto.getSaldo()/antigua.getRatioDeCambio())*dto.getDivisaByDivisaId().getRatioDeCambio());
         DivisaEntity nueva = this.divisaRepository.getById(dto.getDivisaByDivisaId().getId());
 
+        cuenta.setSaldo((dto.getSaldo()/antigua.getRatioDeCambio())*nueva.getRatioDeCambio());
+
         cuenta.setMoneda(nueva.getNombre());
+        cuenta.setDivisaByDivisaId(nueva);
         this.cuentaBancariaRepository.save(cuenta);
     }
 }

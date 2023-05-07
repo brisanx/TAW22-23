@@ -12,7 +12,9 @@ import org.taw.gestorbanco.ui.usuarioFiltro;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo
+ */
 @Service
 public class UsuarioService {
     @Autowired

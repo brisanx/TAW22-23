@@ -7,7 +7,9 @@ import org.taw.gestorbanco.entity.AsignacionEntity;
 import org.taw.gestorbanco.entity.AsignacionEntityPK;
 
 import java.util.List;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo, Óscar Hidalgo Puertas
+ */
 public interface AsignacionRepository extends JpaRepository<AsignacionEntity, AsignacionEntityPK> {
 
     @Query("select a from AsignacionEntity a where a.usuarioId= :id")

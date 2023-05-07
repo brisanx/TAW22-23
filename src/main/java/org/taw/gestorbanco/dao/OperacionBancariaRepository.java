@@ -8,7 +8,9 @@ import org.taw.gestorbanco.entity.OperacionBancariaEntity;
 
 import java.sql.Timestamp;
 import java.util.List;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo, Óscar Hidalgo Puertas
+ */
 public interface OperacionBancariaRepository extends JpaRepository<OperacionBancariaEntity, Integer> {
     @Query("select o from OperacionBancariaEntity o where o.cuentaBancariaByIdCuentaOrigen.id= :id")
     List<OperacionBancariaEntity> buscarOperacionesEmpresa(@Param("id") Integer id);

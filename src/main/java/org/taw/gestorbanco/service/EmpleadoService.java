@@ -8,7 +8,9 @@ import org.taw.gestorbanco.entity.EmpleadoEntity;
 
 import java.util.List;
 import java.util.Random;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo
+ */
 @Service
 public class EmpleadoService {
     @Autowired

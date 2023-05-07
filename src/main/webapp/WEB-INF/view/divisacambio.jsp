@@ -21,7 +21,7 @@
     <form:hidden path="moneda"/>
     <form:hidden path="saldo"/>
   Seleccione a qué divisa quiere cambiar:
-  <form:select path="divisaByDivisaId">
+  <form:select path="divisaByDivisaId.id">
     <form:options items="${divisas}" itemValue="id" itemLabel="nombre" />
   </form:select>
     <form:button>Guardar cambio</form:button>

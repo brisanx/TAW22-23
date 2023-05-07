@@ -12,7 +12,9 @@ import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
+/**
+ * @author Alba Sánchez Ibáñez, Fernando Calvo Díaz, José Torres Postigo, Miguel Moya Castillo
+ */
 @Service
 public class SolicitudAltaService {
     @Autowired
