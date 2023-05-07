@@ -42,10 +42,8 @@ public class ConversacionController {
 
     @GetMapping("/home/user/conversacion/chat/cerrar/{id}")
     public String chatCerrarConversacion(@PathVariable String id ,  Model model, HttpSession session){
-        UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("user");;
         this.conversacionService.cerrarConversacion(Integer.parseInt(id));
-        model.addAttribute("conversaciones", this.conversacionService.listarConversaciones(usuarioDTO));
-        return "usuarioChat";
+        return "redirect:/home/user/conversacion";
 
     }
 
@@ -53,10 +51,7 @@ public class ConversacionController {
     public String chatInsertarConversacion(@RequestParam int gestor, Model model, HttpSession session){
         UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("user");;
         this.conversacionService.crearConversacion(usuarioDTO.getId(), gestor);
-        List<EmpleadoEntity> gestores = conversacionService.getTodosLosGestores();
-        model.addAttribute("gestores", gestores);
-        model.addAttribute("conversaciones", this.conversacionService.listarConversaciones(usuarioDTO));
-        return "usuarioChat";
+        return "redirect:/home/user/conversacion";
     }
 
     @PostMapping("/home/user/conversacion/chat/insertar")
