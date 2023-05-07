@@ -214,7 +214,7 @@
     </table>
 <%
     } else {
-            out.println("Su solicitud de alta no ha sido aceptada todavía. Por lo tanto, no tiene acceso a la cuenta de la empresa");
+            out.println("Acceso a cuenta de la empresa inexistente. No puede realizar operaciones");
     }
 %>
     <%

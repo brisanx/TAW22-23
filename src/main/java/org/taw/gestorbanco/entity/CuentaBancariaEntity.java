@@ -130,7 +130,6 @@ public class CuentaBancariaEntity {
         this.solicitudActivacionsById = solicitudActivacionsById;
     }
 
-
     public CuentaBancariaDTO toDTO() {
         CuentaBancariaDTO cuentaBancariaDTO = new CuentaBancariaDTO();
         cuentaBancariaDTO.setId(id);

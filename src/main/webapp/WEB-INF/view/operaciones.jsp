@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="org.taw.gestorbanco.entity.OperacionBancariaEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.taw.gestorbanco.dto.OperacionBancariaDTO" %><%--
   Created by IntelliJ IDEA.
   User: Alba Sánchez Ibáñez
   Date: 06/05/2023
@@ -9,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  List<OperacionBancariaEntity> op = (List<OperacionBancariaEntity>) request.getAttribute("op");
+  List<OperacionBancariaDTO> op = (List<OperacionBancariaDTO>) request.getAttribute("op");
 %>
 <html>
 <head>
@@ -51,7 +52,7 @@
       <th>Personal encargado</th>
     </tr>
     <%
-      for(OperacionBancariaEntity o : op) {
+      for(OperacionBancariaDTO o : op) {
     %>
     <tr>
       <td><%= o.getId() %></td>
@@ -59,7 +60,7 @@
       <td><%= o.getCantidad()%></td>
       <td><%= o.getCuentaBancariaByIdCuentaOrigen().getId()%></td>
       <td><%= o.getCuentaBancariaByIdCuentaDestino().getId() %></td>
-      <td><%= o.getUsuarioByUsuario().getId() %></td>
+      <td><%= o.getUsuario().getId() %></td>
     </tr>
     <%
       }

@@ -30,8 +30,6 @@ public class SolicitudAltaService {
         solicitudEmpresa.setIdSolicitud(dto.getIdSolicitud());
         solicitudEmpresa.setFechaSolicitud(Timestamp.valueOf(LocalDateTime.now()));
 
-        System.out.println("PRUEBA 3" + dto.getUsuarioByUsuarioId().getEmail());
-
         UsuarioEntity personal = this.usuarioRepository.findByEmail(dto.getUsuarioByUsuarioId().getEmail());
         solicitudEmpresa.setUsuarioByUsuarioId(personal);
         solicitudEmpresa.setEmpleadoByIdGestor(empleadoRepository.findById(dto.getEmpleadoByIdGestor().getIdGestor()).orElse(null));

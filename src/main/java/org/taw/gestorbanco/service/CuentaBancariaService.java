@@ -1,9 +1,11 @@
 package org.taw.gestorbanco.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dao.AsignacionRepository;
 import org.taw.gestorbanco.dao.CuentaBancariaRepository;
+import org.taw.gestorbanco.dao.DivisaRepository;
 import org.taw.gestorbanco.dao.OperacionBancariaRepository;
 import org.taw.gestorbanco.dto.CuentaBancariaDTO;
 import org.taw.gestorbanco.dto.OperacionBancariaDTO;
@@ -20,6 +22,8 @@ public class CuentaBancariaService {
 
     @Autowired
     protected OperacionBancariaRepository operacionBancariaRepository;
+    @Autowired
+    protected DivisaRepository divisaRepository;
 
 
     public CuentaBancariaDTO buscarCuenta(Integer cuentaBancariaId) {
@@ -47,4 +51,14 @@ public class CuentaBancariaService {
         this.cuentaBancariaRepository.save(cuentaDestino);
     }
 
+    public void cambiarDivisa(CuentaBancariaDTO dto){
+        CuentaBancariaEntity cuenta = this.cuentaBancariaRepository.findById(dto.getId()).orElse(null);
+        DivisaEntity antigua = this.divisaRepository.buscarPorMoneda(dto.getMoneda());
+
+        cuenta.setSaldo((dto.getSaldo()/antigua.getRatioDeCambio())*dto.getDivisaByDivisaId().getRatioDeCambio());
+        DivisaEntity nueva = this.divisaRepository.getById(dto.getDivisaByDivisaId().getId());
+
+        cuenta.setMoneda(nueva.getNombre());
+        this.cuentaBancariaRepository.save(cuenta);
+    }
 }

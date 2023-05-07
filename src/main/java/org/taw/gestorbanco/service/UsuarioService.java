@@ -3,8 +3,16 @@ package org.taw.gestorbanco.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dao.UsuarioRepository;
+import org.taw.gestorbanco.dto.DivisaDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
+import org.taw.gestorbanco.entity.DivisaEntity;
 import org.taw.gestorbanco.entity.UsuarioEntity;
+import org.taw.gestorbanco.ui.subrolFiltro;
+import org.taw.gestorbanco.ui.usuarioFiltro;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UsuarioService {
     @Autowired
@@ -67,5 +75,30 @@ public class UsuarioService {
     public UsuarioDTO buscarPorId(Integer id) {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(null);
         return usuario.toDTO();
+    }
+
+    public List<UsuarioDTO> listarEmpresaUsuariosSocioAutorizado(String identificacion) {
+        List<UsuarioEntity> usuarios = this.usuarioRepository.findEmpresaUsuariosSocioAutorizado(identificacion);
+        return this.listaEntidadesADTO(usuarios);
+    }
+    protected List<UsuarioDTO> listaEntidadesADTO(List<UsuarioEntity> lista) {
+        ArrayList dtos = new ArrayList<UsuarioDTO>();
+        lista.forEach(UsuarioEntity -> dtos.add(UsuarioEntity.toDTO()));
+        return dtos;
+    }
+
+    public List<UsuarioDTO> listarPersonal(subrolFiltro cF, usuarioFiltro usrF, String identificacion) {
+        List<UsuarioEntity> lista;
+        if (usrF == null || (usrF.getNombre() == null && usrF.getApellido() == null)) {
+            lista = usuarioRepository.filtrarTipoSubrolEmpresa(cF.getTipo(), identificacion);
+        } else if (cF.getTipo() == null && usrF.getNombre().equals("")) {
+            lista =  usuarioRepository.filtrarApellidoEmpresa(usrF.getApellido(), identificacion);
+        } else if (cF.getTipo() == null && usrF.getApellido().equals("")) {
+            lista =  usuarioRepository.filtrarNombreEmpresa(usrF.getNombre(), identificacion);
+        } else {
+            lista =  usuarioRepository.filtrarNombreApellidoEmpresa(usrF.getNombre(), usrF.getApellido(), identificacion);
+        }
+
+        return this.listaEntidadesADTO(lista);
     }
 }

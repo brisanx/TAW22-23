@@ -1,7 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="org.taw.gestorbanco.entity.UsuarioEntity" %>
 <%@ page import="org.taw.gestorbanco.entity.AsignacionEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.taw.gestorbanco.dto.UsuarioDTO" %>
+<%@ page import="org.taw.gestorbanco.dto.AsignacionDTO" %>
+<%@ page import="java.util.Objects" %><%--
   Created by IntelliJ IDEA.
   User: Alba Sánchez Ibáñez
   Date: 06/05/2023
@@ -10,9 +13,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  List<UsuarioEntity> listaPersonal = (List<UsuarioEntity>) request.getAttribute("personalempresa");
-  List<AsignacionEntity> asignacionesEmpresa = (List<AsignacionEntity>) request.getAttribute("asignaciones");
-  UsuarioEntity e = (UsuarioEntity) request.getAttribute("usuario");
+  List<UsuarioDTO> listaPersonal = (List<UsuarioDTO>) request.getAttribute("personalempresa");
+  List<Integer> asignacionesEmpresa = (List<Integer>) request.getAttribute("asignaciones");
+  UsuarioDTO e = (UsuarioDTO) request.getAttribute("usuario");
 %>
 <html>
 <head>
@@ -56,7 +59,7 @@
       <th>Bloqueo</th>
     </tr>
     <%
-      for(UsuarioEntity u : listaPersonal) {
+      for(UsuarioDTO u : listaPersonal) {
     %>
     <tr>
       <td><%= u.getId() %></td>
@@ -71,7 +74,8 @@
       <td><%= u.getTelefono() %></td>
       <td>
         <%
-          if(u.getId()!=e.getId() && asignacionesEmpresa.contains(u.getId())){
+          if(u.getId()!= e.getId() && asignacionesEmpresa.contains(u.getId()))
+          {
         %>
         <a href="/empresa/bloquear?id=<%= u.getId() %>"><button>Bloquear</button></a>
         <%

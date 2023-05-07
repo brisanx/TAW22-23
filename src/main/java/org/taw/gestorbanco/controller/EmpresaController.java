@@ -246,7 +246,23 @@ public class EmpresaController {
         return "redirect:/empresa/paginaempresa";
     }
 
-/*
+    @GetMapping("/cambiodivisa")
+    public String doRealizarCambioDivisa(@RequestParam("id") Integer id, Model model){
+        CuentaBancariaDTO cuentaEmpresa = this.cuentaBancariaService.buscarCuenta(id);
+        List<DivisaDTO> divisas = this.divisaService.buscarTodasLasDivisas();
+        model.addAttribute("cuentaempresa", cuentaEmpresa);
+        model.addAttribute("divisas", divisas);
+
+        return "divisacambio";
+    }
+
+    @PostMapping("/guardarcambiodivisa")
+    public String doGuardarCambioDivisa(@ModelAttribute("cuentaempresa") CuentaBancariaDTO cuentaempresa){
+       this.cuentaBancariaService.cambiarDivisa(cuentaempresa);
+        return "redirect:/empresa/paginaempresa";
+    }
+
+
     @PostMapping("/filtrarNombre")
     public String doFiltrarN(@ModelAttribute("filtroNombre") usuarioFiltro uF, Model model, HttpSession sesion){
         subrolFiltro cF = new subrolFiltro();
@@ -271,25 +287,24 @@ public class EmpresaController {
         List<UsuarioDTO> lista;
 
         if((usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo() == null) || (usrF.getNombre() == null && usrF.getApellido() == null && cF.getTipo().equals(""))){
-            lista = usuarioRepository.findEmpresaUsuariosSocioAutorizado(user.getIdentificacion());
-        } else if (usrF == null || (usrF.getNombre() == null && usrF.getApellido() == null)) {
-            lista = usuarioRepository.filtrarTipoSubrolEmpresa(cF.getTipo(),user.getIdentificacion());
-        } else if (cF.getTipo() == null && usrF.getNombre().equals("")) {
-            lista = usuarioRepository.filtrarApellidoEmpresa(usrF.getApellido(),user.getIdentificacion());
-        } else if (cF.getTipo() == null && usrF.getApellido().equals("")) {
-            lista = usuarioRepository.filtrarNombreEmpresa(usrF.getNombre(),user.getIdentificacion());
+         lista = this.usuarioService.listarEmpresaUsuariosSocioAutorizado(user.getIdentificacion());
         } else {
-            lista = usuarioRepository.filtrarNombreApellidoEmpresa(usrF.getNombre(), usrF.getApellido(),user.getIdentificacion());
+            lista = this.usuarioService.listarPersonal(cF, usrF, user.getIdentificacion());
         }
-        UsuarioDTO empresa = this.usuarioRepository.buscarUsuarioEmpresaOriginal(user.getIdentificacion());
-        AsignacionEntity asignacionEmpresa = this.asignacionRepository.findByUsuarioIdEmpresa(empresa.getId());
 
-        List<AsignacionEntity> asignacionesEmpresa = this.asignacionRepository.asignacionesDeLaEmpresa(asignacionEmpresa.getCuentaBancariaId());
+        UsuarioDTO empresa = this.usuarioService.buscarEmpresa(user.getIdentificacion());
+        AsignacionDTO asignacionEmpresa = this.asignacionService.buscarAsignacion(empresa.getId());
+        List<AsignacionDTO> asignacionesEmpresa = this.asignacionService.buscarAsignacionesDeLaEmpresa(asignacionEmpresa.getCuentaBancariaId());
 
+        List<Integer> usuariosAsignados = new ArrayList<>();
+        for(AsignacionDTO asi : asignacionesEmpresa){
+            usuariosAsignados.add(asi.getUsuarioId());
+        }
+        
         model.addAttribute("filtroNombre", usrF);
         model.addAttribute("filtroTipo", cF);
         model.addAttribute("usuario",user);
-        model.addAttribute("asignaciones",asignacionesEmpresa);
+        model.addAttribute("asignaciones", usuariosAsignados);
         model.addAttribute("personalempresa", lista);
 
         return "listarpersonal";
@@ -303,42 +318,20 @@ public class EmpresaController {
     }
 
     public String procesarFiltro(opbFiltro filtro, Integer id, Model model){
-        List<Integer> asignaciones = asignacionRepository.cuentasAsignadasPorUsuario(id);
-        AsignacionEntity asignacion = this.asignacionRepository.findByUsuarioIdEmpresa(id);
-        CuentaBancariaEntity cb = this.cuentaBancariaRepository.findById(asignacion.getCuentaBancariaId()).orElse(null);
+        List<Integer> asignaciones = this.asignacionService.todaslascuentasAsignadasPorUsuario(id);
+        AsignacionDTO asignacion = this.asignacionService.buscarAsignacion(id);
+        CuentaBancariaDTO cb = this.cuentaBancariaService.buscarCuenta(asignacion.getCuentaBancariaId());
 
-        List<OperacionBancariaEntity> operaciones = this.operacionBancariaRepository.buscarOperacionesEmpresa(cb.getId());
-        List<OperacionBancariaEntity> op = new ArrayList<>();
-        if((filtro.getCantidad() == null && filtro.getFecha() == null) || filtro.getCantidad() == null && filtro.getFecha().isEmpty()) {
+        List<OperacionBancariaDTO> operaciones = this.operacionBancariaService.listarOperacionesEmpresa(cb.getId());
+        List<OperacionBancariaDTO> op = null;
+        if(filtro == null || (filtro.getCantidad() == null && filtro.getFecha() == null) || filtro.getCantidad() == null && filtro.getFecha().isEmpty()) {
+            op = this.operacionBancariaService.listarOperacionesEmpresaPorAsignacion(asignaciones);
+            filtro = new opbFiltro();
             filtro.setId(id);
-            op = operacionBancariaRepository.operacionesPorAsignacion(asignaciones);
-        } else if (filtro.getCantidad() == null) {
-            System.out.println("1");
-            if(filtro.getMm()) {
-                op = operacionBancariaRepository.opsMenorFecha(operaciones, filtro.conversion());
-            } else{
-                System.out.println("1-2    " + filtro.conversion());
-                op = operacionBancariaRepository.opsMayorFecha(operaciones, filtro.conversion());
-            }
-        } else if (filtro.getFecha().isEmpty()) {
-            System.out.println("2");
-            if(filtro.getMmc()){
-                op = operacionBancariaRepository.opsMenorCantidad(operaciones, filtro.getCantidad());
-            } else {
-                op = operacionBancariaRepository.opsMayorCantidad(operaciones, filtro.getCantidad());
-            }
         } else {
-            System.out.println("3");
-            if(filtro.getMm() && filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMeMe(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else if (!filtro.getMm() && filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMaMe(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else if (filtro.getMm() && !filtro.getMmc()) {
-                op = operacionBancariaRepository.opsMeMa(operaciones, filtro.getCantidad(), filtro.conversion());
-            } else {
-                op = operacionBancariaRepository.opsMaMa(operaciones, filtro.getCantidad(), filtro.conversion());
+                op = operacionBancariaService.listarOperaciones(cb.getId(), filtro);
             }
-        }
+
         model.addAttribute("filtro", filtro);
         model.addAttribute("op", op);
         return "operaciones";
@@ -346,33 +339,8 @@ public class EmpresaController {
 
     @PostMapping("/filtrarOperacion")
     public String recibirFiltro(@ModelAttribute("filtro") opbFiltro filtro,  Model model){
+        System.out.println("ID DE LA PERSONA: " + filtro.getId());
         return  this.procesarFiltro(filtro, filtro.getId(), model);
     }
-    @GetMapping("/cambiodivisa")
-    public String doRealizarCambioDivisa(@RequestParam("id") Integer id, Model model){
-        CuentaBancariaEntity cuentaEmpresa = this.cuentaBancariaRepository.findById(id).orElse(null);
-        List<DivisaEntity> divisas = this.divisaRepository.findAll();
 
-        model.addAttribute("divisas", divisas);
-        model.addAttribute("cuentaempresa", cuentaEmpresa);
-
-        return "divisacambio";
-    }
-
-    @PostMapping("/guardarcambiodivisa")
-    public String doGuardarCambioDivisa(@ModelAttribute("cuentaempresa") CuentaBancariaEntity cuentaempresa){
-        String moneda = cuentaempresa.getMoneda();
-        DivisaEntity divisaAnterior = this.divisaRepository.buscarPorMoneda(moneda);
-        DivisaEntity divisaActual = cuentaempresa.getDivisaByDivisaId();
-
-        Double cantidadEuro = cuentaempresa.getSaldo()/divisaAnterior.getRatioDeCambio();
-
-        cuentaempresa.setSaldo(cantidadEuro*divisaActual.getRatioDeCambio());
-        cuentaempresa.setMoneda(cuentaempresa.getDivisaByDivisaId().getNombre());
-
-        this.cuentaBancariaRepository.save(cuentaempresa);
-        return "redirect:/empresa/paginaempresa";
-    }
-
- */
 }
