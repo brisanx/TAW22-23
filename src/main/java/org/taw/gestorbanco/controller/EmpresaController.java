@@ -101,7 +101,7 @@ public class EmpresaController {
     @GetMapping("/paginaempresa")
     public String doPaginaPrincipalEmpresa(Model model, HttpSession sesion){
         UsuarioDTO usuario = (UsuarioDTO) sesion.getAttribute("user");
-        if (usuario != null && usuario.getSubrol().equalsIgnoreCase("")){
+        if (usuario != null && ((usuario.getSubrol().equalsIgnoreCase("")) || (usuario.getSubrol()==null))){
             model.addAttribute("empresa", usuario);
             AsignacionDTO asignacionEmpresa = this.asignacionService.buscarAsignacion(usuario.getId());
             if(asignacionEmpresa == null) {
@@ -240,7 +240,7 @@ public class EmpresaController {
         operacionDestino.setUsuario(usuario);
         operacionDestino.setFecha(operacionOrigen.getFecha());
 
-        Double cantidad = -operacionOrigen.getCantidad();
+        double cantidad = -operacionOrigen.getCantidad();
         cantidad = cantidad/divisa.getRatioDeCambio();
 
         operacionDestino.setCantidad(cantidad * divisaDestino.getRatioDeCambio());

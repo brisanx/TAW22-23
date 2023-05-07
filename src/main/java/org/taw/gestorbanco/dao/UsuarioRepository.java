@@ -10,8 +10,9 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
     @Query("select u from UsuarioEntity u where u.email = :user and u.contrasena = :password")
     public UsuarioEntity autenticar (@Param("user") String user, @Param("password")String password);
-    @Query("select u from UsuarioEntity u where u.identificacion = :id and u.subrol = ''")
+    @Query("select u from UsuarioEntity u where u.identificacion = :id and (u.subrol = '' or u.subrol is null)")
     public UsuarioEntity buscarUsuarioEmpresaOriginal(@Param("id") String id);
+
 
     @Query("select u from UsuarioEntity u where u.rol = 'empresa' and u.subrol in ('socio', 'autorizado') and u.identificacion = :id")
     public List<UsuarioEntity> findEmpresaUsuariosSocioAutorizado(@Param("id") String id);
