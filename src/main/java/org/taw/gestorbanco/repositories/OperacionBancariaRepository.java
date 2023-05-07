@@ -25,7 +25,6 @@ public interface OperacionBancariaRepository extends JpaRepository<OperacionBanc
 
     @Query("select op from OperacionBancariaEntity op where " +
             "op.cuentaBancariaByIdCuentaOrigen.id in :as " +
-            "and op.cuentaBancariaByIdCuentaDestino.id in :as" +
             " order by op.cuentaBancariaByIdCuentaOrigen.id, op.fecha desc")
     public List<OperacionBancariaEntity> operacionesPorAsignacion(List<Integer> as);
 
@@ -55,6 +54,9 @@ public interface OperacionBancariaRepository extends JpaRepository<OperacionBanc
 
     /*@Query("SELECT op FROM OperacionBancariaEntity op WHERE op.cuentaBancariaByIdCuentaOrigen.id = :cuentaBancariaId")
     List<OperacionBancariaEntity> buscarOperacionesClientes(Integer cuentaBancariaId);*/
+
+    @Query("select o from OperacionBancariaEntity o where o.cuentaBancariaByIdCuentaOrigen.id= :id")
+    List<OperacionBancariaEntity> buscarOperacionesEmpresa(Integer id);
 
 
 

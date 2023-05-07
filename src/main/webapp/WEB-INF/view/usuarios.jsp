@@ -92,7 +92,6 @@
         <th>DNI/CIF</th>
         <th>Nombre</th>
         <th>Apellidos</th>
-        <th>NºCuentas</th>
         <th>Fecha de Solicitud</th>
         <th>Divisa</th>
         <th>Aceptar Solicitud</th>
@@ -107,11 +106,10 @@
         <td><%=pen.getUsuarioByUsuarioId().getIdentificacion()%></td>
         <td><%=pen.getUsuarioByUsuarioId().getNombre()%></td>
         <td><%=pen.getUsuarioByUsuarioId().getApellido()%></td>
-        <td><%=pen.getUsuarioByUsuarioId().getAsignacionsById().size()%></td>
         <td><%=pen.getFechaSolicitud()%></td>
         <td><%=pen.getDivisaByDivisaId().getNombre()%></td>
-        <td> <a href="/gestoria/aceptarAlta?id=<%=pen.getUsuarioByUsuarioId().getId()%>&sol=<%=pen.getId()%>&divisa=<%=pen.getDivisaByDivisaId().getId()%>">Aceptar</a></td>
-        <td> <a href="/gestoria/denegarAlta?sol=<%=pen.getId()%>">Denegar</a></td>
+        <td> <a href="/gestoria/aceptarAlta?id=<%=pen.getUsuarioByUsuarioId().getId()%>&sol=<%=pen.getIdSolicitud()%>&divisa=<%=pen.getDivisaByDivisaId().getId()%>">Aceptar</a></td>
+        <td> <a href="/gestoria/denegarAlta?sol=<%=pen.getIdSolicitud()%>">Denegar</a></td>
     </tr>
 
     <%
@@ -167,6 +165,9 @@
         </thread>
     <%
         List<Timestamp> fechas = (List<Timestamp>) request.getAttribute("fechas");
+        for (int i=0; i<fechas.size(); i++) {
+            System.out.println(fechas.get(i));
+        }
         List<CuentaBancariaDTO> menor = (List<CuentaBancariaDTO>) request.getAttribute("cDesactivar");
         for(int i=0; i<menor.size(); i++){
     %>

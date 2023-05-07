@@ -17,11 +17,11 @@ public class CuentaBancariaDTO {
     private Double saldo;
     private Byte sospechosa;
     private Byte activo;
-    private Collection<AsignacionEntity> asignacionsById;
-    private DivisaEntity divisaByDivisaId;
-    private Collection<OperacionBancariaEntity> operacionBancariasById;
-    private Collection<OperacionBancariaEntity> operacionBancariasById_0;
-    private Collection<SolicitudActivacionEntity> solicitudActivacionsById;
+    private Collection<AsignacionDTO> asignacionsById;
+    private DivisaDTO divisaByDivisaId;
+    private Collection<OperacionBancariaDTO> operacionBancariasById;
+    private Collection<OperacionBancariaDTO> operacionBancariasById_0;
+    private Collection<SolicitudActivacionDTO> solicitudActivacionsById;
 
     public Integer getId() {
         return id;
@@ -63,6 +63,45 @@ public class CuentaBancariaDTO {
         this.activo = activo;
     }
 
+    public Collection<AsignacionDTO> getAsignacionsById() {
+        return asignacionsById;
+    }
+
+    public void setAsignacionsById(Collection<AsignacionDTO> asignacionsById) {
+        this.asignacionsById = asignacionsById;
+    }
+
+    public DivisaDTO getDivisaByDivisaId() {
+        return divisaByDivisaId;
+    }
+
+    public void setDivisaByDivisaId(DivisaDTO divisaByDivisaId) {
+        this.divisaByDivisaId = divisaByDivisaId;
+    }
+
+    public Collection<OperacionBancariaDTO> getOperacionBancariasById() {
+        return operacionBancariasById;
+    }
+
+    public void setOperacionBancariasById(Collection<OperacionBancariaDTO> operacionBancariasById) {
+        this.operacionBancariasById = operacionBancariasById;
+    }
+
+    public Collection<OperacionBancariaDTO> getOperacionBancariasById_0() {
+        return operacionBancariasById_0;
+    }
+
+    public void setOperacionBancariasById_0(Collection<OperacionBancariaDTO> operacionBancariasById_0) {
+        this.operacionBancariasById_0 = operacionBancariasById_0;
+    }
+
+    public Collection<SolicitudActivacionDTO> getSolicitudActivacionsById() {
+        return solicitudActivacionsById;
+    }
+
+    public void setSolicitudActivacionsById(Collection<SolicitudActivacionDTO> solicitudActivacionsById) {
+        this.solicitudActivacionsById = solicitudActivacionsById;
+    }
 
     @Override
     public boolean equals(Object o) {

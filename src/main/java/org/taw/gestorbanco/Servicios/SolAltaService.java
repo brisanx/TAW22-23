@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dto.SolicitudAltaDTO;
 import org.taw.gestorbanco.entity.*;
-import org.taw.gestorbanco.repositories.AltaRepository;
-import org.taw.gestorbanco.repositories.AsignacionRepository;
-import org.taw.gestorbanco.repositories.CuentaBancariaRepository;
-import org.taw.gestorbanco.repositories.DivisasRepository;
+import org.taw.gestorbanco.repositories.*;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,15 @@ public class SolAltaService {
 
     @Autowired
     protected AsignacionRepository asignacionRepository;
+
+    @Autowired
+    protected UsuarioRepository usuarioRepository;
+
+    @Autowired
+    protected  EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    protected DivisasRepository divisaRepository;
 
     public List<SolicitudAltaDTO> doListar(){
         List<SolicitudAltaEntity> lista = this.altaRepository.findAll();
@@ -65,5 +73,23 @@ public class SolAltaService {
         System.out.println(asignacion.getUsuarioId().getClass() + "---" + asignacion.getCuentaBancariaId().getClass());
         asignacionRepository.save(asignacion);
     }
+
+    /*--------------------------------EMPRESA--------------------------------*/
+
+    public void guardarSolicitudAlta(SolicitudAltaDTO dto) {
+        SolicitudAltaEntity solicitudEmpresa = new SolicitudAltaEntity();
+
+        //solicitudEmpresa.setIdSolicitud(dto.getIdSolicitud());
+        solicitudEmpresa.setFechaSolicitud(Timestamp.valueOf(LocalDateTime.now()));
+
+        UsuarioEntity personal = this.usuarioRepository.findByEmail(dto.getUsuarioByUsuarioId().getEmail());
+        solicitudEmpresa.setUsuarioByUsuarioId(personal);
+        solicitudEmpresa.setEmpleadoByIdGestor(empleadoRepository.findById(dto.getEmpleadoByIdGestor().getIdGestor()).orElse(null));
+        solicitudEmpresa.setDivisaByDivisaId(divisaRepository.findById(dto.getDivisaByDivisaId().getId()).orElse(null));
+
+        this.altaRepository.save(solicitudEmpresa);
+
+    }
+
 
 }

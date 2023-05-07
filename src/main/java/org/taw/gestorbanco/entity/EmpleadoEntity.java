@@ -111,8 +111,11 @@ public class EmpleadoEntity {
 
     public EmpleadoDTO toDto(){
         EmpleadoDTO em = new EmpleadoDTO();
+        em.setIdGestor(this.idGestor);
         em.setNombre(this.nombre);
         em.setRol(this.rol);
+        em.setContrasena(this.contrasena);
+        em.setEmail(this.email);
         return em;
     }
 }

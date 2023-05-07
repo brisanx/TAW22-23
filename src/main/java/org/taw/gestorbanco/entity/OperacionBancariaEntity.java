@@ -96,8 +96,9 @@ public class OperacionBancariaEntity {
         op.setId(this.id);
         op.setCantidad(this.cantidad);
         op.setFecha(this.fecha);
-        op.setCuentaBancariaByIdCuentaOrigen(this.cuentaBancariaByIdCuentaOrigen);
-        op.setCuentaBancariaByIdCuentaDestino(this.cuentaBancariaByIdCuentaDestino);
+        op.setCuentaBancariaByIdCuentaOrigen(this.cuentaBancariaByIdCuentaOrigen.toDto());
+        op.setCuentaBancariaByIdCuentaDestino(this.cuentaBancariaByIdCuentaDestino.toDto());
+        op.setUsuario(this.usuarioByUsuario.toDto());
 
         return op;
     }

@@ -3,13 +3,11 @@ package org.taw.gestorbanco.Servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taw.gestorbanco.dto.CuentaBancariaDTO;
+import org.taw.gestorbanco.dto.OperacionBancariaDTO;
 import org.taw.gestorbanco.dto.UsuarioDTO;
 import org.taw.gestorbanco.entity.*;
 import org.taw.gestorbanco.filtros.crudSospechoso;
-import org.taw.gestorbanco.repositories.ActivacionRepository;
-import org.taw.gestorbanco.repositories.AsignacionRepository;
-import org.taw.gestorbanco.repositories.CuentaBancariaRepository;
-import org.taw.gestorbanco.repositories.OperacionBancariaRepository;
+import org.taw.gestorbanco.repositories.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -29,7 +27,11 @@ public class CuentaBancariaService {
 
     @Autowired
     protected ActivacionRepository activacionRepository;
-    private AsignacionRepository asignacionRepository;
+    @Autowired
+    protected AsignacionRepository asignacionRepository;
+
+    @Autowired
+    protected DivisasRepository divisaRepository;
 
     /*--------------------------------GESTORIA-----------------------------------*/
 
@@ -117,5 +119,42 @@ public class CuentaBancariaService {
         ArrayList cuentas = new ArrayList<CuentaBancariaDTO>();
         lista.forEach((final CuentaBancariaEntity cu) -> cuentas.add(cu.toDto()));
         return cuentas;
+    }
+
+    public CuentaBancariaDTO buscarCuenta(Integer cuentaBancariaId) {
+        CuentaBancariaEntity cb = this.cuentaBancariaRepository.findById(cuentaBancariaId).orElse(null);
+        return cb.toDto();
+    }
+
+    public void ajustarSaldos(OperacionBancariaDTO dto) {
+        CuentaBancariaEntity cuentaOrigen = this.cuentaBancariaRepository.findById(dto.getCuentaBancariaByIdCuentaOrigen().getId()).orElse(null);
+        DivisaEntity divisaOrigen = cuentaOrigen.getDivisaByDivisaId();
+
+        CuentaBancariaEntity cuentaDestino = this.cuentaBancariaRepository.findById(dto.getCuentaBancariaByIdCuentaDestino().getId()).orElse(null);
+        DivisaEntity divisaDestino = cuentaDestino.getDivisaByDivisaId();
+
+        double cantidad = dto.getCantidad();
+        cuentaOrigen.setSaldo(cuentaOrigen.getSaldo() - cantidad);
+
+        double cantidadOrigenAEuro = cantidad / divisaOrigen.getRatioDeCambio();
+        double cantidadDestinoAEuro = cantidadOrigenAEuro * divisaDestino.getRatioDeCambio();
+        double saldoDestino = cuentaDestino.getSaldo() + cantidadDestinoAEuro;
+
+        cuentaDestino.setSaldo(saldoDestino);
+
+        this.cuentaBancariaRepository.save(cuentaOrigen);
+        this.cuentaBancariaRepository.save(cuentaDestino);
+    }
+
+    public void cambiarDivisa(CuentaBancariaDTO dto){
+        CuentaBancariaEntity cuenta = this.cuentaBancariaRepository.findById(dto.getId()).orElse(null);
+        DivisaEntity antigua = this.divisaRepository.buscarPorMoneda(dto.getMoneda());
+        DivisaEntity nueva = this.divisaRepository.getById(dto.getDivisaByDivisaId().getId());
+
+        cuenta.setSaldo((dto.getSaldo()/antigua.getRatioDeCambio())*nueva.getRatioDeCambio());
+
+        cuenta.setMoneda(nueva.getNombre());
+        cuenta.setDivisaByDivisaId(nueva);
+        this.cuentaBancariaRepository.save(cuenta);
     }
 }

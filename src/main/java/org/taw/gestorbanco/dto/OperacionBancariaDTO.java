@@ -12,8 +12,13 @@ public class OperacionBancariaDTO {
     private Integer id;
     private Timestamp fecha;
     private Double cantidad;
-    private CuentaBancariaEntity cuentaBancariaByIdCuentaOrigen;
-    private CuentaBancariaEntity cuentaBancariaByIdCuentaDestino;
+    private CuentaBancariaDTO cuentaBancariaByIdCuentaOrigen;
+    private CuentaBancariaDTO cuentaBancariaByIdCuentaDestino;
+
+    private UsuarioDTO usuario;
+
+    public OperacionBancariaDTO() {
+    }
 
     public Integer getId() {
         return id;
@@ -39,22 +44,29 @@ public class OperacionBancariaDTO {
         this.cantidad = cantidad;
     }
 
-    public CuentaBancariaEntity getCuentaBancariaByIdCuentaOrigen() {
+    public CuentaBancariaDTO getCuentaBancariaByIdCuentaOrigen() {
         return cuentaBancariaByIdCuentaOrigen;
     }
 
-    public void setCuentaBancariaByIdCuentaOrigen(CuentaBancariaEntity cuentaBancariaByIdCuentaOrigen) {
+    public void setCuentaBancariaByIdCuentaOrigen(CuentaBancariaDTO cuentaBancariaByIdCuentaOrigen) {
         this.cuentaBancariaByIdCuentaOrigen = cuentaBancariaByIdCuentaOrigen;
     }
 
-    public CuentaBancariaEntity getCuentaBancariaByIdCuentaDestino() {
+    public CuentaBancariaDTO getCuentaBancariaByIdCuentaDestino() {
         return cuentaBancariaByIdCuentaDestino;
     }
 
-    public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaEntity cuentaBancariaByIdCuentaDestino) {
+    public void setCuentaBancariaByIdCuentaDestino(CuentaBancariaDTO cuentaBancariaByIdCuentaDestino) {
         this.cuentaBancariaByIdCuentaDestino = cuentaBancariaByIdCuentaDestino;
     }
 
+    public UsuarioDTO getUsuario(){
+        return this.usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario){
+        this.usuario = usuario;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

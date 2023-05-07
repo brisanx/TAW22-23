@@ -51,7 +51,7 @@ public class AccesoController {
         } else {
             session.setAttribute("user", usuario);
             urlTo = usuario.getRol().equalsIgnoreCase("Particular") ?
-                    "redirect:/usuario/homeCliente" : "redirect:/paginaempresa";
+                    "redirect:/usuario/homeCliente" : "redirect:/empresa/paginaempresa";
         }
 
 

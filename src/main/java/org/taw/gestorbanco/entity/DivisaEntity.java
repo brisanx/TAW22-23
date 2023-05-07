@@ -1,5 +1,7 @@
 package org.taw.gestorbanco.entity;
 
+import org.taw.gestorbanco.dto.DivisaDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -20,7 +22,7 @@ public class DivisaEntity {
     private String simbolo;
     @Basic
     @Column(name = "ratio_de_cambio", nullable = false, precision = 2)
-    private BigDecimal ratioDeCambio;
+    private Double ratioDeCambio;
     @OneToMany(mappedBy = "divisaByDivisaId")
     private Collection<CuentaBancariaEntity> cuentaBancariasById;
     @OneToMany(mappedBy = "divisaByDivisaId")
@@ -50,11 +52,11 @@ public class DivisaEntity {
         this.simbolo = simbolo;
     }
 
-    public BigDecimal getRatioDeCambio() {
+    public Double getRatioDeCambio() {
         return ratioDeCambio;
     }
 
-    public void setRatioDeCambio(BigDecimal ratioDeCambio) {
+    public void setRatioDeCambio(Double ratioDeCambio) {
         this.ratioDeCambio = ratioDeCambio;
     }
 
@@ -85,5 +87,15 @@ public class DivisaEntity {
 
     public void setSolicitudAltasById(Collection<SolicitudAltaEntity> solicitudAltasById) {
         this.solicitudAltasById = solicitudAltasById;
+    }
+
+    public DivisaDTO toDTO() {
+        DivisaDTO divisaDTO = new DivisaDTO();
+        divisaDTO.setId(this.id);
+        divisaDTO.setNombre(this.nombre);
+        divisaDTO.setSimbolo(this.simbolo);
+        divisaDTO.setRatioDeCambio(this.ratioDeCambio);
+
+        return divisaDTO;
     }
 }

@@ -1,20 +1,15 @@
-<%@ page import="org.taw.gestorbanco.entity.CuentaBancariaEntity" %>
-<%@ page import="org.taw.gestorbanco.dto.CuentaBancariaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Alba Sánchez Ibáñez
-  Date: 18/04/2023
+  Date: 22/04/2023
   Time: 12:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    CuentaBancariaDTO cuentaOrigen = (CuentaBancariaDTO) request.getAttribute("cuentaorigen");
-%>
+
 <html>
 <head>
-    <title>Transferencia</title>
     <style>
         body {
             background-color: #f2f2f2;
@@ -22,7 +17,6 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -32,31 +26,36 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
             text-align: center;
             font-size: 30px;
             font-weight: bold;
             margin-bottom: 20px;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        table {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 400px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
         }
-
-        form input[type="text"] {
-            width: 300px;
+        td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
             padding: 10px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
         }
-
-        form button {
+        button {
             background-color: #007bff;
             border: none;
             color: #fff;
@@ -66,24 +65,31 @@
             border-radius: 30px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
-
-        form button:hover {
+        button:hover {
             background-color: #0062cc;
         }
     </style>
+    <title>Cajasoft | Registro socio/autorizado</title>
 </head>
 <body>
 <div class="container">
-    <h1>Transferencia</h1>
-    <form:form action="/empresa/transhecha" method="post" modelAttribute="operacion">
-        <form:hidden path="id" />
-        <form:hidden path="cuentaBancariaByIdCuentaOrigen.id" value="<%=cuentaOrigen.getId()%>" />
-        <label for="cantidad">Cantidad:</label>
-        <form:input path="cantidad" id="cantidad" />
-        <label for="cuenta">Cuenta:</label>
-        <form:input path="cuentaBancariaByIdCuentaDestino.id" id="cuenta"/>
-        <form:button>Realizar</form:button>
+    <h1>GESTIÓN DE PERSONAS RELACIONADAS CON LA EMPRESA</h1>
+    <form:form action="/empresa/guardarpersonal" method="post" modelAttribute="personal">
+        <form:hidden path="id"/>
+        <form:hidden path="rol" value="Empresa"/>
+        <form:hidden path="subrol" value="socio"/>
+        <form:hidden path="identificacion"/>
+        <table>
+            <tr><td>Nombre(*): <form:input path="nombre"/></td></tr>
+            <tr><td>Apellidos(*): <form:input path="apellido"/></td></tr>
+            <tr><td>Email(*): <form:input path="email"/></td></tr>
+            <tr><td>Dirección <form:input path="direccion"/></td></tr>
+            <tr><td>Teléfono: <form:input path="telefono"/></td></tr>
+            <tr><td>Contraseña(*): <form:password path="contrasena"/></td></tr>
+            <tr><td> <form:button>Registrar</form:button></td></tr>
+        </table>
     </form:form>
 </div>
 </body>

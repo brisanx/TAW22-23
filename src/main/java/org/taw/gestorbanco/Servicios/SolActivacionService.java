@@ -67,4 +67,26 @@ public class SolActivacionService {
 
         this.activacionRepository.save(solicitud);
     }
+
+    /*---------EMPRESA------------------------*/
+    public SolicitudActivacionDTO buscarSolicitudActivacionPorUsuarioCuenta(UsuarioDTO u, CuentaBancariaDTO cb) {
+        UsuarioEntity usuario = this.usuarioRepository.findById(u.getId()).orElse(null);
+        CuentaBancariaEntity cuenta = this.cuentaBancariaRepository.findById(cb.getId()).orElse(null);
+        SolicitudActivacionEntity solicitud = this.activacionRepository.buscarSolicitudActivacionPorUsuarioYCuenta(usuario, cuenta);
+
+        if (solicitud != null) {
+            return solicitud.toDto();
+        } else {
+            return null;
+        }
+    }
+
+    public void guardarSolicitud(SolicitudActivacionDTO dto) {
+        SolicitudActivacionEntity nuevaSolicitud = new SolicitudActivacionEntity();
+        nuevaSolicitud.setUsuarioByUsuarioId(this.usuarioRepository.findById(dto.getUsuarioByUsuarioId().getId()).orElse(null));
+        nuevaSolicitud.setFechaSolicitud(Timestamp.valueOf(LocalDateTime.now()));
+        nuevaSolicitud.setCuentaBancariaByCuentaBancariaId(this.cuentaBancariaRepository.findById(dto.getCuentaBancariaByCuentaBancariaId().getId()).orElse(null));
+        nuevaSolicitud.setEmpleadoByEmpleadoIdGestor(this.empleadoRepository.findById(dto.getEmpleadoByEmpleadoIdGestor().getIdGestor()).orElse(null));
+        this.activacionRepository.save(nuevaSolicitud);
+    }
 }

@@ -6,54 +6,52 @@ import org.taw.gestorbanco.entity.UsuarioEntity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
-public class SolicitudAltaDTO implements Serializable {
-    private Integer id;
-    private Date fechaSolicitud;
-    private EmpleadoEntity empleadoByIdGestor;
-    private UsuarioEntity usuarioByUsuarioId;
-    private DivisaEntity divisaByDivisaId;
+public class SolicitudAltaDTO {
+    private Integer idSolicitud;
+    private Timestamp fechaSolicitud;
+    private EmpleadoDTO empleadoByIdGestor;
+    private UsuarioDTO usuarioByUsuarioId;
+    private DivisaDTO divisaByDivisaId;
 
-    public SolicitudAltaDTO() {
+    public Integer getIdSolicitud() {
+        return idSolicitud;
     }
 
-    public Date getFechaSolicitud() {
+    public void setIdSolicitud(Integer idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
+
+    public Timestamp getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
+    public void setFechaSolicitud(Timestamp fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public EmpleadoEntity getEmpleadoByIdGestor() {
+    public EmpleadoDTO getEmpleadoByIdGestor() {
         return empleadoByIdGestor;
     }
 
-    public void setEmpleadoByIdGestor(EmpleadoEntity empleadoByIdGestor) {
+    public void setEmpleadoByIdGestor(EmpleadoDTO empleadoByIdGestor) {
         this.empleadoByIdGestor = empleadoByIdGestor;
     }
 
-    public UsuarioEntity getUsuarioByUsuarioId() {
+    public UsuarioDTO getUsuarioByUsuarioId() {
         return usuarioByUsuarioId;
     }
 
-    public void setUsuarioByUsuarioId(UsuarioEntity usuarioByUsuarioId) {
+    public void setUsuarioByUsuarioId(UsuarioDTO usuarioByUsuarioId) {
         this.usuarioByUsuarioId = usuarioByUsuarioId;
     }
 
-    public DivisaEntity getDivisaByDivisaId() {
+    public DivisaDTO getDivisaByDivisaId() {
         return divisaByDivisaId;
     }
 
-    public void setDivisaByDivisaId(DivisaEntity divisaByDivisaId) {
+    public void setDivisaByDivisaId(DivisaDTO divisaByDivisaId){
         this.divisaByDivisaId = divisaByDivisaId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

@@ -13,4 +13,10 @@ public interface AsignacionRepository extends JpaRepository<AsignacionEntity, As
 
     @Query("select a.cuentaBancariaId from AsignacionEntity a where a.usuarioId = :id")
     List<Integer> findByUsuarioId(Integer id);
+
+    @Query("select a from AsignacionEntity a where a.usuarioId= :id")
+    AsignacionEntity findByUsuarioIdEmpresa(Integer id);
+
+    @Query("select a from AsignacionEntity a where a.cuentaBancariaId= :id")
+    List<AsignacionEntity> asignacionesDeLaEmpresa(Integer id);
 }

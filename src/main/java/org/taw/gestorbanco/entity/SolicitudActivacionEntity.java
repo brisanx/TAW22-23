@@ -85,9 +85,9 @@ public class SolicitudActivacionEntity {
 
         sol.setId(this.id);
         sol.setFechaSolicitud(this.fechaSolicitud);
-        sol.setEmpleadoByEmpleadoIdGestor(this.empleadoByEmpleadoIdGestor);
-        sol.setCuentaBancariaByCuentaBancariaId(this.cuentaBancariaByCuentaBancariaId);
-        sol.setUsuarioByUsuarioId(this.usuarioByUsuarioId);
+        sol.setEmpleadoByEmpleadoIdGestor(this.empleadoByEmpleadoIdGestor.toDto());
+        sol.setCuentaBancariaByCuentaBancariaId(this.cuentaBancariaByCuentaBancariaId.toDto());
+        sol.setUsuarioByUsuarioId(this.usuarioByUsuarioId.toDto());
 
         return sol;
     }
